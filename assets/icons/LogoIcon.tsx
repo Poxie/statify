@@ -1,0 +1,3 @@
+export const LogoIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none"> <rect width="28" height="28" rx="4" fill="#6E3FC9"/> <rect x="8.05856" y="7.42581" width="2.59512" height="12.8078" rx="1.29756" fill="white"/> <rect x="17.4146" y="8.58395" width="2.59512" height="10.4234" rx="1.29756" fill="white"/> <rect x="12.7025" y="5.65448" width="2.66341" height="16.6229" rx="1.33171" fill="white"/> </svg>
+)

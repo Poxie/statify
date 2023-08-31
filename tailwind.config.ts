@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      width: {
+        main: '1200px',
+      },
+      maxWidth: {
+        main: '95%'
+      },
       backgroundColor: {
         'c-primary': '#6E3FC9',
         'c-primary-accent': '#623DAA',
