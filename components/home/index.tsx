@@ -1,8 +1,10 @@
+import HeaderArtists from "./HeaderArtists";
 import HeaderOptions from "./HeaderOptions";
 
 export default function Home() {
     return(
         <main>
+            <HeaderArtists />
             <div className="py-32">
                 <h1 className="text-5xl leading-tight font-semibold text-center mx-auto w-[540px] max-w-main">
                     All your music statistics in one place.
