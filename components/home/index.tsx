@@ -1,7 +1,12 @@
 import HeaderArtists from "./HeaderArtists";
 import HeaderOptions from "./HeaderOptions";
+import HomeArtistInfo from "./HomeArtistInfo";
 
-export default function Home() {
+export default function Home({
+    searchParams: { a: artistId }
+}: {
+    searchParams: { a?: string };
+}) {
     return(
         <main>
             <HeaderArtists />
@@ -13,6 +18,7 @@ export default function Home() {
                     A way to explore your favorite songs and artists in real time. Explore your way through our many exploration options, or login to view your own taste.
                 </p>
                 <HeaderOptions />
+                <HomeArtistInfo artistId={artistId} />
             </div>
         </main>
     )
