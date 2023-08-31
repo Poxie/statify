@@ -12,19 +12,19 @@ export default function HeaderArtist({
 }: {
     id: string;
     image: string;
-    top: number;
-    left?: number;
-    right?: number;
+    top: string;
+    left?: string;
+    right?: string;
 }) {
     const currentArtistId = useSearchParams().get('a');
     return(
         <Link
             href={`/?a=${id}`} 
-            className="absolute w-16 aspect-square"
+            className={`absolute w-16 aspect-square last:translate-y-[260%] ${left ? '-translate-x-[160%]' : 'translate-x-[160%]'} lg:translate-x-0 last:lg:translate-y-0`}
             style={{
-                top: `${top}px`,
-                left: left ? `${left}px` : 'unset',
-                right: right ? `${right}px` : 'unset',
+                top,
+                left,
+                right,
             }}
         >
             <Image 
