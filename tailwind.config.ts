@@ -21,6 +21,11 @@ const config: Config = {
         secondary: '#11151B',
         tertiary: '#1C1F22',
       },
+      borderColor: {
+        primary: '#0D1117',
+        secondary: '#11151B',
+        tertiary: '#1C1F22',
+      },
       textColor: {
         primary: '#fff',
         secondary: '#6B809D',
