@@ -21,14 +21,14 @@ export default function Artist({ artist, isPopular, small }: {
         popularity,
         external_urls: { spotify: artistUrl },
         followers: { total: totalFollowers },
-        images: [ _, image ],
+        images,
     } = artist;
     return(
         <div className="flex gap-3">
             <Image 
                 width={100}
                 height={100}
-                src={image.url}
+                src={images.at(-1)?.url as string}
                 alt={`${name}'s icon`}
                 className={`${small ? 'w-24' : 'w-28'} aspect-square object-cover rounded-lg ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
             />
