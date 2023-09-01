@@ -26,7 +26,7 @@ export default function Input({
             )}
             <input 
                 type="text"
-                className={`placeholder:text-secondary bg-transparent outline-none py-3 px-4 ${className}`}
+                className={`placeholder:text-secondary flex-1 bg-transparent outline-none py-3 px-4 ${className}`}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
                 onFocus={onFocus}
