@@ -1,16 +1,16 @@
 "use client";
-
-import { SearchIcon } from "@/assets/icons/SearchIcon";
-import Input from "../input";
+import { SpotifyArtist } from "@/types";
 import Button from "../button";
+import SearchInput from "../search-input";
+import { useRouter } from "next/navigation";
 
 export default function HeaderOptions() {
+    const router = useRouter();
     return(
         <div className="flex items-center justify-center gap-3 mt-6">
-            <Input
-                containerClassName={'w-[400px]'}
-                icon={<SearchIcon className="w-5 text-secondary" />}
-                placeholder={'Search artist or song...'}
+            <SearchInput<SpotifyArtist> 
+                onSelect={item => router.push(`/?a=${item.id}`)}
+                type={'artist'}
             />
             <span className="uppercase text-secondary text-xs font-semibold">
                 or
