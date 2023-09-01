@@ -24,4 +24,15 @@
     border-top-width: var(--bt);
     border-bottom-width: var(--bb);
   }
+  .gradient-text {
+    @apply bg-[linear-gradient(0.25turn,var(--gradient-from),var(--gradient-to))];
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gradient-background {
+    --bg-opacity: 1;
+    --bg-from: rgb(255 77 0 / var(--bg-opacity));
+    --bg-to: rgb(255 184 0 / var(--bg-opacity));
+    @apply bg-[linear-gradient(0.25turn,var(--bg-from),var(--bg-to))];
+  }
 }
