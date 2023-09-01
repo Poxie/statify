@@ -1,0 +1,1 @@
+export const POPULARITY_THRESHOLD = 80;

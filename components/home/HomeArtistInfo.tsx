@@ -7,12 +7,12 @@ import { cache, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { get } from '@/utils';
 import HeaderArtistStats from './HeaderArtistStats';
+import { POPULARITY_THRESHOLD } from '@/utils/constants';
 
 const getRandomArtist = () => {
     return Artists[Math.floor(Math.random() * Artists.length)].id;
 }
 
-const POPULARITY_THRESHOLD = 85;
 export default function HomeArtistInfo() {
     const artistId = useSearchParams().get('a');
 
@@ -21,6 +21,7 @@ export default function HomeArtistInfo() {
         tracks: SpotifyTrack[];
         albums: SpotifyAlbum[];
         featured: SpotifyFeaturedAlbum[];
+        related: SpotifyArtist[];
     }>(null);
     const isPopular = (artistInfo?.artist.popularity || -1) > POPULARITY_THRESHOLD;
 
@@ -33,9 +34,10 @@ export default function HomeArtistInfo() {
                 get<SpotifyTrack[]>(`/artist/${artistId}/tracks`),
                 get<SpotifyAlbum[]>(`/artist/${artistId}/albums`),
                 get<SpotifyFeaturedAlbum[]>(`/artist/${artistId}/featured`),
+                get<SpotifyArtist[]>(`/artist/${artistId}/related`),
             ],
-        ).then(([ artist, tracks, albums, featured ]) => {
-            setArtistInfo({ artist, tracks, albums, featured });
+        ).then(([ artist, tracks, albums, featured, related ]) => {
+            setArtistInfo({ artist, tracks, albums, featured, related });
         })
     }, [artistId]);
 
@@ -65,6 +67,7 @@ export default function HomeArtistInfo() {
                 artist={artistInfo?.artist}
                 albums={artistInfo?.albums}
                 featured={artistInfo?.featured}
+                related={artistInfo?.related}
             />
         </div>
     )
