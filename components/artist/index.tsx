@@ -29,7 +29,7 @@ export default function Artist({ artist, isPopular }: {
                 height={100}
                 src={image.url}
                 alt={`${name}'s icon`}
-                className={`w-28 aspect-square rounded-lg ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
+                className={`w-28 aspect-square object-cover rounded-lg ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
             />
             <div className="flex flex-col items-start gap-1">
                 <div className="flex items-center gap-3">
