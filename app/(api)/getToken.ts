@@ -7,7 +7,8 @@ export const getToken = async () => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         next: {
-            revalidate: 3600
+            revalidate: 3600,
+            tags: ['access-token'],
         }
     });
     const data = await res.json();
