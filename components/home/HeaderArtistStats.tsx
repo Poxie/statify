@@ -47,12 +47,12 @@ export default function HeaderArtistStats({ albums, tracks, artist }: {
                     </div>
                     <ul className="grid pt-3 gap-1.5">
                         {tracks.slice(1).map((track, key) => (
-                            <li className="flex items-center">
+                            <li className="flex items-center min-w-0">
                                 <span className="w-5 text-sm">
                                     {key + 2}
                                 </span>
-                                <div className="flex-1 flex gap-3 items-center justify-between">
-                                    <div className="flex gap-2 items-center">
+                                <div className="flex-1 flex gap-3 items-center justify-between min-w-0">
+                                    <div className="flex gap-2 items-center max-w-[65%]">
                                         <Image 
                                             className="w-6 aspect-square rounded object-cover"
                                             src={track.album.images.at(-1)?.url as string}
@@ -73,7 +73,7 @@ export default function HeaderArtistStats({ albums, tracks, artist }: {
                     </ul>
                 </div>
             </div>
-            <div className="flex flex-col rounded-lg p-4 pb-0 pr-0 border-[1px] border-tertiary h-[242px]">
+            <div className="flex flex-col rounded-lg p-4 pb-0 border-[1px] border-tertiary h-[242px]">
                 <span className="block text-xs text-secondary mb-3">
                     {artist?.name}'s albums
                 </span>
@@ -97,9 +97,9 @@ export default function HeaderArtistStats({ albums, tracks, artist }: {
                     </div>
                     <ul className="grid pt-3 gap-1.5">
                         {albums.slice(1).map((album, key) => (
-                            <li className="flex items-center">
-                                <div className="flex-1 flex gap-3 items-center justify-between">
-                                    <div className="flex gap-2 items-center">
+                            <li className="flex items-center min-w-0">
+                                <div className="flex-1 flex gap-3 items-center justify-between min-w-0">
+                                    <div className="flex gap-2 items-center max-w-[65%]">
                                         <Image 
                                             className="w-6 aspect-square rounded object-cover"
                                             src={album.images.at(-1)?.url as string}
