@@ -1,9 +1,7 @@
 import { SpotifyArtist } from "@/types";
 import Image from "next/image";
 import Chip from "../chip";
-import Link from "next/link";
 
-const POPULARITY_THRESHOLD = 85;
 export default function Artist({
     name,
     genres,
@@ -11,9 +9,8 @@ export default function Artist({
     external_urls: { spotify: artistUrl },
     followers: { total: totalFollowers },
     images: [ _, image ],
-}: SpotifyArtist) {
-    const isPopular = popularity > POPULARITY_THRESHOLD;
-
+    isPopular,
+}: SpotifyArtist & { isPopular?: boolean }) {
     return(
         <div className="flex gap-3 p-[1px]">
             <Image 
@@ -21,19 +18,21 @@ export default function Artist({
                 height={100}
                 src={image.url}
                 alt={`${name}'s icon`}
-                className="w-28 aspect-square gradient-border rounded-lg [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]"
+                className={`w-28 aspect-square rounded-lg ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
             />
             <div className="flex flex-col items-start gap-1">
                 <div className="flex items-center gap-3">
-                    <span className="text-lg font-semibold gradient-text">
+                    <span className={`text-lg font-semibold ${isPopular ? 'gradient-text' : 'text-primary'}`}>
                         {name}
                     </span>
-                    <Chip 
-                        className="uppercase font-bold"
-                        type={'gradient'}
-                    >
-                        Top Artist
-                    </Chip>
+                    {isPopular && (
+                        <Chip 
+                            className="uppercase font-bold"
+                            type={'gradient'}
+                        >
+                            Top Artist
+                        </Chip>
+                    )}
                 </div>
                 <span className="text-xs text-secondary">
                     {totalFollowers.toLocaleString()} followers
