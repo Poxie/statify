@@ -27,14 +27,15 @@ export default function HomeArtistInfo() {
 
     useEffect(() => {
         setArtistInfo(null);
-
+        
+        const id = artistId || getRandomArtist();
         Promise.all(
             [ 
-                get<SpotifyArtist>(`/artist/${artistId || getRandomArtist()}`),
-                get<SpotifyTrack[]>(`/artist/${artistId}/tracks`),
-                get<SpotifyAlbum[]>(`/artist/${artistId}/albums`),
-                get<SpotifyFeaturedAlbum[]>(`/artist/${artistId}/featured`),
-                get<SpotifyArtist[]>(`/artist/${artistId}/related`),
+                get<SpotifyArtist>(`/artist/${id}`),
+                get<SpotifyTrack[]>(`/artist/${id}/tracks`),
+                get<SpotifyAlbum[]>(`/artist/${id}/albums`),
+                get<SpotifyFeaturedAlbum[]>(`/artist/${id}/featured`),
+                get<SpotifyArtist[]>(`/artist/${id}/related`),
             ],
         ).then(([ artist, tracks, albums, featured, related ]) => {
             setArtistInfo({ artist, tracks, albums, featured, related });
