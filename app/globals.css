@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  :root {
+    --gradient-from: #FF4D00;
+    --gradient-to: #4d9f0c;
+  }
   body {
     @apply text-primary bg-primary;
   }
@@ -12,8 +16,6 @@
     --bb: var(--border-bottom, var(--border-width));
     --bl: var(--border-left, var(--border-width));
     --br: var(--border-right, var(--border-width));
-    --gradient-from: #FF4D00;
-    --gradient-to: #4d9f0c;
     --background: #11151B;
     @apply bg-[linear-gradient(0.25turn,var(--background),var(--background)),linear-gradient(0.25turn,var(--gradient-from),var(--gradient-to))];
     background-origin: border-box;
