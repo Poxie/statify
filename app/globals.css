@@ -6,4 +6,22 @@
   body {
     @apply text-primary bg-primary;
   }
+  .gradient-border {
+    --border-width: 1px;
+    --bt: var(--border-top, var(--border-width));
+    --bb: var(--border-bottom, var(--border-width));
+    --bl: var(--border-left, var(--border-width));
+    --br: var(--border-right, var(--border-width));
+    --gradient-from: #FF4D00;
+    --gradient-to: #4d9f0c;
+    --background: #11151B;
+    @apply bg-[linear-gradient(0.25turn,var(--background),var(--background)),linear-gradient(0.25turn,var(--gradient-from),var(--gradient-to))];
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border: solid transparent;
+    border-left-width: var(--bl);
+    border-right-width: var(--br);
+    border-top-width: var(--bt);
+    border-bottom-width: var(--bb);
+  }
 }

@@ -10,7 +10,7 @@ export default function Home({
     return(
         <main>
             <HeaderArtists />
-            <div className="py-32">
+            <div className="pt-32 pb-40">
                 <h1 className="text-5xl leading-tight font-semibold text-center mx-auto w-[540px] max-w-main">
                     All your music statistics in one place.
                 </h1>
@@ -18,8 +18,8 @@ export default function Home({
                     A way to explore your favorite songs and artists in real time. Explore your way through our many exploration options, or login to view your own taste.
                 </p>
                 <HeaderOptions />
-                <HomeArtistInfo artistId={artistId} />
             </div>
+            <HomeArtistInfo artistId={artistId} />
         </main>
     )
 }
