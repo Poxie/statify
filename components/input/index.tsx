@@ -5,6 +5,8 @@ export default function Input({
     icon,
     defaultValue,
     onChange,
+    onFocus,
+    onBlur,
 }: {
     containerClassName?: string;
     className?: string;
@@ -12,6 +14,8 @@ export default function Input({
     icon?: React.ReactNode;
     defaultValue?: string;
     onChange?: (text: string) => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
 }) {
     return(
         <div className={`focus-within:outline outline-1 outline-white flex bg-secondary border-[1px] border-tertiary rounded-lg ${containerClassName}`}>
@@ -25,6 +29,8 @@ export default function Input({
                 className={`placeholder:text-secondary bg-transparent outline-none py-3 px-4 ${className}`}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 onChange={e => {
                     if(!onChange) return;
                     onChange(e.target.value);

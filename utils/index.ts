@@ -1,7 +1,7 @@
 import { cache } from "react";
 
-export const get = cache(async <T>(query: string) => {
-    const res = await fetch(query);
+export const get = cache(async <T>(query: string, signal?: AbortSignal) => {
+    const res = await fetch(query, { signal });
     const data = await res.json();
 
     if(data.error) {
