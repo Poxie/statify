@@ -3,6 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
     const artistId = req.url.split('/').at(-2);
-    const data = await fetchFromSpotify(`/artists/${artistId}/top-tracks?market=US&limit=50`);
-    return NextResponse.json(data.tracks);
+    const data = await fetchFromSpotify(`/artists/${artistId}/albums`);
+    return NextResponse.json(data.items);
 }
