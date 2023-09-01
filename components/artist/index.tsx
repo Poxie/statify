@@ -2,17 +2,28 @@ import { SpotifyArtist } from "@/types";
 import Image from "next/image";
 import Chip from "../chip";
 
-export default function Artist({
-    name,
-    genres,
-    popularity,
-    external_urls: { spotify: artistUrl },
-    followers: { total: totalFollowers },
-    images: [ _, image ],
-    isPopular,
-}: SpotifyArtist & { isPopular?: boolean }) {
+export default function Artist({ artist, isPopular }: { 
+    artist: SpotifyArtist | undefined, 
+    isPopular?: boolean 
+}) {
+    if(!artist) {
+        return(
+            <div>
+                <div className="w-28 aspect-square" />
+            </div>
+        )
+    }
+    
+    const {
+        name,
+        genres,
+        popularity,
+        external_urls: { spotify: artistUrl },
+        followers: { total: totalFollowers },
+        images: [ _, image ],
+    } = artist;
     return(
-        <div className="flex gap-3 p-[1px]">
+        <div className="flex gap-3">
             <Image 
                 width={100}
                 height={100}

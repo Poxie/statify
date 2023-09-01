@@ -2,11 +2,7 @@ import HeaderArtists from "./HeaderArtists";
 import HeaderOptions from "./HeaderOptions";
 import HomeArtistInfo from "./HomeArtistInfo";
 
-export default function Home({
-    searchParams: { a: artistId }
-}: {
-    searchParams: { a?: string };
-}) {
+export default function Home() {
     return(
         <main>
             <HeaderArtists />
@@ -19,7 +15,7 @@ export default function Home({
                 </p>
                 <HeaderOptions />
             </div>
-            <HomeArtistInfo artistId={artistId} />
+            <HomeArtistInfo />
         </main>
     )
 }

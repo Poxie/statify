@@ -6,7 +6,8 @@ export const fetchFromSpotify = async (query: string) => {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/x-www-form-urlencoded.',
-        }
+        },
+        next: { revalidate: 3600 }
     })
     return await res.json();
 }
