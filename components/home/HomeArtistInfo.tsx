@@ -1,6 +1,6 @@
 "use client";
 import Artists from '@/assets/json/defaultArtists.json';
-import { SpotifyAlbum, SpotifyArtist, SpotifyTrack } from '@/types';
+import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from '@/types';
 import Artist from '../artist';
 import Link from 'next/link';
 import { cache, useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ export default function HomeArtistInfo() {
         artist: SpotifyArtist;
         tracks: SpotifyTrack[];
         albums: SpotifyAlbum[];
+        featured: SpotifyFeaturedAlbum[];
     }>(null);
     const isPopular = (artistInfo?.artist.popularity || -1) > POPULARITY_THRESHOLD;
 
@@ -31,9 +32,10 @@ export default function HomeArtistInfo() {
                 get<SpotifyArtist>(`/artist/${artistId || getRandomArtist()}`),
                 get<SpotifyTrack[]>(`/artist/${artistId}/tracks`),
                 get<SpotifyAlbum[]>(`/artist/${artistId}/albums`),
+                get<SpotifyFeaturedAlbum[]>(`/artist/${artistId}/featured`),
             ],
-        ).then(([ artist, tracks, albums ]) => {
-            setArtistInfo({ artist, tracks, albums });
+        ).then(([ artist, tracks, albums, featured ]) => {
+            setArtistInfo({ artist, tracks, albums, featured });
         })
     }, [artistId]);
 
@@ -62,6 +64,7 @@ export default function HomeArtistInfo() {
                 tracks={artistInfo?.tracks}
                 artist={artistInfo?.artist}
                 albums={artistInfo?.albums}
+                featured={artistInfo?.featured}
             />
         </div>
     )
