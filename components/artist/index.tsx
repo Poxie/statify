@@ -1,6 +1,7 @@
 import { SpotifyArtist } from "@/types";
 import Image from "next/image";
 import Chip from "../chip";
+import Link from "next/link";
 
 export default function Artist({ artist, isPopular, small }: { 
     artist: SpotifyArtist | undefined, 
@@ -16,6 +17,7 @@ export default function Artist({ artist, isPopular, small }: {
     }
     
     const {
+        id,
         name,
         genres,
         popularity,
@@ -34,9 +36,13 @@ export default function Artist({ artist, isPopular, small }: {
             />
             <div className="flex flex-col items-start gap-1">
                 <div className={`flex items-center ${small ? 'gap-2' : 'gap-3'}`}>
-                    <span className={`${small ? 'text-sm' : 'text-lg'} font-semibold ${isPopular ? 'gradient-text' : 'text-primary'}`}>
+                    <Link 
+                        className={`${small ? 'text-sm' : 'text-lg'} font-semibold ${isPopular ? 'gradient-text' : 'text-primary'}`}
+                        href={`/?a=${id}`}
+                        scroll={false}
+                    >
                         {name}
-                    </span>
+                    </Link>
                     {isPopular && (
                         <Chip 
                             className={`uppercase font-bold ${small ? 'text-[8px]' : ''}`}
