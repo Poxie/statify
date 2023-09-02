@@ -4,6 +4,8 @@ import Link from "next/link";
 import ItemContainer from "../item-container";
 import { useRef } from "react";
 import { useAnimateStyle } from "@/hooks/useAnimateStyle";
+import { QuestionIcon } from "@/assets/icons/QuestionIcon";
+import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;
 type ListType = 'track' | 'album' | 'featured';
@@ -45,6 +47,11 @@ const getEmptyText = (type: ListType) => {
     if(type === 'track') return 'This artist has not published any songs.';
     if(type === 'album') return 'This artist has not published any albums.';
     return 'This artist is not featured anywhere.';
+}
+const getTooltipExplanation = (type: ListType) => {
+    if(type === 'track') return 'Popularity is based on how much engagement and how many streams it receives compared to other songs.';
+    if(type === 'album') return 'Many of this artist\'s top songs came from this album.';
+    return 'There is no special reason for this album to be featured, it just is.'
 }
 
 export default function ItemList({ artist, firstItem, items, type, index, loading, opacityZero }: {
@@ -91,8 +98,15 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                     {getItemInfoText(firstItem, type)}
                                 </span>
                             )}
-                            <span className="text-xs text-secondary">
+                            <span className="text-xs text-secondary flex items-center gap-1.5">
                                 {getFirstItemText(firstItem, type)}
+
+                                <HasTooltip 
+                                    tooltip={getTooltipExplanation(type)}
+                                    delay={250}
+                                >
+                                    <QuestionIcon className="w-3" />
+                                </HasTooltip>
                             </span>
                         </div>
                     </div>
