@@ -3,7 +3,7 @@ import Artists from '@/assets/json/defaultArtists.json';
 import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from '@/types';
 import Artist from '../artist';
 import Link from 'next/link';
-import { cache, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { get } from '@/utils';
 import HeaderArtistStats from './HeaderArtistStats';
@@ -40,7 +40,7 @@ export default function HomeArtistInfo() {
 
         setOpacityZero(true);
 
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             setArtistInfo(null);
             
             requests.then(([ artist, tracks, albums, featured, related ]) => {
@@ -48,6 +48,10 @@ export default function HomeArtistInfo() {
                 setOpacityZero(false);
             })
         }, 500);
+
+        return () => {
+            if(timeout) clearTimeout(timeout);
+        }
     }, [artistId]);
 
     return(
