@@ -13,6 +13,7 @@ const getRandomArtist = () => {
     return Artists[Math.floor(Math.random() * Artists.length)].id;
 }
 
+const OPACITY_TRANSITION = 500;
 export default function HomeArtistInfo() {
     const artistId = useSearchParams().get('a');
 
@@ -50,7 +51,7 @@ export default function HomeArtistInfo() {
                 setArtistInfo({ artist, tracks, albums, featured, related });
                 setOpacityZero(false);
             })
-        }, 500);
+        }, OPACITY_TRANSITION);
 
         return () => {
             if(timeout) clearTimeout(timeout);
