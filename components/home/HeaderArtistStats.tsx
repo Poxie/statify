@@ -5,12 +5,13 @@ import ItemList from "../item-list";
 import ItemContainer from "../item-container";
 
 const RELATED_PLACEHOLDER_COUNT = 9;
-export default function HeaderArtistStats({ albums, tracks, artist, featured, related }: {
+export default function HeaderArtistStats({ albums, tracks, artist, featured, related, opacityZero }: {
     tracks: SpotifyTrack[] | undefined;
     albums: SpotifyAlbum[] | undefined;
     artist: SpotifyArtist | undefined;
     featured: SpotifyFeaturedAlbum[] | undefined;
     related: SpotifyArtist[] | undefined;
+    opacityZero: boolean;
 }) {
     const firstFeatured = featured?.at(0);
     const firstTrack = tracks?.at(0);
@@ -38,6 +39,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     items={tracks}
                     type={'track'}
                     loading={!tracks}
+                    opacityZero={opacityZero}
+                    index={0}
                 />
                 <ItemList 
                     artist={artist}
@@ -45,6 +48,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     items={albums}
                     type={'album'}
                     loading={!albums}
+                    opacityZero={opacityZero}
+                    index={1}
                 />
                 <ItemList 
                     artist={artist}
@@ -52,6 +57,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     items={featured}
                     type={'featured'}
                     loading={!featured}
+                    opacityZero={opacityZero}
+                    index={2}
                 />
             </div>
             <ItemContainer
@@ -59,6 +66,16 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 emptyLabel={'This artist does not have enough data to show related artists.'}
                 isEmpty={!related?.length}
                 loading={!related}
+                style={opacityZero ? { 
+                    transition: 'opacity .5s, transform .5s',
+                    transform: `translateY(20px)`,
+                    opacity: 0,
+                } : {
+                    transitionDelay: '.6s',
+                    transition: 'opacity .5s, transform .5s',
+                    transform: `translateY(0)`,
+                    opacity: 1,
+                }}
             >
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {(related || Array.from(Array(RELATED_PLACEHOLDER_COUNT))).slice(0,9).map(artist => (

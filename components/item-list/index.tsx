@@ -45,12 +45,14 @@ const getEmptyText = (type: ListType) => {
     return 'This artist is not featured anywhere.';
 }
 
-export default function ItemList({ artist, firstItem, items, type, loading }: {
+export default function ItemList({ artist, firstItem, items, type, index, loading, opacityZero }: {
     artist?: SpotifyArtist;
     firstItem?: ListItem;
     items?: ListItem[];
     type: ListType;
+    index: number;
     loading?: boolean;
+    opacityZero?: boolean;
 }) {
     return(
         <ItemContainer
@@ -59,6 +61,17 @@ export default function ItemList({ artist, firstItem, items, type, loading }: {
             emptyLabel={getEmptyText(type)}
             className={'pb-0 pr-0 h-[242px]'}
             loading={loading}
+            style={opacityZero ? { 
+                transition: 'opacity .5s, transform .5s',
+                transform: `translateY(20px)`,
+                opacity: 0,
+            } : {
+                
+                transition: 'opacity .5s, transform .5s',
+                transitionDelay: `${index * .1 + .2}s`,
+                transform: `translateY(0)`,
+                opacity: 1,
+            }}
         >
             {firstItem && items?.length && (
                 <div className="flex-1 scrollbar overflow-y-scroll pr-2 pb-4">
