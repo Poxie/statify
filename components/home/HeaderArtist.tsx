@@ -20,7 +20,8 @@ export default function HeaderArtist({
     const isActive = currentArtistId === id;
     return(
         <Link
-            href={isActive ? '/' : `/?a=${id}`} 
+            scroll={false}
+            href={isActive ? '/' : `/?a=${id}`}
             className={`absolute w-16 aspect-square last:translate-y-[260%] ${left ? '-translate-x-[160%]' : 'translate-x-[160%]'} lg:translate-x-0 last:lg:translate-y-0`}
             style={{
                 top,
