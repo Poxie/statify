@@ -26,7 +26,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     topTrackAlbumIds.filter(i => i === b).length
                 )
         ).pop());
-        const firstAlbum = topTrackAlbums.find(album => album.id === firstAlbumId);
+        firstAlbum = topTrackAlbums.find(album => album.id === firstAlbumId);
     }
     
     return(
