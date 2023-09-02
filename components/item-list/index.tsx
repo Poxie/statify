@@ -69,7 +69,7 @@ export default function ItemList({ artist, firstItem, items, type }: {
                             alt=""
                         />
                         <div className="flex flex-col gap-0.5">
-                            <span className="text-sm">
+                            <span className="text-sm multiline-ellipsis">
                                 {firstItem.name}
                             </span>
                             {type === 'featured' && (
