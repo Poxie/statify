@@ -9,7 +9,7 @@ export default function HeaderOptions() {
     return(
         <div className="flex items-center justify-center gap-3 mt-6">
             <SearchInput<SpotifyArtist> 
-                onSelect={item => router.push(`/?a=${item.id}`)}
+                onSelect={item => router.push(`/?a=${item.id}`, { scroll: false })}
                 type={'artist'}
             />
             <span className="uppercase text-secondary text-xs font-semibold">
