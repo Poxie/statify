@@ -2,6 +2,8 @@ import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from 
 import Image from "next/image";
 import Link from "next/link";
 import ItemContainer from "../item-container";
+import { useRef } from "react";
+import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;
 type ListType = 'track' | 'album' | 'featured';
@@ -52,26 +54,23 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
     type: ListType;
     index: number;
     loading?: boolean;
-    opacityZero?: boolean;
+    opacityZero: boolean;
 }) {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useAnimateStyle(ref, opacityZero, {
+        from: { opacity: 0, transform: 'translateY(20px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        delayIn: 200 + index * 100,
+    })
     return(
         <ItemContainer
-            title={getListTitle(artist, type) as string}
+            title={getListTitle(artist, type)}
             isEmpty={!firstItem || !items?.length}
             emptyLabel={getEmptyText(type)}
             className={'pb-0 pr-0 h-[242px]'}
             loading={loading}
-            style={opacityZero ? { 
-                transition: 'opacity .5s, transform .5s',
-                transform: `translateY(20px)`,
-                opacity: 0,
-            } : {
-                
-                transition: 'opacity .5s, transform .5s',
-                transitionDelay: `${index * .1 + .2}s`,
-                transform: `translateY(0)`,
-                opacity: 1,
-            }}
+            ref={ref}
         >
             {firstItem && items?.length && (
                 <div className="flex-1 scrollbar overflow-y-scroll pr-2 pb-4">

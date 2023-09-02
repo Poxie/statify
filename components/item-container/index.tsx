@@ -1,26 +1,22 @@
-export default function ItemContainer({ title, emptyLabel, isEmpty, children, loading, className='', style={} }: {
-    title: string;
+import React from "react";
+
+const ItemContainer = React.forwardRef<HTMLDivElement, {
+    title?: string;
     emptyLabel: string;
     isEmpty: boolean;
     children: React.ReactNode;
     loading?: boolean;
     className?: string;
-    style?: React.CSSProperties;
-}) {
+}>(({ title, isEmpty, emptyLabel, loading, className='', children }, ref) => {
     return(
         <div 
-            className={`flex flex-col rounded-lg p-4 border-[1px] border-tertiary ${className}`}
-            style={style}
+            className={`flex flex-col rounded-lg p-4 border-[1px] ${loading ? 'border-transparent' : 'border-tertiary'} ${className}`}
+            ref={ref}
         >
-            {!loading ? (
-                <span className="block text-xs text-secondary mb-3">
-                    {title}
-                </span>
-            ) : (
-                <span className="block h-4 mb-3">
-                    
-                </span>
-            )}
+            <span className="block text-xs text-secondary mb-3 h-4">
+                {title}
+            </span>
+
             {(!isEmpty || loading) ? (
                 children
             ) : (
@@ -30,4 +26,5 @@ export default function ItemContainer({ title, emptyLabel, isEmpty, children, lo
             )}
         </div>
     )
-}
+})
+export default ItemContainer;

@@ -10,9 +10,7 @@ export default function Artist({ artist, isPopular, small }: {
 }) {
     if(!artist) {
         return(
-            <div>
-                <div className="w-28 aspect-square" />
-            </div>
+            <div className={`${small ? 'w-24' : 'w-28'} aspect-square`} />
         )
     }
     

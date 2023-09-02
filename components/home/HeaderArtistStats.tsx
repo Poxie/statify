@@ -3,6 +3,8 @@ import Artist from "../artist";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
 import ItemList from "../item-list";
 import ItemContainer from "../item-container";
+import { useRef } from "react";
+import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 
 const RELATED_PLACEHOLDER_COUNT = 9;
 export default function HeaderArtistStats({ albums, tracks, artist, featured, related, opacityZero }: {
@@ -13,6 +15,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
     related: SpotifyArtist[] | undefined;
     opacityZero: boolean;
 }) {
+    const relatedArtists = useRef<HTMLDivElement>(null);
+
     const firstFeatured = featured?.at(0);
     const firstTrack = tracks?.at(0);
 
@@ -30,6 +34,11 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
         firstAlbum = topTrackAlbums.find(album => album.id === firstAlbumId);
     }
     
+    useAnimateStyle(relatedArtists, opacityZero, {
+        from: { opacity: 0, transform: 'translateY(20px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        delayIn: 500,
+    })
     return(
         <div className="grid gap-3 w-main max-w-main mx-auto py-8">
             <div className="grid grid-cols-3 gap-3">
@@ -62,20 +71,11 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 />
             </div>
             <ItemContainer
-                title={`Artists related to ${artist?.name}`}
+                title={artist ? `Artists related to ${artist?.name}` : undefined}
                 emptyLabel={'This artist does not have enough data to show related artists.'}
                 isEmpty={!related?.length}
                 loading={!related}
-                style={opacityZero ? { 
-                    transition: 'opacity .5s, transform .5s',
-                    transform: `translateY(20px)`,
-                    opacity: 0,
-                } : {
-                    transitionDelay: '.6s',
-                    transition: 'opacity .5s, transform .5s',
-                    transform: `translateY(0)`,
-                    opacity: 1,
-                }}
+                ref={relatedArtists}
             >
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {(related || Array.from(Array(RELATED_PLACEHOLDER_COUNT))).slice(0,9).map(artist => (

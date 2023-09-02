@@ -4,7 +4,7 @@ import HomeArtistInfo from "./HomeArtistInfo";
 
 export default function Home() {
     return(
-        <main>
+        <main className="pb-52">
             <HeaderArtists />
             <div className="pt-32 pb-40">
                 <h1 className="text-5xl leading-tight font-semibold text-center mx-auto w-[540px] max-w-main">

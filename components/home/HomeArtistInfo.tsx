@@ -3,11 +3,12 @@ import Artists from '@/assets/json/defaultArtists.json';
 import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from '@/types';
 import Artist from '../artist';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { get } from '@/utils';
 import HeaderArtistStats from './HeaderArtistStats';
 import { POPULARITY_THRESHOLD } from '@/utils/constants';
+import { useAnimateStyle } from '@/hooks/useAnimateStyle';
 
 const getRandomArtist = () => {
     return Artists[Math.floor(Math.random() * Artists.length)].id;
@@ -26,6 +27,8 @@ export default function HomeArtistInfo() {
         related: SpotifyArtist[];
     }>(null);
     const isPopular = (artistInfo?.artist.popularity || -1) > POPULARITY_THRESHOLD;
+
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -59,6 +62,10 @@ export default function HomeArtistInfo() {
         }
     }, [artistId]);
 
+    useAnimateStyle(ref, opacityZero, {
+        from: { opacity: 0, transform: 'translateY(20px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+    })
     return(
         <div className={`bg-secondary mt-36 ${isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary'}`}>
             <div className={`absolute left-2/4 -translate-x-2/4 ${isPopular ? 'gradient-border [--border-bottom:0px] [--border-left:1px] [--border-right:1px]' : 'border-[1px] border-b-0 border-tertiary'} mx-auto w-[800px] max-w-[80%] flex rounded-t-lg -translate-y-full`}>
@@ -66,15 +73,7 @@ export default function HomeArtistInfo() {
                 <div className="flex-1 bg-secondary rounded-t-xl">
                     <div 
                         className="flex-1 flex items-start justify-between p-4"
-                        style={opacityZero ? { 
-                            transition: 'opacity .5s, transform .5s',
-                            transform: `translateY(20px)`,
-                            opacity: 0,
-                        } : {
-                            transition: 'opacity .5s, transform .5s',
-                            transform: `translateY(0)`,
-                            opacity: 1,
-                        }}
+                        ref={ref}
                     >
                         <Artist
                             artist={artistInfo?.artist}
