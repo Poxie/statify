@@ -5,6 +5,7 @@ import Link from "next/link";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
+import SpotifyImage from "../spotify-image";
 
 export default function Artist({ artist, hasPopularityExplanation, isPopular, small }: { 
     artist: SpotifyArtist | undefined,
@@ -29,12 +30,11 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
     } = artist;
     return(
         <div className="flex gap-3">
-            <Image 
+            <SpotifyImage 
                 width={100}
                 height={100}
-                src={images.at(-1)?.url as string}
-                alt={`${name}'s icon`}
-                className={`${small ? 'w-24' : 'w-28'} aspect-square object-cover rounded-lg ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
+                src={images.at(-1)?.url}
+                className={`${small ? 'w-24' : 'w-28'} border-[3px] ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
             />
             <div className="flex flex-col items-start gap-1">
                 <div className={`flex items-center ${small ? 'gap-2' : 'gap-3'}`}>

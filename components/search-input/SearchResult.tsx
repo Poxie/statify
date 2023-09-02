@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SpotifyImage from "../spotify-image";
 
 export default function SearchResult({ name, image, extraText, onSelect }: {
     name: string;
@@ -12,12 +13,11 @@ export default function SearchResult({ name, image, extraText, onSelect }: {
                 className="p-2 text-left w-full flex items-center gap-2 transition-colors hover:bg-tertiary rounded-lg"
                 onClick={onSelect}
             >
-                <Image 
-                    className="rounded-md object-cover w-9 aspect-square"
+                <SpotifyImage
+                    className="w-9"
+                    src={image}
                     width={36}
                     height={36}
-                    src={image}
-                    alt=""
                 />
                 <div className="grid">
                     <span className="text-sm">

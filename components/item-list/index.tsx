@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
+import SpotifyImage from "../spotify-image";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;
 type ListType = 'track' | 'album' | 'featured';
@@ -82,12 +83,11 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
             {firstItem && items?.length && (
                 <div className="flex-1 scrollbar overflow-y-scroll pr-2 pb-4">
                     <div className="flex gap-3">
-                        <Image 
-                            className="w-16 aspect-square rounded object-cover"
-                            src={getItemImage(firstItem, type) as string}
+                        <SpotifyImage
+                            className="w-16" 
+                            src={getItemImage(firstItem, type)}
                             width={100}
                             height={100}
-                            alt=""
                         />
                         <div className="flex flex-col gap-0.5">
                             <span className="text-sm multiline-ellipsis">
@@ -118,12 +118,11 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                         {key + 2}
                                     </span>
                                 )}
-                                <Image 
-                                    className="w-6 aspect-square rounded object-cover"
-                                    src={getItemImage(item, type) as string}
-                                    width={32}
+                                <SpotifyImage 
+                                    className="w-6 rounded-sm"
+                                    src={getItemImage(item, type)}
                                     height={32}
-                                    alt=""
+                                    width={32}
                                 />
                                 <span className="text-xs whitespace-nowrap overflow-hidden text-ellipsis flex-1">
                                     {item.name}
