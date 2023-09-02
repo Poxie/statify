@@ -27,14 +27,17 @@ export default function HomeArtistInfo() {
     const isPopular = (artistInfo?.artist.popularity || -1) > POPULARITY_THRESHOLD;
 
     useEffect(() => {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
         const id = artistId || getRandomArtist();
         const requests = Promise.all(
             [ 
-                get<SpotifyArtist>(`/artist/${id}`),
-                get<SpotifyTrack[]>(`/artist/${id}/tracks`),
-                get<SpotifyAlbum[]>(`/artist/${id}/albums`),
-                get<SpotifyFeaturedAlbum[]>(`/artist/${id}/featured`),
-                get<SpotifyArtist[]>(`/artist/${id}/related`),
+                get<SpotifyArtist>(`/artist/${id}`, signal),
+                get<SpotifyTrack[]>(`/artist/${id}/tracks`, signal),
+                get<SpotifyAlbum[]>(`/artist/${id}/albums`, signal),
+                get<SpotifyFeaturedAlbum[]>(`/artist/${id}/featured`, signal),
+                get<SpotifyArtist[]>(`/artist/${id}/related`, signal),
             ],
         )
 
@@ -51,6 +54,7 @@ export default function HomeArtistInfo() {
 
         return () => {
             if(timeout) clearTimeout(timeout);
+            abortController.abort();
         }
     }, [artistId]);
 
