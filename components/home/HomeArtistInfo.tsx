@@ -77,6 +77,7 @@ export default function HomeArtistInfo() {
                     >
                         <Artist
                             artist={artistInfo?.artist}
+                            hasPopularityExplanation
                             isPopular={isPopular}
                         />
                         {artistInfo && (

@@ -2,9 +2,13 @@ import { SpotifyArtist } from "@/types";
 import Image from "next/image";
 import Chip from "../chip";
 import Link from "next/link";
+import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
+import { QuestionIcon } from "@/assets/icons/QuestionIcon";
+import { POPULARITY_THRESHOLD } from "@/utils/constants";
 
-export default function Artist({ artist, isPopular, small }: { 
-    artist: SpotifyArtist | undefined, 
+export default function Artist({ artist, hasPopularityExplanation, isPopular, small }: { 
+    artist: SpotifyArtist | undefined,
+    hasPopularityExplanation?: boolean;
     isPopular?: boolean; 
     small?: boolean;
 }) {
@@ -42,19 +46,34 @@ export default function Artist({ artist, isPopular, small }: {
                         {name}
                     </Link>
                     {isPopular && (
-                        <Chip 
-                            className={`uppercase font-bold ${small ? 'text-[8px]' : ''}`}
-                            type={'gradient'}
+                        <HasTooltip 
+                            className="cursor-default"
+                            tooltip={`${artist.name} has a popularity index that\'s greater than ${POPULARITY_THRESHOLD}.`}
+                            delay={250}
                         >
-                            Top Artist
-                        </Chip>
+                            <Chip 
+                                className={`uppercase font-bold ${small ? 'text-[8px]' : ''}`}
+                                type={'gradient'}
+                            >
+                                Top Artist
+                            </Chip>
+                        </HasTooltip>
                     )}
                 </div>
                 <span className="text-xs text-secondary">
                     {totalFollowers.toLocaleString()} followers
                 </span>
-                <span className="text-xs text-secondary">
+                <span className="text-xs text-secondary flex items-center gap-1.5">
                     Current popularity {popularity}
+                    
+                    {hasPopularityExplanation && (
+                        <HasTooltip 
+                            tooltip={'Popularity is based on how popular their songs are compared to other artists.'}
+                            delay={250}
+                        >
+                            <QuestionIcon className="w-3" />
+                        </HasTooltip>
+                    )}
                 </span>
                 <div className="flex gap-1 mt-1">
                     {genres.slice(0, small ? 2 : genres.length).map(genre => (

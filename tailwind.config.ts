@@ -5,14 +5,10 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './contexts/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
-      colors: {
-        'bg-primary': '#0D1117',
-        'bg-secondary': '#11151B',
-        'bg-tertiary': '#1C1F22',
-      },
       width: {
         main: '1200px',
       },
