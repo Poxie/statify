@@ -67,7 +67,7 @@ export default function HomeArtistInfo() {
         >
             <div className={`absolute left-2/4 -translate-x-2/4 ${isPopular ? 'gradient-border [--border-bottom:0px] [--border-left:1px] [--border-right:1px]' : 'border-[1px] border-b-0 border-tertiary'} mx-auto w-[800px] max-w-[90%] sm:max-w-[80%] flex rounded-t-lg -translate-y-full`}>
                 <div className={`absolute ${isPopular ? 'bg-[var(--gradient-from)]' : 'bg-tertiary'} bottom-0 right-full w-4 aspect-square rounded-br-lg before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1] after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-br-lg after:right-[1px] after:bottom-[1px]`} />
-                <div className="flex-1 bg-secondary rounded-t-xl">
+                <div className="flex-1 bg-secondary rounded-t-[.45rem]">
                     <div 
                         className="flex-1 flex flex-col sm:flex-row gap-2 items-start justify-between p-4"
                         ref={ref}
