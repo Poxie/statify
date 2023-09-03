@@ -13,20 +13,16 @@ export const HasTooltip: React.FC<{
     const ref = useRef<any>(null);
     const timeout = useRef<NodeJS.Timeout | null>(null);
 
-    const onMouseEnter = () => {
+    const onMouseEnter = (bypassDelay?: boolean) => {
         timeout.current = setTimeout(() => {
             setTooltip({ tooltip, position }, ref);
-        }, delay);
+        }, bypassDelay ? 0 : delay);
     }
     const onMouseLeave = () => {
         if(timeout.current) {
             clearTimeout(timeout.current);
             timeout.current = null;
         }
-        close();
-    }
-    const handleClick = () => {
-        if(onClick) onClick();
         close();
     }
 
@@ -40,9 +36,9 @@ export const HasTooltip: React.FC<{
 
     const props = {
         className,
-        onMouseEnter,
         onMouseLeave,
-        onClick: handleClick,
+        onMouseEnter: () => onMouseEnter(false),
+        onClick: () => onMouseEnter(true),
         'aria-label': tooltip,
         ref,
     }
