@@ -8,6 +8,7 @@ import SpotifyImage from "../spotify-image";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
 import { useActiveArtistId } from "@/hooks/useActiveArtistId";
 import { getRandomArtist } from "@/utils";
+import { useScreenSize } from "@/hooks/useScreenSize";
 
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
@@ -22,9 +23,18 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
     const activeArtistId = useActiveArtistId();
     const isActive = id === activeArtistId;
     
+    const screenSize = useScreenSize();
+    const isSmallDevice = ['xs', 'sm'].includes(screenSize);
+    
     const ref = useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
+        if(!ref.current) return;
+        if(isSmallDevice) {
+            ref.current.style.transform = '';
+            return;
+        }
+
         const randomParallaxShift = Math.random() * (MAX_PARALLAX - MIN_PARALLAX) + MIN_PARALLAX;
         const onMouseMove = (e: MouseEvent) => {
             if(!ref.current) return;
@@ -47,18 +57,18 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
 
         window.addEventListener('mousemove', onMouseMove);
         return () => window.removeEventListener('mousemove', onMouseMove);
-    }, []);
+    }, [isSmallDevice]);
 
     return(
         <Link
             scroll={false}
             href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
-            className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden absolute aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
-            style={{
+            className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden ${!isSmallDevice ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''} aspect-square`}
+            style={!isSmallDevice ? {
                 top,
                 left,
                 right,
-            }}
+            } : undefined}
             ref={ref}
         >
             <SpotifyImage 
