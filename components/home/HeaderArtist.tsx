@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
 const MAX_TRANSLATION_X = 5;
-const MAX_TRANSLATION_Y = 2;
+const MAX_TRANSLATION_Y = 1;
 export default function HeaderArtist({
     id,
     image,
