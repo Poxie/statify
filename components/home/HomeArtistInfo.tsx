@@ -62,7 +62,7 @@ export default function HomeArtistInfo() {
     })
     return(
         <div 
-            className={`bg-secondary mt-36 ${isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary'}`}
+            className={`relative z-10 bg-secondary mt-36 ${isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary'}`}
             data-artist-id={artistInfo?.artist.id || ''}
         >
             <div className={`absolute left-2/4 -translate-x-2/4 ${isPopular ? 'gradient-border [--border-bottom:0px] [--border-left:1px] [--border-right:1px]' : 'border-[1px] border-b-0 border-tertiary'} mx-auto w-[800px] max-w-[90%] sm:max-w-[80%] flex rounded-t-lg -translate-y-full`}>

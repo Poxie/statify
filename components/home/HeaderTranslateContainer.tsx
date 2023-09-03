@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const PARALLAX_INDEX = 2.5;
+const PARALLAX_INDEX = 1.9;
 const SCROLL_OFFSET = 100;
 const OPACITY_LOWER_AT = 200;
 export default function HeaderTranslateContainer({ children, className }: {
@@ -18,6 +18,7 @@ export default function HeaderTranslateContainer({ children, className }: {
             const scroll = window.scrollY;
             const translate = scroll / PARALLAX_INDEX;
             ref.current.style.transform = `translateY(${translate}px)`;
+
 
             let opacity = 1;
             if(scroll < OPACITY_LOWER_AT) {

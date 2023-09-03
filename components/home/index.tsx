@@ -6,7 +6,7 @@ import HomeArtistInfo from "./HomeArtistInfo";
 export default function Home() {
     return(
         <main className="pb-52">
-            <HeaderTranslateContainer className="relative pb-10 md:pb-0">
+            <HeaderTranslateContainer className="relative pb-24">
                 <HeaderArtists />
                 <div className="pt-12 md:pt-32 pb-40">
                     <h1 className="text-3xl sm:text-5xl leading-tight font-semibold text-center mx-auto w-[540px] max-w-main">
