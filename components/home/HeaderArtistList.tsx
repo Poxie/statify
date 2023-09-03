@@ -9,10 +9,9 @@ export default function HeaderArtistList({ artists, positions }: {
 }) {
     const screenSize = useScreenSize();
     const isSmallDevice = ['xs', 'sm'].includes(screenSize);
-    const isVerySmall = screenSize === 'xs';
 
     return(
-        <div className={`flex items-end justify-between gap-2 absolute ${isSmallDevice ? 'left-2/4 -translate-x-2/4 w-[90%] sm:w-[80%] ' + (isVerySmall ? 'h-[calc(100%-38px)]' : 'h-[calc(100%-16px)]') : 'w-full h-full overflow-hidden'} pointer-events-none`}>
+        <div className={`flex items-end justify-between gap-2 absolute ${isSmallDevice ? 'left-2/4 -translate-x-2/4 w-[90%] sm:w-[80%] h-[calc(100%-100px)]' : 'w-full h-full overflow-hidden'} pointer-events-none`}>
             {artists.map((artist, key) => (
                 <HeaderArtist 
                     {...artist}
