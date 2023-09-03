@@ -13,7 +13,7 @@ const config: Config = {
         main: '1200px',
       },
       maxWidth: {
-        main: '95%'
+        main: '90%'
       },
       backgroundColor: {
         'c-primary': '#6E3FC9',
