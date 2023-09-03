@@ -28,6 +28,7 @@ export default function NavbarTabs({ open, toggle, isSmallScreen }: {
                         href={tab.path}
                         className={`text-3xl md:text-sm transition-colors ${tab.path === pathname ? 'text-primary' : 'text-secondary'} hover:text-primary`}
                         onClick={isSmallScreen ? toggle : undefined}
+                        tabIndex={tabsAreVisible ? undefined : -1}
                     >
                         {tab.text}
                     </Link>
