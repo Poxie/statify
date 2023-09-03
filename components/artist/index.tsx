@@ -29,7 +29,7 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
         images,
     } = artist;
     return(
-        <div className="flex gap-3">
+        <div className="flex items-start gap-3">
             <SpotifyImage 
                 width={100}
                 height={100}
@@ -37,9 +37,9 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
                 className={`${small ? 'w-24' : 'w-28'} border-[3px] ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
             />
             <div className="flex flex-col items-start gap-1">
-                <div className={`flex items-center ${small ? 'gap-2' : 'gap-3'}`}>
+                <div className={`flex items-center flex-wrap-reverse gap-1`}>
                     <Link 
-                        className={`${small ? 'text-sm' : 'text-lg'} font-semibold ${isPopular ? 'gradient-text' : 'text-primary'}`}
+                        className={`${small ? 'text-sm mr-2' : 'text-lg mr-3'} font-semibold ${isPopular ? 'gradient-text' : 'text-primary'}`}
                         href={`/?a=${id}`}
                         scroll={false}
                     >
@@ -75,7 +75,7 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
                         </HasTooltip>
                     )}
                 </span>
-                <div className="flex gap-1 mt-1">
+                <div className="flex flex-wrap gap-1 mt-1">
                     {genres.slice(0, small ? 2 : genres.length).map(genre => (
                         <Chip
                             className={small ? 'text-[8.5px]' : undefined}
