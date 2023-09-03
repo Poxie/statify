@@ -36,7 +36,7 @@ export default function ComboProvider({ children }: {
         setPersonalBest(personalBest);
 
         gameEnded.current = true;
-        setComboText(`Total combo achieved ${combo.current}.`);
+        setComboText(`Total combo achieved: ${combo.current}`);
 
         setTimeout(() => {
             combo.current = 0;
