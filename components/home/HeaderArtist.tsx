@@ -56,7 +56,7 @@ export default function HeaderArtist({
         <Link
             scroll={false}
             href={isActive ? '/' : `/?a=${id}`}
-            className={`absolute w-16 aspect-square last:translate-y-[260%] ${left ? '-translate-x-[160%]' : 'translate-x-[160%]'} lg:translate-x-0 last:lg:translate-y-0`}
+            className={`absolute w-16 aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
             style={{
                 top,
                 left,
