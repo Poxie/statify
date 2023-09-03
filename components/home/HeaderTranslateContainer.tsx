@@ -1,14 +1,19 @@
 "use client";
 
+import { useScreenSize } from "@/hooks/useScreenSize";
 import { useEffect, useRef } from "react";
 
-const PARALLAX_INDEX = 1.9;
+const PARALLAX_INDEX_LARGE = 1.9;
+const PARALLAX_INDEX_SMALL = 1.6;
 const SCROLL_OFFSET = 100;
 const OPACITY_LOWER_AT = 200;
 export default function HeaderTranslateContainer({ children, className }: {
     children: React.ReactNode;
     className?: string;
 }) {
+    const screenSize = useScreenSize();
+    const isSmallScreen = ['xs', 'sm'].includes(screenSize);
+
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -16,7 +21,7 @@ export default function HeaderTranslateContainer({ children, className }: {
             if(!ref.current) return;
 
             const scroll = window.scrollY;
-            const translate = scroll / PARALLAX_INDEX;
+            const translate = scroll / (isSmallScreen ? PARALLAX_INDEX_SMALL : PARALLAX_INDEX_LARGE);
             ref.current.style.transform = `translateY(${translate}px)`;
 
 
@@ -34,7 +39,7 @@ export default function HeaderTranslateContainer({ children, className }: {
 
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+    }, [isSmallScreen]);
 
     return(
         <div 
