@@ -65,7 +65,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
     return(
         <Link
             onClick={() => {
-                if(isActive) return increaseCombo();
+                if(isActive) return increaseCombo(id);
                 cancelCombo();
             }}
             scroll={false}

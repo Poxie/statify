@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const ComboContext = React.createContext<null | {
-    increaseCombo: () => void;
+    increaseCombo: (artistId: string) => void;
     cancelCombo: () => void;
 }>(null);
 
@@ -25,6 +25,7 @@ export default function ComboProvider({ children }: {
     const [personalBest, setPersonalBest] = useState(0);
     const [comboText, setComboText] = useState(`Current combo ${combo.current}`);
     const [enlargeAnimation, setEnlargeAnimation] = useState(false);
+    const prevArtistId = useRef<null | string>(null);
     const comboTimer = useRef<null | NodeJS.Timeout>(null);
     const gameEnded = useRef(false);
 
@@ -42,11 +43,15 @@ export default function ComboProvider({ children }: {
         setTimeout(() => {
             combo.current = 0;
             gameEnded.current = false;
+            prevArtistId.current = null;
             setComboText(`Current combo ${combo.current}`);
         }, WAIT_BEFORE_RESTART);
     }
-    const increaseCombo = () => {
+    const increaseCombo = (artistId: string) => {
+        if(artistId === prevArtistId.current) return;
         if(gameEnded.current) return;
+
+        prevArtistId.current = artistId;
         
         combo.current += 1;
         setComboText(`Current combo ${combo.current}`);
