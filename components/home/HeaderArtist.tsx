@@ -56,7 +56,7 @@ export default function HeaderArtist({
         <Link
             scroll={false}
             href={isActive ? '/' : `/?a=${id}`}
-            className={`pointer-events-auto absolute w-16 aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
+            className={`pointer-events-auto border-[3px] transition-[border-radius,border-color] ${isActive ? 'rounded-xl gradient-border' : 'border-tertiary rounded-[40px] hover:rounded-[20px]'} overflow-hidden absolute w-16 aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
             style={{
                 top,
                 left,
@@ -65,7 +65,7 @@ export default function HeaderArtist({
             ref={ref}
         >
             <Image 
-                className={`duration-500ms object-cover w-full h-full transition-[border-radius] ${isActive ? 'rounded-xl' : 'rounded-[30px] hover:rounded-3xl'}`}
+                className={`duration-500ms object-cover w-full h-full`}
                 src={image}
                 width={100}
                 height={100}
