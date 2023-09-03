@@ -1,5 +1,5 @@
+import { fetchFromSpotify } from "@/utils/fetchFromSpotify";
 import { NextRequest, NextResponse } from "next/server";
-import { fetchFromSpotify } from "../fetchFromSpotify";
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);

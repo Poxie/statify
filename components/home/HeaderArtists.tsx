@@ -1,6 +1,7 @@
 import Artists from '@/assets/json/defaultArtists.json';
 import { SpotifyArtist } from "@/types";
 import HeaderArtistList from "./HeaderArtistList";
+import { fetchFromSpotify } from '@/utils/fetchFromSpotify';
 
 export default async function HeaderArtists() {
     const positions: {top: string, left?: string, right?: string}[] = [];
@@ -9,7 +10,7 @@ export default async function HeaderArtists() {
         return id;
     }).join(',');
 
-    const artists: SpotifyArtist[] = await fetch(`${process.env.BACKEND_API_URL}/artists?ids=${artistIds}`, {next: {revalidate:3600}}).then(res => res.json());
+    const { artists } = await fetchFromSpotify<{ artists: SpotifyArtist[] }>(`/artists?ids=${artistIds}`);
 
     return(
         <HeaderArtistList 

@@ -38,4 +38,5 @@ export default function Input({
             />
         </div>
     )
-}
+};
+Input.displayName = 'Input';

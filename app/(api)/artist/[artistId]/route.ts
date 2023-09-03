@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fetchFromSpotify } from "../../fetchFromSpotify";
 import { SpotifyArtist } from "@/types";
+import { fetchFromSpotify } from "@/utils/fetchFromSpotify";
 
-export async function GET(req: NextRequest) {
-    const artistId = req.url.split('/').at(-1);
+export async function GET(req: NextRequest, { params: { artistId } }: {
+    params: { artistId: string };
+}) {
     const artist = await fetchFromSpotify<SpotifyArtist>(`/artists/${artistId}`);
     return NextResponse.json(artist);
 }
