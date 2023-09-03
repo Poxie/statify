@@ -1,11 +1,12 @@
 import HeaderArtists from "./HeaderArtists";
 import HeaderOptions from "./HeaderOptions";
+import HeaderTranslateContainer from "./HeaderTranslateContainer";
 import HomeArtistInfo from "./HomeArtistInfo";
 
 export default function Home() {
     return(
         <main className="pb-52">
-            <div className="relative">
+            <HeaderTranslateContainer className="relative">
                 <HeaderArtists />
                 <div className="pt-32 pb-40">
                     <h1 className="text-5xl leading-tight font-semibold text-center mx-auto w-[540px] max-w-main">
@@ -16,7 +17,7 @@ export default function Home() {
                     </p>
                     <HeaderOptions />
                 </div>
-            </div>
+            </HeaderTranslateContainer>
             <HomeArtistInfo />
         </main>
     )
