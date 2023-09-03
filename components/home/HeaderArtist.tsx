@@ -28,7 +28,6 @@ export default function HeaderArtist({
 
     useEffect(() => {
         const randomParallaxShift = Math.random() * (MAX_PARALLAX - MIN_PARALLAX) + MIN_PARALLAX;
-        console.log(randomParallaxShift);
         const onMouseMove = (e: MouseEvent) => {
             if(!ref.current) return;
 
