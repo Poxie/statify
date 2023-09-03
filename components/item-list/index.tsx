@@ -112,7 +112,10 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                     </div>
                     <ul className="flex flex-col pt-3 gap-1.5">
                         {items.slice(1).map((item, key) => (
-                            <li className="flex items-center gap-2">
+                            <li 
+                                className="flex items-center gap-2"
+                                key={item.id}
+                            >
                                 {type === 'track' && (
                                     <span className="w-3.5 text-sm">
                                         {key + 2}

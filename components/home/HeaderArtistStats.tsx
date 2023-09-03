@@ -78,11 +78,12 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 ref={relatedArtists}
             >
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {(related || Array.from(Array(RELATED_PLACEHOLDER_COUNT))).slice(0,9).map(artist => (
+                    {(related || Array.from(Array(RELATED_PLACEHOLDER_COUNT))).slice(0,9).map((artist, key) => (
                         <Artist 
                             isPopular={artist?.popularity > POPULARITY_THRESHOLD}
                             artist={artist}
                             small
+                            key={key}
                         />
                     ))}
                 </div>
