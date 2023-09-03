@@ -37,7 +37,7 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
                 className={`${small ? 'w-24' : 'w-28'} border-[3px] ${isPopular ? 'gradient-border [--border-left:3px] [--border-right:3px] [--border-bottom:3px] [--border-top:3px]' : 'border-[3px] border-tertiary'}`}
             />
             <div className="flex flex-col items-start gap-1">
-                <div className={`flex items-center flex-wrap-reverse gap-1`}>
+                <div className={`flex items-center flex-wrap-reverse`}>
                     <Link 
                         className={`${small ? 'text-sm mr-2' : 'text-lg mr-3'} font-semibold ${isPopular ? 'gradient-text' : 'text-primary'}`}
                         href={`/?a=${id}`}
@@ -47,7 +47,7 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
                     </Link>
                     {isPopular && (
                         <HasTooltip 
-                            className="cursor-default"
+                            className="cursor-default flex"
                             tooltip={`${artist.name} has a popularity index that\'s greater than ${POPULARITY_THRESHOLD}.`}
                             delay={250}
                         >
