@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import SpotifyImage from "../spotify-image";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
+import { useActiveArtistId } from "@/hooks/useActiveArtistId";
+import { getRandomArtist } from "@/utils";
 
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
@@ -16,8 +18,9 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
     left?: string;
     right?: string;
 }) {
-    const currentArtistId = useSearchParams().get('a');
-    const isActive = currentArtistId === id;
+    const paramArtistId = useSearchParams().get('a');
+    const activeArtistId = useActiveArtistId();
+    const isActive = id === activeArtistId;
     
     const ref = useRef<HTMLAnchorElement>(null);
 
@@ -49,7 +52,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
     return(
         <Link
             scroll={false}
-            href={isActive ? '/' : `/?a=${id}`}
+            href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
             className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden absolute aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
             style={{
                 top,
