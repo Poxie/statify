@@ -8,7 +8,6 @@ export const fetchFromSpotify: (<T>(query: string) => Promise<T>) = async <T>(qu
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/x-www-form-urlencoded.',
         },
-        next: { revalidate: 3600 }
     })
     const data = await res.json();
     if(data.error) {
