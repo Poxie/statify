@@ -88,7 +88,7 @@ export default function HomeArtistInfo() {
                         )}
                     </div>
                 </div>
-                <div className={`absolute ${isPopular ? 'bg-[var(--gradient-from)]' : 'bg-tertiary'} bottom-0 left-full w-4 aspect-square rounded-bl-lg before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1] after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-bl-lg after:left-[1px] after:bottom-[1px]`} />
+                <div className={`absolute ${isPopular ? 'bg-[var(--gradient-to)]' : 'bg-tertiary'} bottom-0 left-full w-4 aspect-square rounded-bl-lg before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1] after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-bl-lg after:left-[1px] after:bottom-[1px]`} />
             </div>
             <HeaderArtistStats 
                 tracks={artistInfo?.tracks}
