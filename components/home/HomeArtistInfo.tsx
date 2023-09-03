@@ -48,8 +48,6 @@ export default function HomeArtistInfo() {
         setOpacityZero(true);
 
         const timeout = setTimeout(() => {
-            setArtistInfo(null);
-            
             requests.then(([ artist, tracks, albums, featured, related ]) => {
                 setArtistInfo({ artist, tracks, albums, featured, related });
                 setOpacityZero(false);
