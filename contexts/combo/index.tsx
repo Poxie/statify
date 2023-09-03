@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const ComboContext = React.createContext<null | {
     increaseCombo: () => void;
+    cancelCombo: () => void;
 }>(null);
 
 export const useCombo = () => {
@@ -59,9 +60,13 @@ export default function ComboProvider({ children }: {
             comboTimer.current = setTimeout(endGame, (TIME_BEFORE_LOSS - LESS_TIME_PER_ROUND * combo.current));
         }
     }
+    const cancelCombo = () => {
+        if(combo.current >= SHOW_COMBO_AT) return endGame();
+        combo.current = 0;
+    }
 
     return(
-        <ComboContext.Provider value={{ increaseCombo }}>
+        <ComboContext.Provider value={{ increaseCombo, cancelCombo }}>
         {children}
         <AnimatePresence>
             {combo.current >= SHOW_COMBO_AT && (

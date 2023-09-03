@@ -27,7 +27,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
     const screenSize = useScreenSize();
     const isSmallDevice = ['xs', 'sm'].includes(screenSize);
 
-    const { increaseCombo } = useCombo();
+    const { increaseCombo, cancelCombo } = useCombo();
     
     const ref = useRef<HTMLAnchorElement>(null);
 
@@ -65,7 +65,8 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
     return(
         <Link
             onClick={() => {
-                if(isActive) increaseCombo();
+                if(isActive) return increaseCombo();
+                cancelCombo();
             }}
             scroll={false}
             href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
