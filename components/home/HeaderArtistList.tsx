@@ -2,7 +2,6 @@
 import { SpotifyArtist } from "@/types"
 import HeaderArtist from "./HeaderArtist";
 import { useScreenSize } from "@/hooks/useScreenSize";
-
 export default function HeaderArtistList({ artists, positions }: {
     artists: SpotifyArtist[];
     positions: {top: string, left?: string, right?: string}[];

@@ -32,6 +32,20 @@ const config: Config = {
         primary: '#fff',
         secondary: '#6B809D',
       },
+      animation: {
+        'shake-large': 'shake-large .5s ease-in-out',
+        'shake-small': 'shake-small .1s ease-in-out infinite alternate',
+      },
+      keyframes: {
+        'shake-large': {
+          '0%,50%,100%': { transform: 'rotate(7deg)' },
+          '25%,75%': { transform: 'rotate(-7deg)' },
+        },
+        'shake-small': {
+          '0%': { transform: 'rotate(2deg)' },
+          '100%': { transform: 'rotate(-2deg)' },
+        }
+      }
     },
   },
   plugins: [],
