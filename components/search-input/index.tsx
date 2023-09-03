@@ -42,9 +42,9 @@ export default function SearchInput<T>({ onSelect, type }: {
     }
 
     return(
-        <div className="relative">
+        <div className="relative max-w-full">
             <Input
-                containerClassName={'w-[400px]'}
+                containerClassName={'w-[400px] max-w-full'}
                 icon={<SearchIcon className="w-5 text-secondary" />}
                 placeholder={'Search artist or song...'}
                 onFocus={() => setOpen(true)}
