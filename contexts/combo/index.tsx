@@ -16,7 +16,7 @@ export const useCombo = () => {
 const SHOW_COMBO_AT = 2;
 const ANIMATION_DELAY = 300;
 const TIME_BEFORE_LOSS = 2500;
-const LESS_TIME_PER_ROUND = 35;
+const LESS_TIME_PER_ROUND = 40;
 const WAIT_BEFORE_RESTART = 2500;
 export default function ComboProvider({ children }: {
     children: React.ReactNode;
