@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function HeaderOptions() {
     const router = useRouter();
     return(
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 mt-6 mx-auto max-w-main">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-3 mt-6 mx-auto max-w-[90%]">
             <SearchInput<SpotifyArtist> 
                 onSelect={item => router.push(`/?a=${item.id}`, { scroll: false })}
                 type={'artist'}
