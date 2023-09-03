@@ -26,6 +26,7 @@ const config: Config = {
         primary: '#0D1117',
         secondary: '#11151B',
         tertiary: '#1C1F22',
+        'text-secondary': '#6B809D',
       },
       textColor: {
         primary: '#fff',

@@ -5,6 +5,7 @@ declare global {
         CLIENT_ID: string;
         TOKEN_URL: string;
         SPOTIFY_API_URL: string;
+        BACKEND_API_URL: string;
       }
     }
   }

@@ -1,22 +1,17 @@
 "use client";
+import { SpotifyArtist } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
+import SpotifyImage from "../spotify-image";
+import { POPULARITY_THRESHOLD } from "@/utils/constants";
 
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
 const MAX_TRANSLATION_X = 5;
 const MAX_TRANSLATION_Y = 1;
-export default function HeaderArtist({
-    id,
-    image,
-    top,
-    left,
-    right,
-}: {
-    id: string;
-    image: string;
+export default function HeaderArtist({ id, popularity, images, top, left, right }: SpotifyArtist & {
     top: string;
     left?: string;
     right?: string;
@@ -55,7 +50,7 @@ export default function HeaderArtist({
         <Link
             scroll={false}
             href={isActive ? '/' : `/?a=${id}`}
-            className={`pointer-events-auto border-[3px] transition-[border-radius,border-color] ${isActive ? 'rounded-xl gradient-border' : 'border-tertiary rounded-[40px] hover:rounded-[20px]'} overflow-hidden absolute w-16 aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
+            className={`pointer-events-auto border-[3px] transition-[border-radius,border-color] ${isActive ? 'rounded-xl ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px]'} overflow-hidden absolute w-16 aspect-square ${left ? '-ml-[10%]' : '-mr-[10%]'} lg:ml-0 lg:mr-0`}
             style={{
                 top,
                 left,
@@ -63,12 +58,10 @@ export default function HeaderArtist({
             }}
             ref={ref}
         >
-            <Image 
-                className={`duration-500ms object-cover w-full h-full`}
-                src={image}
+            <SpotifyImage 
+                src={images.at(-1)?.url}
                 width={100}
                 height={100}
-                alt={``}
             />
         </Link>
     )
