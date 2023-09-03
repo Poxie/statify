@@ -65,18 +65,18 @@ export default function ComboProvider({ children }: {
         {children}
         <AnimatePresence>
             {combo.current >= SHOW_COMBO_AT && (
-                <div className={`fixed z-10 top-[calc(50%+64px)] left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all ${enlargeAnimation ? 'scale-125' : ''}`}>
+                <div className={`fixed z-40 top-12 sm:top-[calc(50%+64px)] left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all ${enlargeAnimation ? 'scale-125' : ''}`}>
                     <motion.div
                         exit={{ translateY: 30, opacity: 0 }}
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ bounce: false }}
                     >
-                        <span className={`block ${enlargeAnimation ? 'animate-shake-large' : !gameEnded.current ? 'animate-shake-small' : ''}`}>
+                        <span className={`block whitespace-nowrap ${enlargeAnimation ? 'animate-shake-large' : !gameEnded.current ? 'animate-shake-small' : ''}`}>
                             {comboText}
                         </span>
                         {gameEnded.current && (
-                            <span className="block text-xs text-center text-secondary mt-1">
+                            <span className="block whitespace-nowrap text-xs text-center text-secondary mt-1">
                                 Personal best: {personalBest}
                             </span>
                         )}
