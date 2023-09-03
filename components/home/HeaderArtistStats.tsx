@@ -40,8 +40,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
         delayIn: 500,
     })
     return(
-        <div className="grid gap-3 w-main max-w-main mx-auto py-8">
-            <div className="grid grid-cols-3 gap-3">
+        <div className="flex flex-col gap-3 w-main max-w-main mx-auto py-8">
+            <div className="flex flex-col sm:grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-full">
                 <ItemList 
                     artist={artist}
                     firstItem={firstTrack}
@@ -67,6 +67,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     type={'featured'}
                     loading={!featured}
                     opacityZero={opacityZero}
+                    className="sm:col-span-2 lg:col-span-1"
                     index={2}
                 />
             </div>

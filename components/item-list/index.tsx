@@ -55,13 +55,14 @@ const getTooltipExplanation = (type: ListType) => {
     return 'There is no special reason for this album to be featured, it just is.'
 }
 
-export default function ItemList({ artist, firstItem, items, type, index, loading, opacityZero }: {
+export default function ItemList({ artist, firstItem, items, type, index, loading, className='', opacityZero }: {
     artist?: SpotifyArtist;
     firstItem?: ListItem;
     items?: ListItem[];
     type: ListType;
     index: number;
     loading?: boolean;
+    className?: string;
     opacityZero: boolean;
 }) {
     const ref = useRef<HTMLDivElement>(null);
@@ -76,7 +77,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
             title={getListTitle(artist, type)}
             isEmpty={!firstItem || !items?.length}
             emptyLabel={getEmptyText(type)}
-            className={'pb-0 pr-0 h-[242px]'}
+            className={`pb-0 pr-0 h-[242px] ${className}`}
             loading={loading}
             ref={ref}
         >
