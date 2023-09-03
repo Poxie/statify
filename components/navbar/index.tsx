@@ -23,35 +23,33 @@ export default function Navbar() {
     }
     return(
         <div className="w-main max-w-main mx-auto py-6 flex items-center justify-between">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
                 <Link 
                     className="z-30 flex items-center gap-3"
                     aria-label={'Go home'}
                     href={'/'}
                 >
                     <LogoIcon className="w-7" />
-                    <span>
-                        Statify
-                    </span>
                 </Link>
+                <button 
+                    onClick={toggle}
+                    className="z-30 md:hidden transition-colors duration-300 hover:bg-tertiary p-1 -ml-2 rounded-md"
+                    aria-label={'Toggle navbar navigation'}
+                >
+                    <HamIcon className="w-6" />
+                </button>
                 <NavbarTabs 
                     open={open} 
                     toggle={toggle}
                     isSmallScreen={isSmallScreen}
                 />
             </div>
-            <div className="z-30 flex items-center gap-4">
-                <Button small={isSmallScreen}>
-                    Sign in with Spotify
-                </Button>
-                <button 
-                    onClick={toggle}
-                    className="md:hidden transition-colors duration-300 hover:bg-tertiary p-1 rounded-md"
-                    aria-label={'Toggle navbar navigation'}
-                >
-                    <HamIcon className="w-6" />
-                </button>
-            </div>
+            <Button 
+                small={isSmallScreen}
+                className="z-30"    
+            >
+                Sign in with Spotify
+            </Button>
         </div>
     )
 }
