@@ -22,7 +22,6 @@ export default function HeaderTranslateContainer({ children, className }: {
 
             const scroll = window.scrollY;
             const translate = scroll / (isSmallScreen ? PARALLAX_INDEX_SMALL : PARALLAX_INDEX_LARGE);
-            ref.current.style.transform = `translateY(${translate}px)`;
 
             let opacity = 1;
             if(scroll < OPACITY_LOWER_AT) {
@@ -33,6 +32,7 @@ export default function HeaderTranslateContainer({ children, className }: {
                 opacity = 1 - (scroll - OPACITY_LOWER_AT) / (ref.current.offsetHeight - SCROLL_OFFSET - OPACITY_LOWER_AT);
             }
             
+            if(opacity > 0) ref.current.style.transform = `translateY(${translate}px)`;
             ref.current.style.opacity = String(opacity);
         }
         onScroll();
