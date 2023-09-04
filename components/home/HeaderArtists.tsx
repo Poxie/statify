@@ -3,8 +3,14 @@ import { SpotifyArtist } from "@/types";
 import HeaderArtistList from "./HeaderArtistList";
 import { fetchFromSpotify } from '@/utils/fetchFromSpotify';
 
+export type HeaderArtistItem = {
+    top: string;
+    left?: string;
+    right?: string;
+    parallax: number;
+}
 export default async function HeaderArtists() {
-    const positions: {top: string, left?: string, right?: string, parallax: number}[] = [];
+    const positions: HeaderArtistItem[] = [];
     const artistIds = Artists.map(({ id, top, left, right, parallax }) => {
         positions.push({ top, left, right, parallax });
         return id;

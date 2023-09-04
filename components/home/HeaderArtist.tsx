@@ -10,17 +10,13 @@ import { useActiveArtistId } from "@/hooks/useActiveArtistId";
 import { getRandomArtist } from "@/utils";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { useCombo } from "@/contexts/combo";
+import { HeaderArtistItem } from "./HeaderArtists";
 
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
 const MAX_TRANSLATION_X = 5;
 const MAX_TRANSLATION_Y = 1;
-export default function HeaderArtist({ id, popularity, images, top, left, right, parallax }: SpotifyArtist & {
-    top: string;
-    parallax: number;
-    left?: string;
-    right?: string;
-}) {
+export default function HeaderArtist({ id, popularity, images, top, left, right, parallax }: SpotifyArtist & HeaderArtistItem) {
     const paramArtistId = useSearchParams().get('a');
     const activeArtistId = useActiveArtistId();
     const isActive = id === activeArtistId;

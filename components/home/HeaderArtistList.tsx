@@ -2,9 +2,10 @@
 import { SpotifyArtist } from "@/types"
 import HeaderArtist from "./HeaderArtist";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { HeaderArtistItem } from "./HeaderArtists";
 export default function HeaderArtistList({ artists, positions }: {
     artists: SpotifyArtist[];
-    positions: {top: string, left?: string, right?: string, parallax: number}[];
+    positions: HeaderArtistItem[];
 }) {
     const screenSize = useScreenSize();
     const isSmallDevice = ['xs', 'sm'].includes(screenSize);
