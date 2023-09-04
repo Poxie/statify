@@ -6,7 +6,7 @@ import ItemContainer from "../item-container";
 import { useRef } from "react";
 import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 
-const RELATED_PLACEHOLDER_COUNT = 9;
+const RELATED_ARTIST_COUNT = 9;
 export default function HeaderArtistStats({ albums, tracks, artist, featured, related, opacityZero }: {
     tracks: SpotifyTrack[] | undefined;
     albums: SpotifyAlbum[] | undefined;
@@ -79,7 +79,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 ref={relatedArtists}
             >
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {(related || Array.from(Array(RELATED_PLACEHOLDER_COUNT))).slice(0,9).map((artist, key) => (
+                    {(related || Array.from(Array(RELATED_ARTIST_COUNT))).slice(0, RELATED_ARTIST_COUNT).map((artist, key) => (
                         <Artist 
                             isPopular={artist?.popularity > POPULARITY_THRESHOLD}
                             artist={artist}
