@@ -1,10 +1,5 @@
+import { SCREEN_LG, SCREEN_MD, SCREEN_SM, SCREEN_XL, SCREEN_XXL } from "@/utils/constants";
 import { useEffect, useState } from "react"
-
-const SM = 640;
-const MD = 768;
-const LG = 1024;
-const XL = 1280;
-const XXL = 1536;
 
 export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
@@ -14,11 +9,11 @@ export const useScreenSize = () => {
     useEffect(() => {
         const onResize = () => {
             const width = window.innerWidth;
-            if(width > XXL) return setSize('xxl');
-            if(width > XL) return setSize('xl');
-            if(width > LG) return setSize('lg');
-            if(width > MD) return setSize('md');
-            if(width > SM) return setSize('sm');
+            if(width > SCREEN_XXL) return setSize('xxl');
+            if(width > SCREEN_XL) return setSize('xl');
+            if(width > SCREEN_LG) return setSize('lg');
+            if(width > SCREEN_MD) return setSize('md');
+            if(width > SCREEN_SM) return setSize('sm');
             return setSize('xs');
         }
         onResize();

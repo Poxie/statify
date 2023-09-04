@@ -8,9 +8,9 @@ import SpotifyImage from "../spotify-image";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
 import { useActiveArtistId } from "@/hooks/useActiveArtistId";
 import { getRandomArtist } from "@/utils";
-import { useScreenSize } from "@/hooks/useScreenSize";
 import { useCombo } from "@/contexts/combo";
 import { HeaderArtistItem } from "./HeaderArtists";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
@@ -21,8 +21,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
     const activeArtistId = useActiveArtistId();
     const isActive = id === activeArtistId;
     
-    const screenSize = useScreenSize();
-    const isSmallDevice = ['xs', 'sm'].includes(screenSize);
+    const isSmallScreen = useIsSmallScreen();
 
     const { increaseCombo, cancelCombo, isPlaying } = useCombo();
     
@@ -30,7 +29,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
 
     useEffect(() => {
         if(!ref.current) return;
-        if(isSmallDevice) {
+        if(isSmallScreen) {
             ref.current.style.transform = '';
             return;
         }
@@ -56,12 +55,12 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
 
         window.addEventListener('mousemove', onMouseMove);
         return () => window.removeEventListener('mousemove', onMouseMove);
-    }, [isSmallDevice]);
+    }, [isSmallScreen]);
 
     return(
         <div 
-            className={`${isActive ? 'active:scale-[.85]' : ''} transition-transform flex items-center justify-center ${!isSmallDevice ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''}`}
-            style={!isSmallDevice ? {
+            className={`${isActive ? 'active:scale-[.85]' : ''} transition-transform flex items-center justify-center ${!isSmallScreen ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''}`}
+            style={!isSmallScreen ? {
                 top,
                 left,
                 right,
@@ -74,7 +73,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
                 }}
                 scroll={false}
                 href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
-                className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden ${!isSmallDevice ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''} aspect-square`}
+                className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden ${!isSmallScreen ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''} aspect-square`}
                 replace={isPlaying}
                 ref={ref}
             >

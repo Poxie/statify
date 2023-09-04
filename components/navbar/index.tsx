@@ -6,11 +6,10 @@ import NavbarTabs from "./NavbarTabs";
 import { LogoIcon } from "@/assets/icons/LogoIcon";
 import { HamIcon } from "@/assets/icons/HamIcon";
 import { useState } from "react";
-import { useScreenSize } from "@/hooks/useScreenSize";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
 export default function Navbar() {
-    const screenSize = useScreenSize();
-    const isSmallScreen = ['xs', 'sm'].includes(screenSize);
+    const isSmallScreen = useIsSmallScreen();
 
     const [open, setOpen] = useState(false);
 
