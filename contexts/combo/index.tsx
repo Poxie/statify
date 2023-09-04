@@ -45,6 +45,7 @@ export default function ComboProvider({ children }: {
             gameEnded.current = false;
             prevArtistId.current = null;
             setComboText(`Current combo ${combo.current}`);
+            document.body.style.overflow = '';    
         }, WAIT_BEFORE_RESTART);
     }
     const increaseCombo = (artistId: string) => {
@@ -63,6 +64,7 @@ export default function ComboProvider({ children }: {
         if(comboTimer.current) clearTimeout(comboTimer.current);
         if(combo.current >= SHOW_COMBO_AT) {
             comboTimer.current = setTimeout(endGame, (TIME_BEFORE_LOSS - LESS_TIME_PER_ROUND * combo.current));
+            document.body.style.overflow = 'hidden';
         }
     }
     const cancelCombo = () => {
@@ -72,7 +74,9 @@ export default function ComboProvider({ children }: {
 
     return(
         <ComboContext.Provider value={{ increaseCombo, cancelCombo }}>
-        {children}
+        <div className={combo.current >= SHOW_COMBO_AT && !gameEnded.current ? 'animate-shake-tiny' : ''}>
+            {children}
+        </div>
         <AnimatePresence>
             {combo.current >= SHOW_COMBO_AT && (
                 <div className={`fixed z-40 top-12 sm:top-[calc(50%+64px)] left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all ${enlargeAnimation ? 'scale-125' : ''}`}>

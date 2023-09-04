@@ -35,6 +35,7 @@ const config: Config = {
       animation: {
         'shake-large': 'shake-large .5s ease-in-out',
         'shake-small': 'shake-small .1s ease-in-out infinite alternate',
+        'shake-tiny': 'shake-tiny .1s ease-in-out infinite alternate',
       },
       keyframes: {
         'shake-large': {
@@ -44,6 +45,10 @@ const config: Config = {
         'shake-small': {
           '0%': { transform: 'rotate(2deg)' },
           '100%': { transform: 'rotate(-2deg)' },
+        },
+        'shake-tiny': {
+          '0%': { transform: 'rotate(.2deg)' },
+          '100%': { transform: 'rotate(-.2deg)' },
         }
       }
     },
