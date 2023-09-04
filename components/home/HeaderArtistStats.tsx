@@ -6,20 +6,8 @@ import ItemContainer from "../item-container";
 import { useRef } from "react";
 import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 
-const RELATED_ARTIST_COUNT = 9;
-export default function HeaderArtistStats({ albums, tracks, artist, featured, related, opacityZero }: {
-    tracks: SpotifyTrack[] | undefined;
-    albums: SpotifyAlbum[] | undefined;
-    artist: SpotifyArtist | undefined;
-    featured: SpotifyFeaturedAlbum[] | undefined;
-    related: SpotifyArtist[] | undefined;
-    opacityZero: boolean;
-}) {
-    const relatedArtists = useRef<HTMLDivElement>(null);
-
-    const firstFeatured = featured?.at(0);
-    const firstTrack = tracks?.at(0);
-
+// Determining the artist's top album by checking the most occuring album among their top tracks.
+const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] | undefined) => {
     let firstAlbum = albums?.at(0);
     if(tracks?.length) {
         const topTrackAlbums = tracks.map(track => track.album);
@@ -33,6 +21,23 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
         ).pop());
         firstAlbum = topTrackAlbums.find(album => album.id === firstAlbumId);
     }
+    return firstAlbum;
+}
+
+const RELATED_ARTIST_COUNT = 9;
+export default function HeaderArtistStats({ albums, tracks, artist, featured, related, opacityZero }: {
+    tracks: SpotifyTrack[] | undefined;
+    albums: SpotifyAlbum[] | undefined;
+    artist: SpotifyArtist | undefined;
+    featured: SpotifyFeaturedAlbum[] | undefined;
+    related: SpotifyArtist[] | undefined;
+    opacityZero: boolean;
+}) {
+    const relatedArtists = useRef<HTMLDivElement>(null);
+
+    const firstFeatured = featured?.at(0);
+    const firstTrack = tracks?.at(0);
+    const firstAlbum = getTopAlbum(tracks, albums);
     
     useAnimateStyle(relatedArtists, opacityZero, {
         from: { opacity: 0, transform: 'translateY(20px)' },
