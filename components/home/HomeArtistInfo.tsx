@@ -9,9 +9,11 @@ import { get, getRandomArtist } from '@/utils';
 import HeaderArtistStats from './HeaderArtistStats';
 import { POPULARITY_THRESHOLD } from '@/utils/constants';
 import { useAnimateStyle } from '@/hooks/useAnimateStyle';
+import { useCombo } from '@/contexts/combo';
 
 const OPACITY_TRANSITION = 500;
 export default function HomeArtistInfo() {
+    const { isPlaying } = useCombo();
     const artistId = useSearchParams().get('a');
 
     const [opacityZero, setOpacityZero] = useState(true);
@@ -27,6 +29,16 @@ export default function HomeArtistInfo() {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if(isPlaying) {
+            setOpacityZero(true);
+            if(artistInfo) {
+                setTimeout(() => {
+                    setArtistInfo(null);
+                }, OPACITY_TRANSITION);
+            }
+            return;
+        }
+        
         const abortController = new AbortController();
         const signal = abortController.signal;
 
@@ -54,7 +66,7 @@ export default function HomeArtistInfo() {
             if(timeout) clearTimeout(timeout);
             abortController.abort();
         }
-    }, [artistId]);
+    }, [artistId, isPlaying]);
 
     useAnimateStyle(ref, opacityZero, {
         from: { opacity: 0, transform: 'translateY(20px)' },
@@ -63,7 +75,7 @@ export default function HomeArtistInfo() {
     return(
         <div 
             className={`relative z-10 bg-secondary mt-36 ${isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary'}`}
-            data-artist-id={artistInfo?.artist.id || ''}
+            data-artist-id={artistInfo?.artist.id || artistId || ''}
         >
             <div className={`absolute left-2/4 -translate-x-2/4 ${isPopular ? 'gradient-border [--border-bottom:0px] [--border-left:1px] [--border-right:1px]' : 'border-[1px] border-b-0 border-tertiary'} mx-auto w-[800px] max-w-[90%] sm:max-w-[80%] flex rounded-t-lg -translate-y-full`}>
                 <div className={`absolute ${isPopular ? 'bg-[var(--gradient-from)]' : 'bg-tertiary'} bottom-0 right-full w-4 aspect-square rounded-br-lg before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1] after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-br-lg after:right-[1px] after:bottom-[1px]`} />

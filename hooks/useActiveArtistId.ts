@@ -7,6 +7,7 @@ export const useActiveArtistId = () => {
     useEffect(() => {
         const element = document.querySelector(`[${ARTIST_ATTRIBUTE}`);
         if(!element) throw new Error('Element does not exist.');
+        setActiveArtistId(element.getAttribute(ARTIST_ATTRIBUTE));
 
         const observer = new MutationObserver(mutations => {
             mutations.forEach(mutation => {

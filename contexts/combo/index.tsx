@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 const ComboContext = React.createContext<null | {
     increaseCombo: (artistId: string) => void;
     cancelCombo: () => void;
+    isPlaying: boolean;
 }>(null);
 
 export const useCombo = () => {
@@ -84,6 +85,7 @@ export default function ComboProvider({ children }: {
             if(soundTrack.current?.paused) {
                 soundTrack.current.play();
             } else if(hitSound.current) {
+                hitSound.current.currentTime = 0;
                 hitSound.current.play();
             }
         }
@@ -95,7 +97,7 @@ export default function ComboProvider({ children }: {
 
     const isSpecialCombo = combo.current % 10 === 0;
     return(
-        <ComboContext.Provider value={{ increaseCombo, cancelCombo }}>
+        <ComboContext.Provider value={{ increaseCombo, cancelCombo, isPlaying: combo.current >= SHOW_COMBO_AT }}>
         <div className={combo.current >= SHOW_COMBO_AT && !gameEnded.current ? 'animate-shake-tiny' : ''}>
             {children}
         </div>
