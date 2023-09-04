@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const ComboContext = React.createContext<null | {
@@ -17,7 +17,7 @@ const SHOW_COMBO_AT = 2;
 const ANIMATION_DELAY = 300;
 const TIME_BEFORE_LOSS = 2500;
 const LESS_TIME_PER_ROUND = 40;
-const WAIT_BEFORE_RESTART = 2500;
+const WAIT_BEFORE_RESTART = 3000;
 export default function ComboProvider({ children }: {
     children: React.ReactNode;
 }) {
@@ -28,6 +28,16 @@ export default function ComboProvider({ children }: {
     const prevArtistId = useRef<null | string>(null);
     const comboTimer = useRef<null | NodeJS.Timeout>(null);
     const gameEnded = useRef(false);
+    const soundTrack = useRef<HTMLAudioElement | null>(null);
+    const hitSound = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        soundTrack.current = new Audio('/soundtrack.mp3');
+        soundTrack.current.volume = .7;
+        
+        hitSound.current = new Audio('/hit.mp3');
+        hitSound.current.volume = .7;
+    }, []);
 
     const endGame = () => {
         let personalBest = Number(window.localStorage.getItem('combo-pb'));
@@ -45,7 +55,12 @@ export default function ComboProvider({ children }: {
             gameEnded.current = false;
             prevArtistId.current = null;
             setComboText(`Current combo ${combo.current}`);
-            document.body.style.overflow = '';    
+            document.body.style.overflow = '';
+
+            if(soundTrack.current) {
+                soundTrack.current.pause();
+                soundTrack.current.currentTime = 0;
+            }
         }, WAIT_BEFORE_RESTART);
     }
     const increaseCombo = (artistId: string) => {
@@ -65,6 +80,12 @@ export default function ComboProvider({ children }: {
         if(combo.current >= SHOW_COMBO_AT) {
             comboTimer.current = setTimeout(endGame, (TIME_BEFORE_LOSS - LESS_TIME_PER_ROUND * combo.current));
             document.body.style.overflow = 'hidden';
+
+            if(soundTrack.current?.paused) {
+                soundTrack.current.play();
+            } else if(hitSound.current) {
+                hitSound.current.play();
+            }
         }
     }
     const cancelCombo = () => {
@@ -72,6 +93,7 @@ export default function ComboProvider({ children }: {
         combo.current = 0;
     }
 
+    const isSpecialCombo = combo.current % 10 === 0;
     return(
         <ComboContext.Provider value={{ increaseCombo, cancelCombo }}>
         <div className={combo.current >= SHOW_COMBO_AT && !gameEnded.current ? 'animate-shake-tiny' : ''}>
@@ -79,14 +101,14 @@ export default function ComboProvider({ children }: {
         </div>
         <AnimatePresence>
             {combo.current >= SHOW_COMBO_AT && (
-                <div className={`fixed z-40 top-12 sm:top-[calc(50%+64px)] left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all ${enlargeAnimation ? 'scale-125' : ''}`}>
+                <div className={`fixed z-40 top-12 sm:top-[calc(50%+64px)] left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all ${enlargeAnimation ? isSpecialCombo ? 'scale-[2]' : 'scale-125' : ''}`}>
                     <motion.div
                         exit={{ translateY: 30, opacity: 0 }}
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ bounce: false }}
                     >
-                        <span className={`block whitespace-nowrap ${enlargeAnimation ? 'animate-shake-large' : !gameEnded.current ? 'animate-shake-small' : ''}`}>
+                        <span className={`block whitespace-nowrap ${enlargeAnimation ? 'animate-shake-large ' + (isSpecialCombo ? 'gradient-text' : '') : !gameEnded.current ? 'animate-shake-small' : ''}`}>
                             {comboText}
                         </span>
                         {gameEnded.current && (
