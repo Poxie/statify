@@ -31,6 +31,7 @@ export default function ComboProvider({ children }: {
     const gameEnded = useRef(false);
     const soundTrack = useRef<HTMLAudioElement | null>(null);
     const hitSound = useRef<HTMLAudioElement | null>(null);
+    const endSound = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
         soundTrack.current = new Audio('/soundtrack.mp3');
@@ -38,6 +39,8 @@ export default function ComboProvider({ children }: {
         
         hitSound.current = new Audio('/hit.mp3');
         hitSound.current.volume = .7;
+
+        endSound.current = new Audio('/end.mp3');
     }, []);
 
     const endGame = () => {
@@ -50,6 +53,12 @@ export default function ComboProvider({ children }: {
 
         gameEnded.current = true;
         setComboText(`Total combo achieved: ${combo.current}`);
+        
+        endSound.current?.play();
+        if(soundTrack.current) {
+            soundTrack.current.pause();
+            soundTrack.current.currentTime = 0;
+        }
 
         setTimeout(() => {
             combo.current = 0;
@@ -57,11 +66,6 @@ export default function ComboProvider({ children }: {
             prevArtistId.current = null;
             setComboText(`Current combo ${combo.current}`);
             document.body.style.overflow = '';
-
-            if(soundTrack.current) {
-                soundTrack.current.pause();
-                soundTrack.current.currentTime = 0;
-            }
         }, WAIT_BEFORE_RESTART);
     }
     const increaseCombo = (artistId: string) => {
