@@ -4,9 +4,9 @@ import HeaderArtistList from "./HeaderArtistList";
 import { fetchFromSpotify } from '@/utils/fetchFromSpotify';
 
 export default async function HeaderArtists() {
-    const positions: {top: string, left?: string, right?: string}[] = [];
-    const artistIds = Artists.map(({ id, top, left, right }) => {
-        positions.push({ top, left, right });
+    const positions: {top: string, left?: string, right?: string, parallax: number}[] = [];
+    const artistIds = Artists.map(({ id, top, left, right, parallax }) => {
+        positions.push({ top, left, right, parallax });
         return id;
     }).join(',');
 

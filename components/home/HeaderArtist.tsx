@@ -15,8 +15,9 @@ const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
 const MAX_TRANSLATION_X = 5;
 const MAX_TRANSLATION_Y = 1;
-export default function HeaderArtist({ id, popularity, images, top, left, right }: SpotifyArtist & {
+export default function HeaderArtist({ id, popularity, images, top, left, right, parallax }: SpotifyArtist & {
     top: string;
+    parallax: number;
     left?: string;
     right?: string;
 }) {
@@ -38,7 +39,6 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
             return;
         }
 
-        const randomParallaxShift = Math.random() * (MAX_PARALLAX - MIN_PARALLAX) + MIN_PARALLAX;
         const onMouseMove = (e: MouseEvent) => {
             if(!ref.current) return;
 
@@ -55,7 +55,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right 
             const relativeYPart = heightPart - mouseYPos;
             const translateYPercentage = relativeYPart / heightPart;
 
-            ref.current.style.transform = `translateY(${translateYPercentage * -(MAX_TRANSLATION_Y + randomParallaxShift)}px) translateX(${translateXPercentage * -(MAX_TRANSLATION_X + randomParallaxShift)}px)`;
+            ref.current.style.transform = `translateY(${translateYPercentage * -(MAX_TRANSLATION_Y + parallax)}px) translateX(${translateXPercentage * -(MAX_TRANSLATION_X + parallax)}px)`;
         }
 
         window.addEventListener('mousemove', onMouseMove);
