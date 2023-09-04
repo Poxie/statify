@@ -53,7 +53,7 @@ export default function ComboProvider({ children }: {
 
         gameEnded.current = true;
         setComboText(`Total combo achieved: ${combo.current}`);
-        
+
         endSound.current?.play();
         if(soundTrack.current) {
             soundTrack.current.pause();
@@ -114,14 +114,14 @@ export default function ComboProvider({ children }: {
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ bounce: false }}
                     >
-                        <span className={`block whitespace-nowrap ${enlargeAnimation ? 'animate-shake-large ' + (isSpecialCombo ? 'gradient-text' : '') : !gameEnded.current ? 'animate-shake-small' : ''}`}>
-                            {comboText}
-                        </span>
-                        {gameEnded.current && (
-                            <span className="block whitespace-nowrap text-xs text-center text-secondary mt-1">
-                                Personal best: {personalBest}
+                        <div className={enlargeAnimation ? 'animate-shake-large' : !gameEnded.current ? 'animate-shake-small' : ''}>
+                            <span className={`block whitespace-nowrap ${enlargeAnimation && isSpecialCombo ? 'gradient-text' : ''}`}>
+                                {comboText}
                             </span>
-                        )}
+                            <span className="block whitespace-nowrap text-xs text-center text-secondary mt-1">
+                                {gameEnded.current ? `Personal best: ${personalBest}` : `Time between rounds: ${WAIT_BEFORE_RESTART - combo.current * LESS_TIME_PER_ROUND}ms`}
+                            </span>
+                        </div>
                     </motion.div>
                 </div>
             )}
