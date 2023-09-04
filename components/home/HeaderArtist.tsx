@@ -24,7 +24,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
     const screenSize = useScreenSize();
     const isSmallDevice = ['xs', 'sm'].includes(screenSize);
 
-    const { increaseCombo, cancelCombo } = useCombo();
+    const { increaseCombo, cancelCombo, isPlaying } = useCombo();
     
     const ref = useRef<HTMLAnchorElement>(null);
 
@@ -75,6 +75,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
                 scroll={false}
                 href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
                 className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden ${!isSmallDevice ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''} aspect-square`}
+                replace={isPlaying}
                 ref={ref}
             >
                 <SpotifyImage 
