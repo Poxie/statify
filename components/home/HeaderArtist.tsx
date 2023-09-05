@@ -27,7 +27,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
 
     const { increaseCombo, cancelCombo, isPlaying } = useCombo();
     
-    const ref = useRef<HTMLAnchorElement>(null);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if(!ref.current) return;
@@ -62,15 +62,16 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
     return(
         <div 
             className={clsx(
-                "flex items-center justify-center transition-transform",
+                "aspect-square flex items-center justify-center duration-300 transition-[width]",
                 !isSmallScreen && 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]'),
-                isActive && 'active:scale-[.85]',
+                isActive ? 'w-20' : 'w-16',
             )}
             style={!isSmallScreen ? {
                 top,
                 left,
                 right,
             } : undefined}
+            ref={ref}
         >
             <Link
                 onClick={() => {
@@ -80,16 +81,14 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
                 scroll={false}
                 href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
                 className={clsx(
-                    "aspect-square pointer-events-auto overflow-hidden border-[3px] duration-300 transition-[border-radius,border-color,width]",
+                    "pointer-events-auto overflow-hidden border-[3px] duration-300 transition-[transform,border-radius,border-color]",
                     isActive ? (
-                        'rounded-xl w-20 ' + (isPopular ? 'gradient-border' : 'border-text-secondary')
+                        "active:scale-[.85] rounded-xl " + (isPopular ? 'gradient-border' : 'border-text-secondary')
                     ) : (
-                        'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'
-                    ),
-                    !isSmallScreen && 'absolute lg:ml-0 lg:mr-0 ' + left ? '-ml-[10%]' : '-mr-[10%]',
+                        "border-tertiary rounded-[40px] hover:rounded-[20px]"
+                    )
                 )}
                 replace={isPlaying}
-                ref={ref}
             >
                 <SpotifyImage 
                     src={images.at(-1)?.url}
