@@ -2,7 +2,7 @@
 import React, { RefObject, useEffect, useState, useRef } from 'react';
 import { SpotifyTrack } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
-import PreviewTrack from './PreviewTrack';
+import PreviewProgress from './PreviewProgress';
 import PreviewContent from './PreviewContent';
 
 type Track = SpotifyTrack | null;
@@ -56,7 +56,7 @@ export default function PreviewProvider({ children }: {
                         transition={{ bounce: false }}
                         className="p-4 w-full fixed bottom-0 left-0 z-20 bg-tertiary border-t-4 border-t-text-secondary"
                     >
-                        <PreviewTrack />
+                        <PreviewProgress />
                         <PreviewContent />
                     </motion.div>
                 )}
