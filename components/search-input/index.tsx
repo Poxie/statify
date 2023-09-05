@@ -2,7 +2,7 @@ import Input from "../input";
 import { AnimatePresence, motion } from 'framer-motion';
 import { SpotifyArtist, SpotifyTrack } from "@/types";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { get } from "@/utils";
 import SearchResult from "./SearchResult";
 
@@ -12,12 +12,13 @@ export default function SearchInput<T>({ onSelect, type }: {
     type: 'artist' | 'track';
 }) {
     const [open, setOpen] = useState(false);
+    const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<(SpotifyArtist | SpotifyTrack)[]>([]);
     const timeout = useRef<NodeJS.Timeout | null>(null);
     const abortContoller = useRef<AbortController | null>(null);
 
-    const search = (query: string) => {
+    useEffect(() => {
         if(!query) return setResults([]);
         setLoading(true);
 
@@ -39,7 +40,18 @@ export default function SearchInput<T>({ onSelect, type }: {
                 abortContoller.current = null;
             });
         }, WAIT_BEFORE_FETCH);
-    }
+    }, [query]);
+
+    const sortedResults = useMemo(() => (
+        results
+            .filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+            .sort((a,b) => {
+                if(type === 'artist') {
+                    return (b as SpotifyArtist).followers.total - (a as SpotifyArtist).followers.total
+                }
+                return b.popularity - a.popularity;
+            })
+    ), [results]);
 
     return(
         <div className="relative max-w-full">
@@ -49,7 +61,7 @@ export default function SearchInput<T>({ onSelect, type }: {
                 placeholder={'Search artist or song...'}
                 onFocus={() => setOpen(true)}
                 onBlur={() => setOpen(false)}
-                onChange={search}
+                onChange={setQuery}
             />
             <AnimatePresence>
                 {open && (
@@ -60,16 +72,20 @@ export default function SearchInput<T>({ onSelect, type }: {
                         transition={{ duration: .15, bounce: false }}
                         className="max-h-[220px] w-full p-2 pr-0 overflow-auto scrollbar absolute z-10 top-[calc(100%+.5rem)] bg-secondary border-[1px] border-tertiary rounded-lg"
                     >
-                        {!results.length && (
+                        {!sortedResults.length && (
                             <span className="block text-xs text-secondary">
                                 {!loading ? (
-                                    `Enter the name of your favorite ${type}`
+                                    !query ? (
+                                        `Enter the name of your favorite ${type}`
+                                    ) : (
+                                        'No results were found.'
+                                    )
                                 ) : (
                                     'Loading results...'
                                 )}
                             </span>
                         )}
-                        {results.map(item => {
+                        {sortedResults.map(item => {
                             let image = '';
                             if(type === 'artist') image = (item as SpotifyArtist).images.at(-1)?.url as string;
                             if(type === 'track') image = (item as SpotifyTrack).album.images.at(-1)?.url as string;
