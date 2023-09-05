@@ -19,7 +19,7 @@ export default function SearchInput<T>({ onSelect, type }: {
     const abortContoller = useRef<AbortController | null>(null);
 
     useEffect(() => {
-        if(!query) return setResults([]);
+        if(!query.trim()) return setResults([]);
         setLoading(true);
 
         if(timeout.current) {
