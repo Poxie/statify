@@ -2,7 +2,7 @@ import Input from "../input";
 import { AnimatePresence, motion } from 'framer-motion';
 import { SpotifyArtist, SpotifyTrack } from "@/types";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { get } from "@/utils";
 import SearchResult from "./SearchResult";
 
@@ -15,31 +15,23 @@ export default function SearchInput<T>({ onSelect, type }: {
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<(SpotifyArtist | SpotifyTrack)[]>([]);
-    const timeout = useRef<NodeJS.Timeout | null>(null);
-    const abortContoller = useRef<AbortController | null>(null);
 
     useEffect(() => {
         if(!query.trim()) return setResults([]);
         setLoading(true);
 
-        if(timeout.current) {
-            clearTimeout(timeout.current);
-            timeout.current = null;
-        }
-        if(abortContoller.current) {
-            abortContoller.current.abort();
-            abortContoller.current = null;
-        }
-
-        timeout.current = setTimeout(() => {
-            abortContoller.current = new AbortController();
-            get<(SpotifyArtist | SpotifyTrack)[]>(`/search?q=${query}&type=${type}`, abortContoller.current.signal).then(results => {
+        const abortController = new AbortController();
+        const timeout = setTimeout(() => {
+            get<(SpotifyArtist | SpotifyTrack)[]>(`/search?q=${query}&type=${type}`, abortController.signal).then(results => {
                 setLoading(false);
                 setResults(results);
-                timeout.current = null;
-                abortContoller.current = null;
             });
         }, WAIT_BEFORE_FETCH);
+
+        return () => {
+            abortController.abort();
+            clearTimeout(timeout);
+        }
     }, [query]);
 
     const sortedResults = useMemo(() => (
