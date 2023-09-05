@@ -11,6 +11,7 @@ import { getRandomArtist } from "@/utils";
 import { useCombo } from "@/contexts/combo";
 import { HeaderArtistItem } from "./HeaderArtists";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
+import clsx from "clsx";
 
 const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
@@ -20,6 +21,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
     const paramArtistId = useSearchParams().get('a');
     const activeArtistId = useActiveArtistId();
     const isActive = id === activeArtistId;
+    const isPopular = popularity > POPULARITY_THRESHOLD;
     
     const isSmallScreen = useIsSmallScreen();
 
@@ -59,7 +61,11 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
 
     return(
         <div 
-            className={`${isActive ? 'active:scale-[.85]' : ''} transition-transform flex items-center justify-center ${!isSmallScreen ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''}`}
+            className={clsx(
+                "flex items-center justify-center transition-transform",
+                !isSmallScreen && 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]'),
+                isActive && 'active:scale-[.85]',
+            )}
             style={!isSmallScreen ? {
                 top,
                 left,
@@ -73,7 +79,15 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
                 }}
                 scroll={false}
                 href={isActive ? `/?a=${getRandomArtist(id)}` : `/?a=${id}`}
-                className={`pointer-events-auto border-[3px] duration-300 transition-[border-radius,border-color,width] ${isActive ? 'rounded-xl w-20 ' + (popularity > POPULARITY_THRESHOLD ? 'gradient-border' : 'border-text-secondary') : 'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'} overflow-hidden ${!isSmallScreen ? 'absolute lg:ml-0 lg:mr-0 ' + (left ? '-ml-[10%]' : '-mr-[10%]') : ''} aspect-square`}
+                className={clsx(
+                    "aspect-square pointer-events-auto overflow-hidden border-[3px] duration-300 transition-[border-radius,border-color,width]",
+                    isActive ? (
+                        'rounded-xl w-20 ' + (isPopular ? 'gradient-border' : 'border-text-secondary')
+                    ) : (
+                        'border-tertiary rounded-[40px] hover:rounded-[20px] w-16'
+                    ),
+                    !isSmallScreen && 'absolute lg:ml-0 lg:mr-0 ' + left ? '-ml-[10%]' : '-mr-[10%]',
+                )}
                 replace={isPlaying}
                 ref={ref}
             >

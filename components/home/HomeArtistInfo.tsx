@@ -10,6 +10,7 @@ import HeaderArtistStats from './HeaderArtistStats';
 import { POPULARITY_THRESHOLD } from '@/utils/constants';
 import { useAnimateStyle } from '@/hooks/useAnimateStyle';
 import { useCombo } from '@/contexts/combo';
+import clsx from 'clsx';
 
 const OPACITY_TRANSITION = 500;
 export default function HomeArtistInfo() {
@@ -74,14 +75,25 @@ export default function HomeArtistInfo() {
     })
     return(
         <div 
-            className={`relative z-10 bg-secondary mt-36 ${isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary'}`}
+            className={clsx(
+                "mt-36 relative z-10 bg-secondary",
+                isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary',
+            )}
             data-artist-id={artistInfo?.artist.id || artistId || ''}
         >
-            <div className={`absolute left-2/4 -translate-x-2/4 ${isPopular ? 'gradient-border [--border-bottom:0px] [--border-left:1px] [--border-right:1px]' : 'border-[1px] border-b-0 border-tertiary'} mx-auto w-[800px] max-w-[90%] sm:max-w-[80%] flex rounded-t-lg -translate-y-full`}>
-                <div className={`absolute ${isPopular ? 'bg-[var(--gradient-from)]' : 'bg-tertiary'} bottom-0 right-full w-4 aspect-square rounded-br-lg before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1] after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-br-lg after:right-[1px] after:bottom-[1px]`} />
+            <div className={clsx(
+                "w-[800px] max-w-[90%] mx-auto absolute left-2/4 -translate-x-2/4 -translate-y-full flex rounded-t-lg sm:max-w-[80%]",
+                isPopular ? 'gradient-border [--border-bottom:0px] [--border-left:1px] [--border-right:1px]' : 'border-[1px] border-b-0 border-tertiary',
+            )}>
+                <div className={clsx(
+                    "w-4 aspect-square absolute bottom-0 right-full rounded-br-lg",
+                    "before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1]",
+                    "after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-br-lg after:right-[1px] after:bottom-[1px]",
+                    isPopular ? 'bg-[var(--gradient-from)]' : 'bg-tertiary',
+                )} />
                 <div className="flex-1 bg-secondary rounded-t-[.45rem]">
                     <div 
-                        className="flex-1 flex flex-col sm:flex-row gap-2 items-start justify-between p-4"
+                        className="p-4 flex-1 flex flex-col gap-2 items-start justify-between sm:flex-row"
                         ref={ref}
                     >
                         <Artist
@@ -93,14 +105,19 @@ export default function HomeArtistInfo() {
                             <Link
                                 target="_blank" 
                                 href={artistInfo.artist.external_urls.spotify}
-                                className="text-xs transition-colors text-secondary hover:text-primary"
+                                className="text-xs text-secondary hover:text-primary transition-colors"
                             >
                                 Follow {artistInfo.artist.name}
                             </Link>
                         )}
                     </div>
                 </div>
-                <div className={`absolute ${isPopular ? 'bg-[var(--gradient-to)]' : 'bg-tertiary'} bottom-0 left-full w-4 aspect-square rounded-bl-lg before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1] after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-bl-lg after:left-[1px] after:bottom-[1px]`} />
+                <div className={clsx(
+                    "w-4 aspect-square absolute bottom-0 left-full rounded-bl-lg",
+                    "before:absolute before:bg-secondary before:w-full before:aspect-square before:-z-[1]",
+                    "after:absolute after:bg-primary after:w-full after:aspect-square after:rounded-bl-lg after:left-[1px] after:bottom-[1px]",
+                    isPopular ? 'bg-[var(--gradient-to)]' : 'bg-tertiary',
+                )} />
             </div>
             <HeaderArtistStats 
                 tracks={artistInfo?.tracks}

@@ -10,7 +10,7 @@ export default function SearchResult({ name, image, extraText, onSelect }: {
     return(
         <li>
             <button 
-                className="p-2 text-left w-full flex items-center gap-2 transition-colors hover:bg-tertiary rounded-lg"
+                className="p-2 w-full flex items-center gap-2 text-left rounded-lg transition-colors hover:bg-tertiary"
                 onClick={onSelect}
             >
                 <SpotifyImage

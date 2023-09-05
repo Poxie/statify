@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 export default function Input({
     containerClassName='',
     className='',
@@ -18,15 +20,21 @@ export default function Input({
     onBlur?: () => void;
 }) {
     return(
-        <div className={`focus-within:outline outline-1 outline-white flex bg-secondary border-[1px] border-tertiary rounded-lg ${containerClassName}`}>
+        <div className={clsx(
+            "flex outline-1 outline-white focus-within:outline bg-secondary border-[1px] border-tertiary rounded-lg",
+            containerClassName,
+        )}>
             {icon && (
-                <div className="flex items-center pl-3">
+                <div className="pl-3 flex items-center">
                     {icon}
                 </div>
             )}
             <input 
                 type="text"
-                className={`placeholder:text-secondary flex-1 bg-transparent outline-none py-3 px-4 ${className}`}
+                className={clsx(
+                    "py-3 px-4 flex-1 bg-transparent outline-none placeholder:text-secondary",
+                    className,
+                )}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
                 onFocus={onFocus}

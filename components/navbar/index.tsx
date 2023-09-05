@@ -32,7 +32,7 @@ export default function Navbar() {
                 </Link>
                 <button 
                     onClick={toggle}
-                    className="z-30 md:hidden transition-colors duration-300 hover:bg-tertiary p-1 -ml-2 rounded-md"
+                    className="z-30 p-1 -ml-2 rounded-md transition-colors duration-300 hover:bg-tertiary md:hidden"
                     aria-label={'Toggle navbar navigation'}
                 >
                     <HamIcon className="w-6" />

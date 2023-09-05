@@ -82,7 +82,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
             ref={ref}
         >
             {firstItem && items?.length && (
-                <div className="flex-1 scrollbar overflow-y-scroll pr-2 pb-4">
+                <div className="pr-2 pb-4 flex-1 scrollbar overflow-y-scroll">
                     <div className="flex gap-3">
                         <SpotifyImage
                             className="w-16" 
@@ -99,7 +99,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                     {getItemInfoText(firstItem, type)}
                                 </span>
                             )}
-                            <span className="text-xs text-secondary flex items-center gap-1.5">
+                            <span className="flex items-center gap-1.5 text-xs text-secondary">
                                 {getFirstItemText(firstItem, type)}
 
                                 <HasTooltip 
@@ -111,7 +111,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                             </span>
                         </div>
                     </div>
-                    <ul className="flex flex-col pt-3 gap-1.5">
+                    <ul className="pt-3 flex flex-col gap-1.5">
                         {items.slice(1).map((item, key) => (
                             <li 
                                 className="flex items-center gap-2"
@@ -128,7 +128,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                     height={32}
                                     width={32}
                                 />
-                                <span className="text-xs whitespace-nowrap overflow-hidden text-ellipsis flex-1">
+                                <span className="flex-1 text-xs whitespace-nowrap overflow-hidden text-ellipsis">
                                     {item.name}
                                 </span>
                                 <span className="text-xs text-secondary whitespace-nowrap">

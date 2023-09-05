@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function HeaderOptions() {
     const router = useRouter();
     return(
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 mt-6 mx-auto max-w-[90%]">
+        <div className="max-w-[90%] mx-auto mt-6 flex flex-col items-center justify-center gap-3 md:flex-row">
             <SearchInput<SpotifyArtist> 
                 onSelect={item => router.push(`/?a=${item.id}`, { scroll: false })}
                 type={'artist'}
@@ -15,7 +15,7 @@ export default function HeaderOptions() {
             <span className="uppercase text-secondary text-xs font-semibold">
                 or
             </span>
-            <Button className="max-w-full w-[400px] md:w-[unset]">
+            <Button className="w-[400px] max-w-full md:w-[unset]">
                 Explore now
             </Button>
         </div>

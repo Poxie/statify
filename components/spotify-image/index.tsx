@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Image from "next/image";
 
 export default function SpotifyImage({ src, width, height, className='' }: {
@@ -7,7 +8,12 @@ export default function SpotifyImage({ src, width, height, className='' }: {
     height: number;
 }) {
     return(
-        <div className={`flex items-center justify-center aspect-square bg-tertiary rounded-md overflow-hidden ${className}`}>
+        <div 
+            className={clsx(
+                "flex items-center justify-center aspect-square bg-tertiary rounded-md overflow-hidden",
+                className,
+            )}
+        >
             {src ? (
                 <Image 
                     className="object-cover w-full h-full"

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import clsx from 'clsx';
 
 const ComboContext = React.createContext<null | {
     increaseCombo: (artistId: string) => void;
@@ -102,30 +103,38 @@ export default function ComboProvider({ children }: {
     const isSpecialCombo = combo.current % 10 === 0;
     return(
         <ComboContext.Provider value={{ increaseCombo, cancelCombo, isPlaying: combo.current >= SHOW_COMBO_AT }}>
-        <div className={combo.current >= SHOW_COMBO_AT && !gameEnded.current ? 'animate-shake-tiny' : ''}>
-            {children}
-        </div>
-        <AnimatePresence>
-            {combo.current >= SHOW_COMBO_AT && (
-                <div className={`fixed z-40 top-12 sm:top-[calc(50%+64px)] left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all ${enlargeAnimation ? isSpecialCombo ? 'scale-[2]' : 'scale-125' : ''}`}>
-                    <motion.div
-                        exit={{ translateY: 30, opacity: 0 }}
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ bounce: false }}
-                    >
-                        <div className={enlargeAnimation ? 'animate-shake-large' : !gameEnded.current ? 'animate-shake-small' : ''}>
-                            <span className={`block whitespace-nowrap ${enlargeAnimation && isSpecialCombo ? 'gradient-text' : ''}`}>
-                                {comboText}
-                            </span>
-                            <span className="block whitespace-nowrap text-xs text-center text-secondary mt-1">
-                                {gameEnded.current ? `Personal best: ${personalBest}` : `Time between rounds: ${WAIT_BEFORE_RESTART - combo.current * LESS_TIME_PER_ROUND}ms`}
-                            </span>
-                        </div>
-                    </motion.div>
-                </div>
-            )}
-        </AnimatePresence>
+            <div className={combo.current >= SHOW_COMBO_AT && !gameEnded.current ? 'animate-shake-tiny' : ''}>
+                {children}
+            </div>
+            <AnimatePresence>
+                {combo.current >= SHOW_COMBO_AT && (
+                    <div className={clsx(
+                        "fixed z-40 top-12 left-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl font-semibold transition-all sm:top-[calc(50%+64px)]",
+                        enlargeAnimation && (isSpecialCombo ? 'scale-[2]' : 'scale-125')
+                    )}>
+                        <motion.div
+                            exit={{ translateY: 30, opacity: 0 }}
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ bounce: false }}
+                        >
+                            <div className={clsx(
+                                enlargeAnimation ? 'animate-shake-large' : (!gameEnded.current && 'animate-shake-small')
+                            )}>
+                                <span className={clsx(
+                                    "block whitespace-nowrap",
+                                    enlargeAnimation && isSpecialCombo && 'gradient-text'
+                                )}>
+                                    {comboText}
+                                </span>
+                                <span className="block whitespace-nowrap text-xs text-center text-secondary mt-1">
+                                    {gameEnded.current ? `Personal best: ${personalBest}` : `Time between rounds: ${WAIT_BEFORE_RESTART - combo.current * LESS_TIME_PER_ROUND}ms`}
+                                </span>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </ComboContext.Provider>
     )
 }

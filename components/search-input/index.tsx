@@ -58,7 +58,7 @@ export default function SearchInput<T>({ onSelect, type }: {
                         initial={{ scale: .98, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: .15, bounce: false }}
-                        className="max-h-[220px] overflow-auto scrollbar absolute z-10 top-[calc(100%+.5rem)] w-full p-2 pr-0 rounded-lg border-[1px] border-tertiary bg-secondary"
+                        className="max-h-[220px] w-full p-2 pr-0 overflow-auto scrollbar absolute z-10 top-[calc(100%+.5rem)] bg-secondary border-[1px] border-tertiary rounded-lg"
                     >
                         {!results.length && (
                             <span className="block text-xs text-secondary">

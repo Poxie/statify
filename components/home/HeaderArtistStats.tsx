@@ -45,8 +45,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
         delayIn: 500,
     })
     return(
-        <div className="flex flex-col gap-3 w-main max-w-main mx-auto py-8">
-            <div className="flex flex-col sm:grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-full">
+        <div className="py-8 w-main max-w-main mx-auto flex flex-col gap-3">
+            <div className="max-w-full flex flex-col gap-3 grid-col-1 sm:grid sm:grid-cols-2 lg:grid-cols-3">
                 <ItemList 
                     artist={artist}
                     firstItem={firstTrack}
@@ -83,7 +83,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 loading={!related}
                 ref={relatedArtists}
             >
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {(related || Array.from(Array(RELATED_ARTIST_COUNT))).slice(0, RELATED_ARTIST_COUNT).map((artist, key) => (
                         <Artist 
                             isPopular={artist?.popularity > POPULARITY_THRESHOLD}
