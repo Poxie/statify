@@ -3,6 +3,7 @@ import SpotifyImage from "@/components/spotify-image";
 import { usePreview } from ".";
 import Link from 'next/link';
 import PreviewControls from './PreviewControls';
+import PreviewVolume from './PreviewVolume';
 
 export default function PreviewContent() {
     const { track } = usePreview();
@@ -38,6 +39,7 @@ export default function PreviewContent() {
                 </div>
             </div>
             <PreviewControls />
+            <PreviewVolume />
         </div>
     )
 }
