@@ -7,6 +7,7 @@ import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import SpotifyImage from "../spotify-image";
+import { usePreview } from "@/contexts/preview";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;
 type ListType = 'track' | 'album' | 'featured';
@@ -65,6 +66,8 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
     className?: string;
     opacityZero: boolean;
 }) {
+    const { setTrack } = usePreview();
+
     const ref = useRef<HTMLDivElement>(null);
 
     useAnimateStyle(ref, opacityZero, {
@@ -83,10 +86,13 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
         >
             {firstItem && items?.length && (
                 <div className="pr-2 pb-4 flex-1 scrollbar overflow-y-scroll">
-                    <div className="flex gap-3">
+                    <div 
+                        className="flex gap-3"
+                        onClick={type === 'track' ? () => setTrack(firstItem as SpotifyTrack) : undefined}
+                    >
                         <SpotifyImage
-                            className="w-16" 
                             src={getItemImage(firstItem, type)}
+                            className="w-16" 
                             width={100}
                             height={100}
                         />

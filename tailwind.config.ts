@@ -18,6 +18,7 @@ const config: Config = {
       backgroundColor: {
         'c-primary': '#6E3FC9',
         'c-primary-accent': '#623DAA',
+        't-secondary': '#6B809D',
         primary: '#0D1117',
         secondary: '#11151B',
         tertiary: '#1C1F22',

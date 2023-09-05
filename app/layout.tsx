@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import TooltipProvider from '@/contexts/tooltip'
+import PreviewProvider from '@/contexts/preview'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,8 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <TooltipProvider>
-          <Navbar />
-          {children}
+          <PreviewProvider>
+            <Navbar />
+            {children}
+          </PreviewProvider>
         </TooltipProvider>
       </body>
     </html>
