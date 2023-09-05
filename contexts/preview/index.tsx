@@ -1,9 +1,7 @@
 "use client";
-import Link from 'next/link';
-import SpotifyImage from '@/components/spotify-image';
+import React, { RefObject, useEffect, useState, useRef } from 'react';
 import { SpotifyTrack } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { RefObject, useState, useRef } from 'react';
 import PreviewTrack from './PreviewTrack';
 import PreviewContent from './PreviewContent';
 
@@ -25,6 +23,20 @@ export default function PreviewProvider({ children }: {
 }) {
     const [track, setTrack] = useState<Track>(null);
     const audio = useRef(new Audio());
+
+    useEffect(() => {
+        if(!audio.current) return;
+        
+        if(!track?.preview_url) {
+            audio.current.currentTime = 0;
+            audio.current.srcObject = null;
+            return;
+        } 
+
+        audio.current.src = track.preview_url;
+        audio.current.currentTime = 0;
+        audio.current.play();
+    }, [track?.id]);
 
     const value = {
         track,
