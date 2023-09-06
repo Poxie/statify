@@ -15,8 +15,8 @@ export default function SpotifyTrackImage(props: SpotifyImageProps & {
     const canBePreviewed = props.track.preview_url !== null;
 
     const handleClick = () => {
-        if(!audio.current) return initializeAudio(props.track);
         if(!canBePreviewed) return;
+        if(!audio.current) return initializeAudio(props.track);
         if(track?.id !== props.track.id) return setTrack(props.track);
         togglePause();
     }
