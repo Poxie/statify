@@ -2,9 +2,12 @@ import { useRef } from 'react';
 import { VolumeIcon } from "@/assets/icons/VolumeIcon";
 import { usePreview } from '.';
 import { useSlider } from '@/hooks/useSlider';
+import { usePreviewMute } from '@/hooks/usePreviewMute';
+import { NoVolumeIcon } from '@/assets/icons/NoVolumeIcon';
 
 export default function PreviewVolume() {
     const { audio } = usePreview();
+    const { muted, toggleMuted } = usePreviewMute();
     
     const slider = useRef<HTMLDivElement>(null);
     const progress = useRef<HTMLDivElement>(null);
@@ -12,6 +15,7 @@ export default function PreviewVolume() {
     const onVolumeChange = (decimal: number) => {
         if(!audio.current) return;
         audio.current.volume = decimal;
+        audio.current.muted = false;
     }
     
     useSlider({
@@ -34,7 +38,16 @@ export default function PreviewVolume() {
                     </div>
                 </div>
             </div>
-            <VolumeIcon className="w-5" />
+            <button
+                aria-label={muted ? 'Unmute audio' : 'Mute audio'} 
+                onClick={toggleMuted}
+            >
+                {!muted ? (
+                    <VolumeIcon className="w-5" />
+                ) : (
+                    <NoVolumeIcon className="w-5" />
+                )}
+            </button>
         </div>
     )
 }
