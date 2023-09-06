@@ -54,7 +54,7 @@ export default function PreviewProvider({ children }: {
                         initial={{ translateY: '100%' }}
                         animate={{ translateY: 0 }}
                         transition={{ bounce: false }}
-                        className="p-4 w-full fixed bottom-0 left-0 z-20 bg-tertiary border-t-4 border-t-text-secondary"
+                        className="p-4 w-full fixed bottom-0 left-0 z-20 bg-tertiary"
                     >
                         <PreviewProgress />
                         <PreviewContent />

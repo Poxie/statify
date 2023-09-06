@@ -11,11 +11,13 @@ export const usePreviewPause = () => {
         audio.current.onplay = () => setPaused(false);
     }, []);
     const togglePause = () => {
-        if(!audio.current) return;
-        
-        if(paused) return audio.current.play();
-        audio.current.pause();
+        if(paused) return audio.current?.play();
+        audio.current?.pause();
     }
+    const setPause = (paused: boolean) => {
+        if(paused) return audio.current?.pause();
+        audio.current?.play();
+    };
 
-    return { paused, togglePause };
+    return { paused, togglePause, setPause };
 }
