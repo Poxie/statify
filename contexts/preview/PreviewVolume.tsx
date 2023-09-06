@@ -27,7 +27,6 @@ export default function PreviewVolume() {
         audio.current.muted = false;
     }
     
-    console.log(isIOSDevice);
     useSlider({
         slider,
         progress,
