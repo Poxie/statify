@@ -9,12 +9,13 @@ import clsx from "clsx";
 export default function SpotifyTrackImage(props: SpotifyImageProps & {
     track: SpotifyTrack;
 }) {
-    const { setTrack, track } = usePreview();
+    const { setTrack, track, audio, initializeAudio } = usePreview();
     const { paused, togglePause } = usePreviewPause();
     
     const canBePreviewed = props.track.preview_url !== null;
 
     const handleClick = () => {
+        if(!audio.current) return initializeAudio(props.track);
         if(!canBePreviewed) return;
         if(track?.id !== props.track.id) return setTrack(props.track);
         togglePause();

@@ -1,5 +1,5 @@
 "use client";
-import React, { RefObject, useEffect, useState, useRef } from 'react';
+import React, { RefObject, useEffect, useState, useRef, useCallback } from 'react';
 import { SpotifyTrack } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import PreviewProgress from './PreviewProgress';
@@ -10,6 +10,7 @@ const PreviewContext = React.createContext<null | {
     track: Track;
     setTrack: (Track: Track) => void;
     audio: RefObject<HTMLAudioElement>;
+    initializeAudio: (track: SpotifyTrack) => void;
 }>(null);
 
 export const usePreview = () => {
@@ -25,12 +26,18 @@ export default function PreviewProvider({ children }: {
     const [track, setTrack] = useState<Track>(null);
     const audio = useRef<null | HTMLAudioElement>(null);
 
+    const initializeAudio = useCallback((track: SpotifyTrack) => {
+        const audioContext = new AudioContext();
+        const audioElement = new Audio();
+        audioElement.crossOrigin = 'anonymous';
+        audioElement.volume = DEFAULT_VOLUME;
+        const mediaElement = audioContext.createMediaElementSource(audioElement);
+        mediaElement.connect(audioContext.destination);
+        audio.current = audioElement;
+        setTrack(track);
+    }, []);
     useEffect(() => {
-        if(!audio.current) {
-            const audioElement = new Audio();
-            audioElement.volume = DEFAULT_VOLUME;
-            audio.current = audioElement;
-        }
+        if(!audio.current) return;
 
         if(!track?.preview_url) {
             audio.current.currentTime = 0;
@@ -44,6 +51,7 @@ export default function PreviewProvider({ children }: {
     }, [track?.id]);
 
     const value = {
+        initializeAudio,
         track,
         setTrack,
         audio,
