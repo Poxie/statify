@@ -9,6 +9,7 @@ import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import SpotifyImage from "../spotify-image";
 import { usePreview } from "@/contexts/preview";
 import SpotifyTrackImage from "../SpotifyTrackImage";
+import SpotifyTrackName from "../spotify-track-name";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;
 type ListType = 'track' | 'album' | 'featured';
@@ -105,9 +106,16 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                             />
                         )}
                         <div className="flex flex-col gap-0.5">
-                            <span className="text-sm multiline-ellipsis">
-                                {firstItem.name}
-                            </span>
+                            {type === 'track' ? (
+                                <SpotifyTrackName 
+                                    track={firstItem as SpotifyTrack}
+                                    className="text-sm multiline-ellipsis"
+                                />
+                            ) : (
+                                <span className="text-sm multiline-ellipsis">
+                                    {firstItem.name}
+                                </span>
+                            )}
                             {type === 'featured' && (
                                 <span className="text-[10px] text-secondary -mt-1 mb-1">
                                     {getItemInfoText(firstItem, type)}
@@ -152,9 +160,16 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                         width={32}
                                     />
                                 )}
-                                <span className="flex-1 text-xs whitespace-nowrap overflow-hidden text-ellipsis">
-                                    {item.name}
-                                </span>
+                                {type === 'track' ? (
+                                    <SpotifyTrackName 
+                                        track={item as SpotifyTrack}
+                                        className="flex-1 text-left text-xs whitespace-nowrap overflow-hidden text-ellipsis"
+                                    />
+                                ) : (
+                                    <span className="flex-1 text-xs whitespace-nowrap overflow-hidden text-ellipsis">
+                                        {item.name}
+                                    </span>
+                                )}
                                 <span className="text-xs text-secondary whitespace-nowrap">
                                     {getItemInfoText(item, type)}
                                 </span>
