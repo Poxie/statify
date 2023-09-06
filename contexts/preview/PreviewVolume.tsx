@@ -30,9 +30,9 @@ export default function PreviewVolume() {
         onChange: onVolumeChange,
     })
     return(
-        <div className="flex items-center justify-end gap-3">
+        <div className="col-span-2 sm:col-span-1 flex items-center justify-end gap-3">
             <div 
-                className="w-32 h-4 flex items-center"
+                className="flex-1 sm:flex-none sm:w-32 h-4 flex items-center"
                 ref={slider}
             >
                 <div className="flex-1 h-2 bg-t-secondary rounded-full justify-self-end">

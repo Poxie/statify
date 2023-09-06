@@ -11,7 +11,7 @@ export default function PreviewControls() {
     const { paused, togglePause } = usePreviewPause();
 
     return(
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-end sm:justify-center gap-4">
             <HasTooltip
                 onClick={rewind}
                 tooltip={'Replay song'}

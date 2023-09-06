@@ -5,7 +5,7 @@ import PreviewTrack from './PreviewTrack';
 
 export default function PreviewContent() {
     return(
-        <div className="grid items-center gap-3 grid-cols-3">
+        <div className="grid items-center gap-3 grid-cols-2 sm:grid-cols-3">
             <PreviewTrack />
             <PreviewControls />
             <PreviewVolume />
