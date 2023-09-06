@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { usePreview } from "@/contexts/preview"
 
 export const usePreviewPause = () => {
@@ -6,9 +6,15 @@ export const usePreviewPause = () => {
     const [paused, setPaused] = useState(false);
 
     useEffect(() => {
-        if(!audio.current) return;
-        audio.current.onpause = () => setPaused(true);
-        audio.current.onplay = () => setPaused(false);
+        const onPause = () => setPaused(true);
+        const onPlay = () => setPaused(false);
+
+        audio.current?.addEventListener('pause', onPause);
+        audio.current?.addEventListener('play', onPlay);
+        return () => {
+            audio.current?.removeEventListener('pause', onPause);
+            audio.current?.removeEventListener('play', onPlay);
+        }
     }, []);
     const togglePause = () => {
         if(paused) return audio.current?.play();

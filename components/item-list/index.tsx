@@ -8,6 +8,7 @@ import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import SpotifyImage from "../spotify-image";
 import { usePreview } from "@/contexts/preview";
+import SpotifyTrackImage from "../SpotifyTrackImage";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;
 type ListType = 'track' | 'album' | 'featured';
@@ -86,16 +87,23 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
         >
             {firstItem && items?.length && (
                 <div className="pr-2 pb-4 flex-1 scrollbar overflow-y-scroll">
-                    <div 
-                        className="flex gap-3"
-                        onClick={type === 'track' ? () => setTrack(firstItem as SpotifyTrack) : undefined}
-                    >
-                        <SpotifyImage
-                            src={getItemImage(firstItem, type)}
-                            className="w-16" 
-                            width={100}
-                            height={100}
-                        />
+                    <div className="group flex gap-3">
+                        {type === 'track' ? (
+                            <SpotifyTrackImage
+                                track={firstItem as SpotifyTrack}
+                                src={getItemImage(firstItem, type)}
+                                className="w-16" 
+                                width={100}
+                                height={100}
+                            />
+                        ) : (
+                            <SpotifyImage
+                                src={getItemImage(firstItem, type)}
+                                className="w-16" 
+                                width={100}
+                                height={100}
+                            />
+                        )}
                         <div className="flex flex-col gap-0.5">
                             <span className="text-sm multiline-ellipsis">
                                 {firstItem.name}
@@ -120,7 +128,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                     <ul className="pt-3 flex flex-col gap-1.5">
                         {items.slice(1).map((item, key) => (
                             <li 
-                                className="flex items-center gap-2"
+                                className="group flex items-center gap-2"
                                 key={item.id}
                             >
                                 {type === 'track' && (
@@ -128,12 +136,22 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                         {key + 2}
                                     </span>
                                 )}
-                                <SpotifyImage 
-                                    className="w-6 rounded-sm"
-                                    src={getItemImage(item, type)}
-                                    height={32}
-                                    width={32}
-                                />
+                                {type === 'track' ? (
+                                    <SpotifyTrackImage 
+                                        className="w-6 rounded-sm"
+                                        track={item as SpotifyTrack}
+                                        src={getItemImage(item, type)}
+                                        height={32}
+                                        width={32}
+                                    />
+                                ) : (
+                                    <SpotifyImage 
+                                        className="w-6 rounded-sm"
+                                        src={getItemImage(item, type)}
+                                        height={32}
+                                        width={32}
+                                    />
+                                )}
                                 <span className="flex-1 text-xs whitespace-nowrap overflow-hidden text-ellipsis">
                                     {item.name}
                                 </span>

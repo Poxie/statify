@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import Image from "next/image";
 
-export default function SpotifyImage({ src, width, height, className='' }: {
+export type SpotifyImageProps = {
     className?: string;
     src?: string;
     width: number;
     height: number;
-}) {
+}
+export default function SpotifyImage({ src, width, height, className='' }: SpotifyImageProps) {
     return(
         <div 
             className={clsx(
