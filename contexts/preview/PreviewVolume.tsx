@@ -33,7 +33,7 @@ export default function PreviewVolume() {
         onChange: onVolumeChange,
     })
     return(
-        <div className="col-span-2 sm:col-span-1 flex flex-col">
+        <div className="col-span-3 sm:col-span-1 flex flex-col">
             <div className="flex items-center justify-end gap-3">
                 <div 
                     className="flex-1 sm:flex-none sm:w-32 h-4 flex items-center"
