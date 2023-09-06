@@ -6,11 +6,12 @@ export const usePreviewMute = () => {
     const [muted, setMuted] = useState(audio.current?.volume === 0);
 
     useEffect(() => {
-        if(!audio.current) return;
-
-        audio.current.onvolumechange = () => {
+        const onVolumeChange = () => {
             setMuted(audio.current?.volume === 0 || (audio.current?.muted || false));
         }
+
+        audio.current?.addEventListener('volumechange', onVolumeChange);
+        return () => audio.current?.removeEventListener('volumechange', onVolumeChange);
     }, []);
     const toggleMuted = () => {
         if(!audio.current) return;
