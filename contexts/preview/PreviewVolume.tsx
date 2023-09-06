@@ -60,7 +60,7 @@ export default function PreviewVolume() {
                 </HasTooltip>
             </div>
             {isIOSDevice && (
-                <div className="mt-1 flex items-center gap-2">
+                <div className="mt-1 flex items-center sm:justify-end gap-2">
                     <QuestionIcon className="w-3" />
                     <span className="text-xs font-semibold text-secondary mt-[0.08rem]">
                         Volume cannot be changed due to Apple restrictions.
