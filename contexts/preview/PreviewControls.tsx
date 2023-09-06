@@ -12,7 +12,7 @@ export default function PreviewControls() {
     const { paused, togglePause } = usePreviewPause();
 
     return(
-        <div className="flex items-center justify-center gap-4 col-span-3">
+        <div className="flex items-center justify-center gap-4">
             <button 
                 onClick={rewind}
                 aria-label={'Rewind song'}
