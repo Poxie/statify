@@ -32,6 +32,7 @@ const config: Config = {
       textColor: {
         primary: '#fff',
         secondary: '#6B809D',
+        'c-primary': '#6E3FC9'
       },
       animation: {
         'shake-large': 'shake-large .5s ease-in-out',

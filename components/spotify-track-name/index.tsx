@@ -6,13 +6,14 @@ export default function SpotifyTrackName({ track, className }: {
     track: SpotifyTrack;
     className?: string;
 }) {
-    const { setTrack } = usePreview();
-    
+    const { track: currentTrack, setTrack } = usePreview();
+
     return(
         <button 
             onClick={() => setTrack(track)}
             className={clsx(
-                "text-left",
+                "text-left transition-colors hover:text-c-primary",
+                track.id === currentTrack?.id && 'text-c-primary',
                 className
             )}
         >
