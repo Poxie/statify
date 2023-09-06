@@ -5,8 +5,11 @@ import { useSlider } from '@/hooks/useSlider';
 import { usePreviewMute } from '@/hooks/usePreviewMute';
 import { NoVolumeIcon } from '@/assets/icons/NoVolumeIcon';
 import { HasTooltip } from '../tooltip/HasTooltip';
+import { useIsIOSDevice } from '@/hooks/useIsIOSDevice';
+import clsx from 'clsx';
 
 export default function PreviewVolume() {
+    const isIOSDevice = useIsIOSDevice();
     const { audio } = usePreview();
     const { muted, toggleMuted } = usePreviewMute();
     
@@ -24,13 +27,18 @@ export default function PreviewVolume() {
         audio.current.muted = false;
     }
     
+    console.log(isIOSDevice);
     useSlider({
         slider,
         progress,
         onChange: onVolumeChange,
     })
     return(
-        <div className="col-span-2 sm:col-span-1 flex items-center justify-end gap-3">
+        <div className={clsx(
+            "col-span-2 sm:col-span-1 flex items-center justify-end gap-3",
+            // Because sound volumes cannot be altered on iOS devices
+            isIOSDevice && 'hidden sm:flex',
+        )}>
             <div 
                 className="flex-1 sm:flex-none sm:w-32 h-4 flex items-center"
                 ref={slider}
