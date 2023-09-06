@@ -18,9 +18,11 @@ export const useSlider = ({ slider, progress, onChange, onDragStart, onDragEnd }
             if(onDragEnd) onDragEnd(currentDecimal.current);
         }
 
+        slider.current.addEventListener('touchstart', onMouseDown);
         slider.current.addEventListener('mousedown', onMouseDown);
         slider.current.addEventListener('click', onClick);
         return () => {
+            slider.current?.removeEventListener('touchstart', onMouseDown);
             slider.current?.removeEventListener('mousedown', onMouseDown);
             slider.current?.removeEventListener('click', onClick);
         }
@@ -30,6 +32,8 @@ export const useSlider = ({ slider, progress, onChange, onDragStart, onDragEnd }
         document.body.style.userSelect = 'none';
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
+        window.addEventListener('touchmove', onTouchMove);
+        window.addEventListener('touchend', onMouseUp);
 
         if(onDragStart) onDragStart(false);
     }
@@ -37,15 +41,17 @@ export const useSlider = ({ slider, progress, onChange, onDragStart, onDragEnd }
         document.body.style.userSelect = '';
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('mouseup', onMouseUp);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchend', onMouseUp);
         
         if(onDragEnd) onDragEnd(currentDecimal.current);
     }
-    const onMouseMove = (e: MouseEvent | React.MouseEvent) => {
+    const handleMove = (clientX: number) => {
         if(!slider.current || !progress.current) return;
 
         const { left, width } = slider.current.getBoundingClientRect();
         
-        const mouseSliderPosition = e.clientX - left;
+        const mouseSliderPosition = clientX - left;
         let sliderDecimal = mouseSliderPosition / width;
 
         if(sliderDecimal < 0) sliderDecimal = 0;
@@ -56,5 +62,11 @@ export const useSlider = ({ slider, progress, onChange, onDragStart, onDragEnd }
         currentDecimal.current = sliderDecimal;
         
         if(onChange) onChange(sliderDecimal);
+    }
+    const onMouseMove = (e: MouseEvent) => {
+        handleMove(e.clientX);
+    }
+    const onTouchMove = (e: TouchEvent) => {
+        handleMove(e.touches[0].clientX);
     }
 }
