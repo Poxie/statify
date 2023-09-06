@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { VolumeIcon } from "@/assets/icons/VolumeIcon";
 import { usePreview } from '.';
+import { useSlider } from '@/hooks/useSlider';
 
 export default function PreviewVolume() {
     const { audio } = usePreview();
@@ -8,37 +9,20 @@ export default function PreviewVolume() {
     const slider = useRef<HTMLDivElement>(null);
     const progress = useRef<HTMLDivElement>(null);
 
-    const onMouseMove = (e: MouseEvent | React.MouseEvent) => {
-        if(!audio.current || !slider.current || !progress.current) return;
-
-        const { left, width } = slider.current.getBoundingClientRect();
-        
-        const mouseSliderPosition = e.clientX - left;
-        let volumeDecimal = mouseSliderPosition / width;
-
-        if(volumeDecimal < 0) volumeDecimal = 0;
-        if(volumeDecimal > 1) volumeDecimal = 1;
-
-        progress.current.style.width = `${volumeDecimal * 100}%`;
-        audio.current.volume = volumeDecimal;
+    const onVolumeChange = (decimal: number) => {
+        if(!audio.current) return;
+        audio.current.volume = decimal;
     }
-    const onMouseUp = () => {
-        document.body.style.userSelect = '';
-        window.removeEventListener('mousemove', onMouseMove);
-        window.removeEventListener('mouseup', onMouseUp);
-    }
-    const onMouseDown = () => {
-        document.body.style.userSelect = 'none';
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mouseup', onMouseUp);
-    }
-
+    
+    useSlider({
+        slider,
+        progress,
+        onChange: onVolumeChange,
+    })
     return(
         <div className="flex items-center justify-end gap-3">
             <div 
                 className="w-32 h-4 flex items-center"
-                onMouseDown={onMouseDown}
-                onClick={onMouseMove}
                 ref={slider}
             >
                 <div className="flex-1 h-2 bg-t-secondary rounded-full justify-self-end">
