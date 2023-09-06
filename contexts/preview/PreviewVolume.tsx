@@ -4,6 +4,7 @@ import { usePreview } from '.';
 import { useSlider } from '@/hooks/useSlider';
 import { usePreviewMute } from '@/hooks/usePreviewMute';
 import { NoVolumeIcon } from '@/assets/icons/NoVolumeIcon';
+import { HasTooltip } from '../tooltip/HasTooltip';
 
 export default function PreviewVolume() {
     const { audio } = usePreview();
@@ -38,16 +39,16 @@ export default function PreviewVolume() {
                     </div>
                 </div>
             </div>
-            <button
-                aria-label={muted ? 'Unmute audio' : 'Mute audio'} 
+            <HasTooltip
                 onClick={toggleMuted}
+                tooltip={muted ? 'Unmute audio' : 'Mute audio'}
             >
                 {!muted ? (
                     <VolumeIcon className="w-5" />
                 ) : (
                     <NoVolumeIcon className="w-5" />
                 )}
-            </button>
+            </HasTooltip>
         </div>
     )
 }
