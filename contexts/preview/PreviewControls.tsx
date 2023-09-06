@@ -15,12 +15,14 @@ export default function PreviewControls() {
             <HasTooltip
                 onClick={rewind}
                 tooltip={'Replay song'}
+                hideOnSmallScreens
             >
                 <RewindIcon className="w-6" />
             </HasTooltip>
             <HasTooltip
                 onClick={togglePause}
                 tooltip={paused ? 'Resume song' : 'Pause song'}
+                hideOnSmallScreens
             >
                 {paused ? (
                     <PlayIcon className="w-8" />
@@ -31,6 +33,7 @@ export default function PreviewControls() {
             <HasTooltip
                 onClick={forward}
                 tooltip={'Skip song'}
+                hideOnSmallScreens
             >
                 <ForwardIcon className="w-6" />
             </HasTooltip>
