@@ -6,7 +6,7 @@ import { usePreviewMute } from '@/hooks/usePreviewMute';
 import { NoVolumeIcon } from '@/assets/icons/NoVolumeIcon';
 import { HasTooltip } from '../tooltip/HasTooltip';
 import { useIsIOSDevice } from '@/hooks/useIsIOSDevice';
-import clsx from 'clsx';
+import { QuestionIcon } from '@/assets/icons/QuestionIcon';
 
 export default function PreviewVolume() {
     const isIOSDevice = useIsIOSDevice();
@@ -33,34 +33,40 @@ export default function PreviewVolume() {
         onChange: onVolumeChange,
     })
     return(
-        <div className={clsx(
-            "col-span-2 sm:col-span-1 flex items-center justify-end gap-3",
-            // Because sound volumes cannot be altered on iOS devices
-            isIOSDevice && 'hidden sm:flex',
-        )}>
-            <div 
-                className="flex-1 sm:flex-none sm:w-32 h-4 flex items-center"
-                ref={slider}
-            >
-                <div className="flex-1 h-2 bg-t-secondary rounded-full justify-self-end">
-                    <div
-                        className="relative w-full h-full bg-c-primary rounded-full"
-                        ref={progress}
-                    >
-                        <div className="[--dot-width:0.875rem] w-[var(--dot-width)] absolute left-[calc(100%-var(--dot-width)/2)] top-2/4 -translate-y-2/4 aspect-square rounded-full bg-c-primary" />
+        <div className="col-span-2 sm:col-span-1 flex flex-col">
+            <div className="flex items-center justify-end gap-3">
+                <div 
+                    className="flex-1 sm:flex-none sm:w-32 h-4 flex items-center"
+                    ref={slider}
+                >
+                    <div className="flex-1 h-2 bg-t-secondary rounded-full justify-self-end">
+                        <div
+                            className="relative w-full h-full bg-c-primary rounded-full"
+                            ref={progress}
+                        >
+                            <div className="[--dot-width:0.875rem] w-[var(--dot-width)] absolute left-[calc(100%-var(--dot-width)/2)] top-2/4 -translate-y-2/4 aspect-square rounded-full bg-c-primary" />
+                        </div>
                     </div>
                 </div>
+                <HasTooltip
+                    onClick={toggleMuted}
+                    tooltip={muted ? 'Unmute audio' : 'Mute audio'}
+                >
+                    {!muted ? (
+                        <VolumeIcon className="w-5" />
+                    ) : (
+                        <NoVolumeIcon className="w-5" />
+                    )}
+                </HasTooltip>
             </div>
-            <HasTooltip
-                onClick={toggleMuted}
-                tooltip={muted ? 'Unmute audio' : 'Mute audio'}
-            >
-                {!muted ? (
-                    <VolumeIcon className="w-5" />
-                ) : (
-                    <NoVolumeIcon className="w-5" />
-                )}
-            </HasTooltip>
+            {isIOSDevice && (
+                <div className="mt-1 flex items-center gap-2">
+                    <QuestionIcon className="w-3" />
+                    <span className="text-xs font-semibold text-secondary mt-[0.08rem]">
+                        Volume cannot be changed due to Apple restrictions.
+                    </span>
+                </div>
+            )}
         </div>
     )
 }
