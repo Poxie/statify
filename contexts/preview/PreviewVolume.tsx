@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { VolumeIcon } from "@/assets/icons/VolumeIcon";
 import { usePreview } from '.';
 import { useSlider } from '@/hooks/useSlider';
@@ -12,6 +12,11 @@ export default function PreviewVolume() {
     
     const slider = useRef<HTMLDivElement>(null);
     const progress = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if(!audio.current || !progress.current) return;
+        progress.current.style.width = `${audio.current.volume * 100}%`;
+    }, []);
 
     const onVolumeChange = (decimal: number) => {
         if(!audio.current) return;

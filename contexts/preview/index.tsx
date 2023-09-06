@@ -18,15 +18,19 @@ export const usePreview = () => {
     return context;
 }
 
+const DEFAULT_VOLUME = .4;
+const getDefaultAudio = () => {
+    const audio = new Audio();
+    audio.volume = DEFAULT_VOLUME;
+    return audio;
+}
 export default function PreviewProvider({ children }: {
     children: React.ReactNode;
 }) {
     const [track, setTrack] = useState<Track>(null);
-    const audio = useRef(new Audio());
+    const audio = useRef(getDefaultAudio());
 
     useEffect(() => {
-        if(!audio.current) return;
-        
         if(!track?.preview_url) {
             audio.current.currentTime = 0;
             audio.current.srcObject = null;
