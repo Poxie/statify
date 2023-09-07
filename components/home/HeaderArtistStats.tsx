@@ -95,7 +95,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 loading={!related}
                 ref={relatedArtists}
             >
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 max-h-[350px] overflow-auto scrollbar pb-4 pr-4">
                     {(related || Array.from(Array(RELATED_ARTIST_COUNT))).slice(0, RELATED_ARTIST_COUNT).map((artist, key) => (
                         <Artist 
                             isPopular={artist?.popularity > POPULARITY_THRESHOLD}
