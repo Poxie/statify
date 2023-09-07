@@ -52,7 +52,7 @@ export default function HomeArtistInfo() {
                 get<SpotifyAlbum[]>(`/artist/${id}/albums`, signal),
                 get<SpotifyFeaturedAlbum[]>(`/artist/${id}/featured`, signal),
                 get<SpotifyArtist[]>(`/artist/${id}/related`, signal),
-                get<SpotifyTrack[]>(`/artist/${artistId}/related-tracks`),
+                get<SpotifyTrack[]>(`/artist/${id}/related-tracks`),
             ],
         )
 
