@@ -8,7 +8,7 @@ import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import SpotifyImage from "../spotify-image";
 import { usePreview } from "@/contexts/preview";
-import SpotifyTrackImage from "../SpotifyTrackImage";
+import SpotifyTrackImage from "../spotify-track-image";
 import SpotifyTrackName from "../spotify-track-name";
 
 type ListItem = SpotifyTrack | SpotifyAlbum | SpotifyFeaturedAlbum;

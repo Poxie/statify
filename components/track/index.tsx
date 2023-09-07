@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from "next/link";
-import SpotifyTrackImage from "../SpotifyTrackImage";
+import SpotifyTrackImage from "../spotify-track-image";
 import { SpotifyTrack } from "@/types";
 import SpotifyTrackName from '../spotify-track-name';
 
