@@ -123,8 +123,8 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     ))}
                 </div>
                 {relatedTracks ? (
-                    <div className="flex justify-between gap-3 text-xs text-secondary pt-4 mr-4 border-t-[1px] border-t-tertiary">
-                        <div className="flex items-center gap-2">
+                    <div className="flex justify-between flex-wrap gap-3 text-xs text-secondary pt-4 mr-4 border-t-[1px] border-t-tertiary">
+                        <div className="flex sm:items-center gap-2">
                             <span>
                                 Navigate to our
                                 {' '}
