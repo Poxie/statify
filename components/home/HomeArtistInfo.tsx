@@ -24,6 +24,7 @@ export default function HomeArtistInfo() {
         albums: SpotifyAlbum[];
         featured: SpotifyFeaturedAlbum[];
         related: SpotifyArtist[];
+        relatedTracks: SpotifyTrack[];
     }>(null);
     const isPopular = (artistInfo?.artist.popularity || -1) > POPULARITY_THRESHOLD;
 
@@ -51,14 +52,15 @@ export default function HomeArtistInfo() {
                 get<SpotifyAlbum[]>(`/artist/${id}/albums`, signal),
                 get<SpotifyFeaturedAlbum[]>(`/artist/${id}/featured`, signal),
                 get<SpotifyArtist[]>(`/artist/${id}/related`, signal),
+                get<SpotifyTrack[]>(`/artist/${artistId}/related-tracks`),
             ],
         )
 
         setOpacityZero(true);
 
         const timeout = setTimeout(() => {
-            requests.then(([ artist, tracks, albums, featured, related ]) => {
-                setArtistInfo({ artist, tracks, albums, featured, related });
+            requests.then(([ artist, tracks, albums, featured, related, relatedTracks ]) => {
+                setArtistInfo({ artist, tracks, albums, featured, related, relatedTracks });
                 setOpacityZero(false);
             })
         }, OPACITY_TRANSITION);
@@ -125,6 +127,7 @@ export default function HomeArtistInfo() {
                 albums={artistInfo?.albums}
                 featured={artistInfo?.featured}
                 related={artistInfo?.related}
+                relatedTracks={artistInfo?.relatedTracks}
                 opacityZero={opacityZero}
             />
         </div>
