@@ -1,3 +1,17 @@
+export type SpotifyOwner = {
+    external_urls: {
+        spotify: string;
+    };
+    followers: {
+        href: string;
+        total: 0;
+    };
+    href: string;
+    id: string;
+    type: 'user';
+    uri: string;
+    display_name: string;
+}
 export type SpotifyImage = {
     height: number | null;
     url: string;
@@ -58,3 +72,32 @@ export type SpotifyFeaturedAlbum = {
     type: string;
     uri: string;
 };
+export type SpotifyPlaylist = {
+    collaborative: boolean;
+    description: string;
+    external_urls: { spotify: string };
+    followers: { total: number };
+    href: string;
+    id: string;
+    images: SpotifyImage[];
+    name: string;
+    owner: SpotifyOwner;
+    public: boolean;
+    snapshot_id: string;
+    tracks: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: {
+        added_at: string;
+        added_by: SpotifyOwner;
+        is_local: boolean;
+        track: SpotifyTrack;
+        }[];
+    };
+    type: string;
+    uri: string;
+}
