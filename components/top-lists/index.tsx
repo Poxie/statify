@@ -1,5 +1,6 @@
 import { SpotifyPlaylist } from "@/types";
 import { fetchFromSpotify } from "@/utils/fetchFromSpotify";
+import TopListSearch from "./TopListSearch";
 
 const getTopByCountry = async (country: string) => {
     const playlistQuery = `spotify top 50 - ${country}`;
@@ -28,10 +29,22 @@ export default async function TopLists({ searchParams: { country='global' } }: {
     const { tracks } = await getTopByCountry(country);
 
     return(
-        <div>
-            {tracks.map(track => (
-                track.track.name
-            ))}
-        </div>
+        <>
+            <div className="w-[800px] max-w-full mx-auto grid gap-3">
+                <h1 className="text-4xl font-semibold text-center">
+                    These are the top hits {country.toLowerCase() === 'global' ? (
+                        'globally'
+                    ) : (
+                        <>
+                        in{' '}
+                        <span>
+                            {country}
+                        </span>
+                        </>
+                    )}
+                </h1>
+                <TopListSearch />
+            </div>
+        </>
     )
 }
