@@ -27,7 +27,7 @@ const getTopByCountry = async (country: string) => {
 export default async function TopLists({ searchParams: { country='global' } }: {
     searchParams: { country?: string }; 
 }) {
-    const { tracks } = await getTopByCountry(country);
+    const { tracks, name, href, owner } = await getTopByCountry(country);
 
     return(
         <>
@@ -48,6 +48,9 @@ export default async function TopLists({ searchParams: { country='global' } }: {
             </div>
             <TopListTracks 
                 tracks={tracks}
+                owner={owner}
+                playlistName={name}
+                playlistHref={href}
             />
         </>
     )
