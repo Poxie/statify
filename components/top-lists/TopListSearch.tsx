@@ -34,7 +34,7 @@ export default function TopListSearch() {
                         initial={{ scale: .98, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: .2, bounce: false }}
-                        className="absolute top-[calc(100%+12px)] w-full rounded-lg bg-secondary border-[1px] border-tertiary p-2 max-h-[350px] overflow-auto scrollbar"
+                        className="absolute z-20 top-[calc(100%+12px)] w-full rounded-lg bg-secondary border-[1px] border-tertiary p-2 max-h-[350px] overflow-auto scrollbar"
                     >
                         {!filteredCountries.length && (
                             <span className="p-3 block text-sm text-secondary">
