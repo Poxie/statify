@@ -51,8 +51,8 @@ export default async function TopLists({ searchParams: { country='global' } }: {
 
     const colors = getCountryColors(country);
     return(
-        <main className="py-20 grid gap-8">
-            <div className="w-[800px] max-w-full mx-auto grid gap-3">
+        <main className="py-10 sm:py-20 pb-42 flex flex-col gap-8">
+            <div className="w-[800px] max-w-main mx-auto grid gap-3">
                 <h1 className="text-4xl font-semibold text-center">
                     These are the top hits {country.toLowerCase() === 'global' ? (
                         'globally'

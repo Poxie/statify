@@ -15,7 +15,7 @@ export default function _TopListTrack({ track, index, small }: {
         <div 
             className={clsx(
                 "group p-3 relative flex rounded-lg overflow-hidden hover:[--bg-opacity:.7]",
-                small ? 'flex-col gap-2' : 'gap-3',
+                small ? 'flex-col gap-2' : 'flex-col gap-3 sm:flex-row',
             )}
             style={{
                 '--bg-color': `rgb(${track.color})`,
@@ -30,15 +30,15 @@ export default function _TopListTrack({ track, index, small }: {
             />
             {!small && (
                 <TopListIndex 
-                    className={"text-center text-6xl w-11 leading-[54px]"}
+                    className={"text-center text-6xl w-11 leading-[54px] top-5 translate-y-0.5 sm:top-3 sm:translate-y-0"}
                     index={index}
                 />
             )}
             <div className={clsx(
                 "relative rounded-lg overflow-hidden",
-                small ? 'aspect-video' : 'aspect-square w-28',
+                small ? 'aspect-video' : 'aspect-square w-20 sm:w-28',
             )}>
-                <SpotifyImage 
+                <SpotifyImage
                     src={image}
                     width={100}
                     height={100}

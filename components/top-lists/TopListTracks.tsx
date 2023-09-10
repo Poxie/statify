@@ -12,7 +12,7 @@ export default function TopListTracks({ tracks, playlistName, playlistHref, owne
 }) {
     return(
         <div className="w-main max-w-main mx-auto">
-            <ul className="grid grid-cols-5 gap-3">
+            <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 {tracks.slice(0,15).map((track, key) => (
                     <TopListTrack 
                         track={track}
