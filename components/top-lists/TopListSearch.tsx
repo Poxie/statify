@@ -4,6 +4,7 @@ import Countries from '@/assets/json/countries.json';
 import { useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import TopListSearchItem from "./TopListSearchItem";
 
 export default function TopListSearch() {
     const router = useRouter();
@@ -12,6 +13,7 @@ export default function TopListSearch() {
     const [search, setSearch] = useState('');
 
     const onSelect = (country: string) => {
+        if(country === 'global') router.push(`/top-lists`, { scroll: false });
         router.push(`/top-lists?country=${country}`, { scroll: false });
     }
 
@@ -36,20 +38,22 @@ export default function TopListSearch() {
                         transition={{ duration: .2, bounce: false }}
                         className="absolute z-20 top-[calc(100%+12px)] w-full rounded-lg bg-secondary border-[1px] border-tertiary p-2 max-h-[350px] overflow-auto scrollbar"
                     >
+                        {!search && (
+                            <TopListSearchItem 
+                                text={'Globally'}
+                                onSelect={() => onSelect('global')}
+                            />
+                        )}
                         {!filteredCountries.length && (
                             <span className="p-3 block text-sm text-secondary">
                                 Your country was not found.
                             </span>
                         )}
                         {filteredCountries.map(country => (
-                            <li key={country.name}>
-                                <button
-                                    className="w-full text-left text-lg py-2 px-3 rounded-lg transition-colors hover:bg-tertiary"
-                                    onClick={() => onSelect(country.name)}
-                                >
-                                    {country.name}
-                                </button>
-                            </li>
+                            <TopListSearchItem 
+                                text={country.name}
+                                onSelect={() => onSelect(country.name)}
+                            />
                         ))}
                     </motion.ul>
                 )}
