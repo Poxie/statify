@@ -1,12 +1,14 @@
 import { SpotifyTrack } from "@/types";
 import SpotifyImage from "../spotify-image";
 import Link from "next/link";
-import React from "react";
+import React, { CSSProperties } from "react";
 import TopListTrackPreview from "./TopListTrackPreview";
 
 export default function TopListPopularTracks({ colors, tracks }: {
     colors: string[] | undefined;
-    tracks: SpotifyTrack[];
+    tracks: (SpotifyTrack & {
+        color: string | undefined
+    })[];
 }) {
     return(
         <div className="py-8 border-t-2 border-b-2 border-t-tertiary border-b-tertiary bg-secondary">
@@ -15,25 +17,27 @@ export default function TopListPopularTracks({ colors, tracks }: {
                     const image = track.album.images.at(-1)?.url;
                     return(
                         <li
-                            className="p-3 relative border-[1px] border-tertiary rounded-lg flex justify-between"
+                            style={{'--bg-with-opacity': `rgb(${track.color} / var(--bg-opacity, 0))`} as CSSProperties}
+                            className="p-3 relative border-[1px] border-tertiary rounded-lg flex justify-between hover:[--bg-opacity:.65]"
                             key={track.id}
                         >
                             <SpotifyImage 
                                 src={image}
                                 width={100}
                                 height={100}
-                                className="z-0 absolute top-0 left-0 w-full h-full opacity-10"
+                                className="z-0 absolute top-0 left-0 w-full h-full opacity-10 after:duration-300 after:transition-colors after:bg-[var(--bg-with-opacity)] after:absolute after:top-0 after:left-0 after:w-full after:h-full"
                             />
                             <div className="relative z-[1] flex gap-3">
-                                <div className="relative">
+                                <div className="relative rounded-lg overflow-hidden">
                                     <SpotifyImage 
                                         src={image}
                                         width={100}
                                         height={100}
-                                        className="w-28 aspect-square rounded-lg"
+                                        className="w-28 aspect-square"
                                     />
-                                    <TopListTrackPreview 
-                                        className="p-2 absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 bg-tertiary rounded-full shadow-2xl transition-opacity hover:bg-opacity-90"
+                                    <TopListTrackPreview
+                                        className="p-2 absolute z-[3] top-0 left-0 w-full h-full flex justify-center items-center shadow-2xl duration-300 transition-colors bg-[var(--bg-with-opacity)] before:bg-[var(--bg-color)] before:w-12 before:rounded-full before:aspect-square before:absolute before:z-[2]"
+                                        style={track.color ? { '--bg-color': `rgb(${track.color})` } as CSSProperties : undefined}
                                         track={track}
                                     />
                                 </div>

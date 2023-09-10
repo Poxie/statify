@@ -92,10 +92,12 @@ export type SpotifyPlaylist = {
         previous: string | null;
         total: number;
         items: {
-        added_at: string;
-        added_by: SpotifyOwner;
-        is_local: boolean;
-        track: SpotifyTrack;
+            added_at: string;
+            added_by: SpotifyOwner;
+            is_local: boolean;
+            track: SpotifyTrack & {
+                color: string | undefined;
+            };
         }[];
     };
     type: string;

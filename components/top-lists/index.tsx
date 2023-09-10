@@ -4,7 +4,9 @@ import TopListSearch from "./TopListSearch";
 import TopListTracks from "./TopListTracks";
 import Countries from '@/assets/json/countries.json';
 import TopListPopularTracks from "./TopListPopularTracks";
+import Vibrant from 'node-vibrant';
 
+const TOP_TRACKS_COUNT = 15;
 const getTopByCountry = async (country: string) => {
     const playlistQuery = `spotify top 50 - ${country}`;
     const { playlists: { items } } = await fetchFromSpotify<{ 
@@ -18,11 +20,24 @@ const getTopByCountry = async (country: string) => {
 
     const playlist = await fetchFromSpotify<SpotifyPlaylist>(`/playlists/${playlistId}`);
 
+    const tracks = [];
+    for(const item of playlist.tracks.items.slice(0, TOP_TRACKS_COUNT)) {
+        const colors = await new Vibrant(item.track.album.images.at(-1)?.url || '', { colorCount: 5 }).getPalette();
+        const rgb = colors.DarkVibrant?.rgb;
+        if(!rgb) {
+            tracks.push(item.track);
+            continue;
+        }
+
+        item.track.color = `${rgb[0]} ${rgb[1]} ${rgb[2]}`;
+        tracks.push(item.track);
+    }
+
     return {
         href: playlist.href,
         name: playlist.name,
         owner: playlist.owner,
-        tracks: playlist.tracks.items.map(item => item.track),
+        tracks,
     }
 }
 const getCountryColors = (country: string) => (
