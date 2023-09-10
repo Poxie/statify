@@ -3,6 +3,7 @@ import { fetchFromSpotify } from "@/utils/fetchFromSpotify";
 import TopListSearch from "./TopListSearch";
 import TopListTracks from "./TopListTracks";
 import Countries from '@/assets/json/countries.json';
+import TopListPopularTracks from "./TopListPopularTracks";
 
 const getTopByCountry = async (country: string) => {
     const playlistQuery = `spotify top 50 - ${country}`;
@@ -44,7 +45,7 @@ export default async function TopLists({ searchParams: { country='global' } }: {
                         <>
                         in{' '}
                         <span 
-                            className="gradient-text"
+                            className="gradient-text font-extrabold"
                             style={colors ? { '--gradient-from': colors[0], '--gradient-to': colors[1] } as React.CSSProperties : undefined}
                         >
                             {country}
@@ -54,11 +55,9 @@ export default async function TopLists({ searchParams: { country='global' } }: {
                 </h1>
                 <TopListSearch />
             </div>
-            <TopListTracks 
-                tracks={tracks}
-                owner={owner}
-                playlistName={name}
-                playlistHref={href}
+            <TopListPopularTracks 
+                tracks={tracks.slice(0,5)}
+                colors={colors}
             />
         </main>
     )
