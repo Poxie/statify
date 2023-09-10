@@ -93,7 +93,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                             <SpotifyTrackImage
                                 track={firstItem as SpotifyTrack}
                                 src={getItemImage(firstItem, type)}
-                                className="w-16" 
+                                imageClassName="w-16" 
                                 width={100}
                                 height={100}
                             />
@@ -146,7 +146,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                 )}
                                 {type === 'track' ? (
                                     <SpotifyTrackImage 
-                                        className="w-6 rounded-sm"
+                                        imageClassName="w-6 rounded-sm"
                                         track={item as SpotifyTrack}
                                         src={getItemImage(item, type)}
                                         height={32}
