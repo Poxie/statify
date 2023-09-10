@@ -13,7 +13,7 @@ export default function TopListSearch() {
     const [search, setSearch] = useState('');
 
     const onSelect = (country: string) => {
-        if(country === 'global') router.push(`/top-lists`, { scroll: false });
+        if(country === 'global') return router.push(`/top-lists`, { scroll: false });
         router.push(`/top-lists?country=${country}`, { scroll: false });
     }
 
