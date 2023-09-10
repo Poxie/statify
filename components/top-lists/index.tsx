@@ -8,7 +8,7 @@ import Vibrant from 'node-vibrant';
 
 const TOP_TRACKS_COUNT = 15;
 const getTopByCountry = async (country: string) => {
-    const playlistQuery = `spotify top 50 - ${country}`;
+    const playlistQuery = `top 50 - ${country}`;
     const { playlists: { items } } = await fetchFromSpotify<{ 
         playlists: {
             items: { id: string }[];
