@@ -5,6 +5,7 @@ import TopListTracks from "./TopListTracks";
 import Countries from '@/assets/json/countries.json';
 import TopListPopularTracks from "./TopListPopularTracks";
 import Vibrant from 'node-vibrant';
+import TopListHeader from "./TopListHeader";
 
 const TOP_TRACKS_COUNT = 15;
 const getTopByCountry = async (country: string) => {
@@ -50,30 +51,14 @@ export default async function TopLists({ searchParams: { country='global' } }: {
     const { tracks, name, href, owner } = await getTopByCountry(country);
 
     const colors = getCountryColors(country);
-    const isTopList = name.toLowerCase().includes('top') && owner.display_name === 'Spotify';
     return(
-        <main className="py-10 sm:py-20 pb-42 flex flex-col gap-8">
-            <div className="w-[600px] max-w-main mx-auto text-center">
-                <h1 className="text-4xl font-semibold">
-                    These are {isTopList ? 'the top' : 'some'} hits {country.toLowerCase() === 'global' ? (
-                        'globally'
-                    ) : (
-                        <>
-                        in{' '}
-                        <span 
-                            className="gradient-text font-extrabold"
-                            style={colors ? { '--gradient-from': colors[0], '--gradient-to': colors[1] } as React.CSSProperties : undefined}
-                        >
-                            {country}
-                        </span>
-                        </>
-                    )}
-                </h1>
-                <span className="block mt-4 mb-6 sm:text-xl text-secondary">
-                    It is time to leave your country’s bobble. This is a way to explore the culture of countries all around the world.
-                </span>
-                <TopListSearch />
-            </div>
+        <main className="pt-10 sm:pt-20 pb-8 flex flex-col gap-8">
+            <TopListHeader 
+                colors={colors}
+                country={country}
+                owner={owner}
+                playlistName={name}
+            />
             <TopListPopularTracks 
                 tracks={tracks.slice(0,5)}
                 colors={colors}
