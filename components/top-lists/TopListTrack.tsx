@@ -35,10 +35,14 @@ export default function _TopListTrack({ track, index, small }: {
                 />
             )}
             <div className={clsx(
-                "relative rounded-lg overflow-hidden",
+                "relative",
                 small ? 'aspect-video' : 'aspect-square w-20 sm:w-28',
             )}>
                 <SpotifyImage
+                    className={clsx(
+                        "rounded-lg border-4 border-[var(--bg-color)]",
+                        small ? 'aspect-video' : 'aspect-square',
+                    )}
                     src={image}
                     width={100}
                     height={100}
@@ -46,7 +50,7 @@ export default function _TopListTrack({ track, index, small }: {
                 <TopListTrackPreview 
                     track={track}
                     className={clsx(
-                        "p-4 absolute top-0 left-0 w-full h-full flex items-center justify-center duration-300 transition-[opacity,background-color] opacity-0 group-hover:opacity-100 bg-[var(--bg-with-opacity)]",
+                        "p-4 absolute top-0 left-0 w-full h-full flex items-center justify-center duration-300 transition-[opacity,background-color] opacity-0 group-hover:opacity-100 rounded-xl bg-[var(--bg-with-opacity)]",
                         "after:w-12 after:aspect-square after:rounded-full after:bg-[var(--bg-color)] after:absolute after:top-2/4 after:left-2/4 after:-translate-x-2/4 after:-translate-y-2/4",
                     )}
                 />
@@ -92,7 +96,7 @@ function TopListIndex({ index, className }: {
     return(
         <span
             className={clsx(
-                "text-border absolute z-[1] top-3 right-3 font-extrabold",
+                "[--stroke-color:var(--bg-color)] text-border absolute z-[1] top-3 right-3 font-extrabold",
                 className,
             )}
         >
