@@ -19,7 +19,7 @@ export default function TopListSearch() {
         Countries.filter(country => country.name.toLowerCase().includes(search.toLowerCase()))
     ), [search]);
     return(
-        <div className="relative">
+        <div className="relative w-[600px] max-w-full mx-auto">
             <Input 
                 placeholder={'Find your country...'}
                 className="text-base py-4"

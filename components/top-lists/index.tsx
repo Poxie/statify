@@ -52,8 +52,8 @@ export default async function TopLists({ searchParams: { country='global' } }: {
     const colors = getCountryColors(country);
     return(
         <main className="py-10 sm:py-20 pb-42 flex flex-col gap-8">
-            <div className="w-[800px] max-w-main mx-auto grid gap-3">
-                <h1 className="text-4xl font-semibold text-center">
+            <div className="w-[600px] max-w-main mx-auto text-center">
+                <h1 className="text-4xl font-semibold">
                     These are the top hits {country.toLowerCase() === 'global' ? (
                         'globally'
                     ) : (
@@ -68,6 +68,9 @@ export default async function TopLists({ searchParams: { country='global' } }: {
                         </>
                     )}
                 </h1>
+                <span className="block mt-4 mb-6 sm:text-xl text-secondary">
+                    It is time to leave your country’s bobble. This is a way to explore the culture of countries all around the world.
+                </span>
                 <TopListSearch />
             </div>
             <TopListPopularTracks 
