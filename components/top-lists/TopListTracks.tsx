@@ -1,7 +1,6 @@
 import React from 'react';
-import { SpotifyOwner, SpotifyPlaylist, SpotifyTrack } from "@/types";
-import SpotifyImage from "../spotify-image";
 import TopListTrack from './TopListTrack';
+import { SpotifyOwner, SpotifyPlaylist, SpotifyTrack } from "@/types";
 import Link from 'next/link';
 
 const INITIAL_INDEX = 6;
@@ -18,6 +17,7 @@ export default function TopListTracks({ tracks, playlistName, playlistHref, owne
                     <TopListTrack 
                         track={track}
                         index={INITIAL_INDEX + key}
+                        small
                         key={track.id}
                     />
                 ))}

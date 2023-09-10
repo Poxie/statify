@@ -1,48 +1,67 @@
-"use client";
 import React, { CSSProperties } from 'react';
-import SpotifyImage from "../spotify-image";
-import { SpotifyPlaylist } from "@/types";
+import clsx from "clsx";
 import Link from 'next/link';
-import TopListTrackPreview from './TopListTrackPreview';
+import SpotifyImage from "../spotify-image";
+import TopListTrackPreview from "./TopListTrackPreview";
+import { SpotifyAlbum, SpotifyPlaylist } from "@/types";
 
-export default function TopListTrack({ track, index }: {
+export default function _TopListTrack({ track, index, small }: {
     track: SpotifyPlaylist['tracks']['items'][number]['track'];
     index: number;
+    small?: boolean;
 }) {
-    const bgImage = track.album.images.at(-1)?.url;
-    const image = track.album.images.at(0)?.url;
-
+    const image = track.album.images.at(-1)?.url;
     return(
-        <li className="group relative grid gap-2 p-3 border-[1px] border-tertiary rounded-lg">
-            <SpotifyImage 
-                src={bgImage}
-                height={64}
-                width={64}
-                className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"
+        <div 
+            className={clsx(
+                "group p-3 relative flex rounded-lg overflow-hidden hover:[--bg-opacity:.7]",
+                small ? 'flex-col gap-2' : 'gap-3',
+            )}
+            style={{
+                '--bg-color': `rgb(${track.color})`,
+                '--bg-with-opacity': `rgb(${track.color} / var(--bg-opacity, 0))`,
+            } as CSSProperties}
+        >
+            <SpotifyImage
+                className="absolute top-0 left-0 w-full h-full opacity-10 after:absolute after:w-full after:h-full after:top-0 after:left-0 after:duration-300 after:transition-colors after:bg-[var(--bg-with-opacity)]" 
+                src={image}
+                width={100}
+                height={100}
             />
-            <div 
-                className="relative rounded-lg overflow-hidden group-hover:[--bg-opacity:.75]"
-                style={{ 
-                    '--bg-color': `rgb(${track.color})`, 
-                    '--bg-with-opacity': `rgb(${track.color} / var(--bg-opacity, 0))` 
-                } as CSSProperties}
-            >
+            {!small && (
+                <TopListIndex 
+                    className={"text-6xl"}
+                    index={index}
+                />
+            )}
+            <div className={clsx(
+                "relative rounded-lg overflow-hidden",
+                small ? 'aspect-video' : 'aspect-square w-28',
+            )}>
                 <SpotifyImage 
                     src={image}
-                    height={200}
-                    width={200}
-                    className="aspect-video"
+                    width={100}
+                    height={100}
                 />
-                <TopListTrackPreview
-                    className="opacity-0 group-hover:opacity-100 p-2 absolute z-[3] top-0 left-0 w-full h-full flex justify-center items-center shadow-2xl duration-300 transition-[background-color,opacity] bg-[var(--bg-with-opacity)] before:bg-[var(--bg-color)] before:w-12 before:rounded-full before:aspect-square before:absolute before:z-[2]"
+                <TopListTrackPreview 
                     track={track}
+                    className={clsx(
+                        "p-4 absolute top-0 left-0 w-full h-full flex items-center justify-center duration-300 transition-[opacity,background-color] opacity-0 group-hover:opacity-100 bg-[var(--bg-with-opacity)]",
+                        "after:w-12 after:aspect-square after:rounded-full after:bg-[var(--bg-color)] after:absolute after:top-2/4 after:left-2/4 after:-translate-x-2/4 after:-translate-y-2/4",
+                    )}
                 />
-                <span className="absolute z-[3] top-1 right-2 text-4xl font-extrabold drop-shadow-[0_0px_2px_rgba(0,0,0,0.8)]">
-                    {index}
-                </span>
+                {small && (
+                    <TopListIndex 
+                        className={"text-4xl"}
+                        index={index}
+                    />
+                )}
             </div>
-            <div className="grid">
-                <span className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="flex flex-col relative z-[2]">
+                <span className={clsx(
+                    "font-semibold overflow-hidden text-ellipsis whitespace-nowrap",
+                    small ? 'text-sm' : 'text-xl',
+                )}>
                     {track.name}
                 </span>
                 <span className="text-xs text-secondary whitespace-nowrap overflow-hidden text-ellipsis">
@@ -62,6 +81,22 @@ export default function TopListTrack({ track, index }: {
                     ))}
                 </span>
             </div>
-        </li>
+        </div>
+    )
+}
+
+function TopListIndex({ index, className }: {
+    index: number;
+    className: string;
+}) {
+    return(
+        <span
+            className={clsx(
+                "absolute z-[1] top-2 right-3 text-center font-extrabold",
+                className,
+            )}
+        >
+            {index}
+        </span>
     )
 }
