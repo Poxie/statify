@@ -1,10 +1,10 @@
 import React, { CSSProperties } from 'react';
-import clsx from "clsx";
-import Link from 'next/link';
 import SpotifyImage from "../spotify-image";
-import TopListTrackPreview from "./TopListTrackPreview";
-import { SpotifyAlbum, SpotifyPlaylist } from "@/types";
 import SpotifyTrackArtists from '../spotify-track-artists';
+import SpotifyTrackName from '../spotify-track-name';
+import SpotifyTrackImage from '../spotify-track-image';
+import { SpotifyPlaylist } from "@/types";
+import clsx from "clsx";
 
 export default function _TopListTrack({ track, index, small }: {
     track: SpotifyPlaylist['tracks']['items'][number]['track'];
@@ -15,7 +15,7 @@ export default function _TopListTrack({ track, index, small }: {
     return(
         <div 
             className={clsx(
-                "group p-3 relative flex rounded-lg overflow-hidden hover:[--bg-opacity:.7]",
+                "group p-3 relative flex rounded-lg overflow-hidden hover:[--bg-opacity:.75]",
                 small ? 'flex-col gap-2' : 'flex-col gap-3 sm:flex-row',
             )}
             style={{
@@ -39,19 +39,17 @@ export default function _TopListTrack({ track, index, small }: {
                 "relative",
                 small ? 'aspect-video' : 'aspect-square w-20 sm:w-28',
             )}>
-                <SpotifyImage
-                    className={clsx(
-                        "rounded-lg border-4 border-[var(--bg-color)]",
+                <SpotifyTrackImage 
+                    height={100}
+                    width={100}
+                    track={track}
+                    src={track.album.images.at(-1)?.url}
+                    imageClassName={clsx(
+                        "border-4 border-[var(--bg-color)]",
                         small ? 'aspect-video' : 'aspect-square',
                     )}
-                    src={image}
-                    width={100}
-                    height={100}
-                />
-                <TopListTrackPreview 
-                    track={track}
-                    className={clsx(
-                        "p-4 absolute top-0 left-0 w-full h-full flex items-center justify-center duration-300 transition-[opacity,background-color] opacity-0 group-hover:opacity-100 rounded-xl bg-[var(--bg-with-opacity)]",
+                    buttonClassName={clsx(
+                        "p-4 duration-300 transition-[opacity,background-color] opacity-0 group-hover:opacity-100 rounded-md bg-[var(--bg-with-opacity)]",
                         "after:w-12 after:aspect-square after:rounded-full after:bg-[var(--bg-color)] after:absolute after:top-2/4 after:left-2/4 after:-translate-x-2/4 after:-translate-y-2/4",
                     )}
                 />
@@ -63,12 +61,13 @@ export default function _TopListTrack({ track, index, small }: {
                 )}
             </div>
             <div className="flex flex-col relative z-[2]">
-                <span className={clsx(
-                    "font-semibold overflow-hidden text-ellipsis whitespace-nowrap",
-                    small ? 'text-sm' : 'text-xl',
-                )}>
-                    {track.name}
-                </span>
+                <SpotifyTrackName 
+                    className={clsx(
+                        "font-semibold overflow-hidden text-ellipsis whitespace-nowrap",
+                        small ? 'text-sm' : 'text-xl',
+                    )}
+                    track={track}
+                />
                 <SpotifyTrackArtists artists={track.artists} />
             </div>
         </div>

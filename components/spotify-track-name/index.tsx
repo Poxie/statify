@@ -1,3 +1,4 @@
+"use client";
 import { usePreview } from "@/contexts/preview";
 import { SpotifyTrack } from "@/types";
 import clsx from "clsx";

@@ -1,5 +1,6 @@
-import { usePreview } from "@/contexts/preview";
+"use client";
 import SpotifyImage, { SpotifyImageProps } from "../spotify-image";
+import { usePreview } from "@/contexts/preview";
 import { SpotifyTrack } from "@/types";
 import { PlayIcon } from "@/assets/icons/PlayIcon";
 import { PauseIcon } from "@/assets/icons/PauseIcon";
@@ -8,38 +9,45 @@ import clsx from "clsx";
 
 export default function SpotifyTrackImage(props: SpotifyImageProps & {
     track: SpotifyTrack;
+    imageClassName?: string;
+    buttonClassName?: string;
 }) {
-    const { setTrack, track } = usePreview();
+    const { track, imageClassName, buttonClassName } = props;
+
+    const { setTrack, track: previewTrack } = usePreview();
     const { paused, togglePause } = usePreviewPause();
-    
-    const canBePreviewed = props.track.preview_url !== null;
 
     const handleClick = () => {
         if(!canBePreviewed) return;
-        if(track?.id !== props.track.id) return setTrack(props.track);
+        if(previewTrack?.id !== track.id) return setTrack(track);
         togglePause();
     }
 
-    const isPausable = track?.id === props.track.id && !paused;
+    const canBePreviewed = track.preview_url !== null;
+    const isPreviewTrack = previewTrack?.id === track.id;
+    const isPausable = isPreviewTrack && !paused;
     return(
         <div className="relative">
             <SpotifyImage 
                 {...props}
+                className={imageClassName}
             />
             <button 
                 disabled={!canBePreviewed}
                 onClick={handleClick}
-                aria-label={isPausable ? canBePreviewed ? `Play preview for ${track.name}` : `Preview for ${track.name} is not available` : `Pause preview for ${track?.name}`}
+                aria-label={isPausable ? canBePreviewed ? `Play preview for ${track.name}` : `Preview for ${track.name} is not available` : `Pause preview for ${track.name}`}
                 className={clsx(
-                    "absolute w-full h-full left-0 top-0 flex items-center justify-center bg-secondary bg-opacity-75 opacity-0 group-hover:opacity-100 duration-300 transition-opacity",
-                    !canBePreviewed ? 'after:bg-t-secondary after:rounded-full after:h-[1.35rem] after:w-[.18rem] after:rotate-45 after:absolute after:left-[50%+.25rem] after:-translate-x-2/4' : 'focus:opacity-100',
-                    isPausable && 'opacity-100',
+                    "absolute w-full h-full left-0 top-0 flex items-center justify-center rounded-md opacity-0 group-hover:opacity-100 duration-300 transition-[opacity,background-color]",
+                    !canBePreviewed && "before:absolute before:w-1 before:h-8 before:rotate-45 before:top-2/4 before:left-2/4 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-lg before:bg-tertiary before:z-[5]",
+                    !buttonClassName?.includes('bg-') && "bg-tertiary group-hover:bg-opacity-75",
+                    (isPausable || isPreviewTrack) && 'opacity-100',
+                    buttonClassName,
                 )}
             >
                 {isPausable ? (
-                    <PauseIcon className="w-7" />
+                    <PauseIcon className="w-7 relative z-[4]" />
                 ) : (
-                    <PlayIcon className="w-7" />
+                    <PlayIcon className="w-7 relative z-[4]" />
                 )}
             </button>
         </div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export type SpotifyImageProps = {
     className?: string;
-    src?: string;
+    src: string | undefined;
     width: number;
     height: number;
 }
