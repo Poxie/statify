@@ -74,6 +74,12 @@ export default async function TopLists({ searchParams: { country='global' } }: {
                 tracks={tracks.slice(0,5)}
                 colors={colors}
             />
+            <TopListTracks 
+                tracks={tracks.slice(5)}
+                playlistHref={href}
+                playlistName={name}
+                owner={owner}
+            />
         </main>
     )
 }
