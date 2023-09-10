@@ -92,7 +92,7 @@ function TopListIndex({ index, className }: {
     return(
         <span
             className={clsx(
-                "absolute z-[1] top-2 right-3 text-center font-extrabold",
+                "text-border absolute z-[1] top-2 right-3 text-center font-extrabold",
                 className,
             )}
         >

@@ -50,4 +50,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .text-border {
+    --stroke-color: #6E3FC9;
+    --stroke-width: 3px;
+    text-shadow: 4px 0 var(--stroke-color), -4px 0 var(--stroke-color), 0 4px var(--stroke-color), 0 -4px var(--stroke-color),
+             3px 3px var(--stroke-color), -3px -3px var(--stroke-color), 3px -3px var(--stroke-color), -3px 3px var(--stroke-color);
+  }
 }
