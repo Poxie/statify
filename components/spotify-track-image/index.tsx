@@ -7,7 +7,7 @@ import { PauseIcon } from "@/assets/icons/PauseIcon";
 import { usePreviewPause } from "@/hooks/usePreviewPause";
 import clsx from "clsx";
 
-export default function SpotifyTrackImage(props: SpotifyImageProps & {
+export default function SpotifyTrackImage(props: Omit<SpotifyImageProps, 'className'> & {
     track: SpotifyTrack;
     imageClassName?: string;
     buttonClassName?: string;
