@@ -7,7 +7,6 @@ import { useAnimateStyle } from "@/hooks/useAnimateStyle";
 import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import SpotifyImage from "../spotify-image";
-import { usePreview } from "@/contexts/preview";
 import SpotifyTrackImage from "../spotify-track-image";
 import SpotifyTrackName from "../spotify-track-name";
 
@@ -68,8 +67,6 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
     className?: string;
     opacityZero: boolean;
 }) {
-    const { setTrack } = usePreview();
-
     const ref = useRef<HTMLDivElement>(null);
 
     useAnimateStyle(ref, opacityZero, {
