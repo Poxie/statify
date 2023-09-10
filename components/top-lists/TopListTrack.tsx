@@ -52,7 +52,7 @@ export default function _TopListTrack({ track, index, small }: {
                 />
                 {small && (
                     <TopListIndex 
-                        className={"text-4xl"}
+                        className={"[--stroke-width:2px] text-4xl"}
                         index={index}
                     />
                 )}

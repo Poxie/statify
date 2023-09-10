@@ -53,7 +53,7 @@
   .text-border {
     --stroke-color: #6E3FC9;
     --stroke-width: 3px;
-    text-shadow: 4px 0 var(--stroke-color), -4px 0 var(--stroke-color), 0 4px var(--stroke-color), 0 -4px var(--stroke-color),
-             3px 3px var(--stroke-color), -3px -3px var(--stroke-color), 3px -3px var(--stroke-color), -3px 3px var(--stroke-color);
+    text-shadow: calc(var(--stroke-width) + 1px) 0 var(--stroke-color), calc(-1 * (var(--stroke-width) + 1px)) 0 var(--stroke-color), 0 calc(var(--stroke-width) + 1px) var(--stroke-color), 0 calc(-1 * (var(--stroke-width) + 1px)) var(--stroke-color),
+             var(--stroke-width) var(--stroke-width) var(--stroke-color), calc(-1 * var(--stroke-width)) calc(-1 * var(--stroke-width)) var(--stroke-color), var(--stroke-width) calc(-1 * var(--stroke-width)) var(--stroke-color), calc(-1 * var(--stroke-width)) var(--stroke-width) var(--stroke-color);
   }
 }
