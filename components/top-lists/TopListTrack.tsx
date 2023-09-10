@@ -4,6 +4,7 @@ import Link from 'next/link';
 import SpotifyImage from "../spotify-image";
 import TopListTrackPreview from "./TopListTrackPreview";
 import { SpotifyAlbum, SpotifyPlaylist } from "@/types";
+import SpotifyTrackArtists from '../spotify-track-artists';
 
 export default function _TopListTrack({ track, index, small }: {
     track: SpotifyPlaylist['tracks']['items'][number]['track'];
@@ -68,22 +69,7 @@ export default function _TopListTrack({ track, index, small }: {
                 )}>
                     {track.name}
                 </span>
-                <span className="text-xs text-secondary whitespace-nowrap overflow-hidden text-ellipsis">
-                    by{' '}
-                    {track.artists.map((artist, key) => (
-                        <React.Fragment key={artist.id}>
-                            <Link
-                                href={`/?a=${artist.id}`}
-                                className="transition-colors hover:text-primary"
-                            >
-                                {artist.name}
-                            </Link>
-                            {key !== track.artists.length - 1 && (
-                                ', '
-                            )}
-                        </React.Fragment>
-                    ))}
-                </span>
+                <SpotifyTrackArtists artists={track.artists} />
             </div>
         </div>
     )

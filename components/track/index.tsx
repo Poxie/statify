@@ -3,6 +3,7 @@ import Link from "next/link";
 import SpotifyTrackImage from "../spotify-track-image";
 import { SpotifyTrack } from "@/types";
 import SpotifyTrackName from '../spotify-track-name';
+import SpotifyTrackArtists from '../spotify-track-artists';
 
 export default function Track({ track }: {
     track: SpotifyTrack | undefined;
@@ -27,20 +28,7 @@ export default function Track({ track }: {
                     track={track}
                     className="text-sm font-semibold text-ellipsis whitespace-nowrap overflow-hidden"
                 />
-                <span className="text-xs text-secondary">
-                    by {track.artists.map((artist, key) => (
-                        <React.Fragment key={artist.id}>
-                            <Link
-                                className="transition-colors hover:text-primary"
-                                href={`/?a=${artist.id}`}
-                                scroll={false}
-                            >
-                                {artist.name}
-                            </Link>
-                            {key !== track.artists.length - 1 && ', '}
-                        </React.Fragment>
-                    ))}
-                </span>
+                <SpotifyTrackArtists artists={track.artists}/>
             </div>
         </div>
     )

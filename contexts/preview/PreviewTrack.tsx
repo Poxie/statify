@@ -2,6 +2,7 @@ import SpotifyImage from '@/components/spotify-image';
 import React from 'react';
 import { usePreview } from '.';
 import Link from 'next/link';
+import SpotifyTrackArtists from '@/components/spotify-track-artists';
 
 export default function PreviewTrack() {
     const { track } = usePreview();
@@ -18,21 +19,7 @@ export default function PreviewTrack() {
                 <span className="font-bold -mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
                     {track?.name}
                 </span>
-                <span className="text-xs text-secondary">
-                    by{' '}
-                    {track?.artists.map((artist, key) => (
-                        <React.Fragment key={artist.id}>
-                            <Link 
-                                href={`/?a=${artist.id}`}
-                                className="transition-colors hover:text-primary"
-                                scroll={false}
-                            >
-                                {artist.name}
-                            </Link>
-                            {key !== track.artists.length - 1 && ', '}
-                        </React.Fragment>
-                    ))}
-                </span>
+                <SpotifyTrackArtists artists={track?.artists || []} />
             </div>
         </div>
     )
