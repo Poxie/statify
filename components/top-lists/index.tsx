@@ -50,11 +50,12 @@ export default async function TopLists({ searchParams: { country='global' } }: {
     const { tracks, name, href, owner } = await getTopByCountry(country);
 
     const colors = getCountryColors(country);
+    const isTopList = name.toLowerCase().includes('top') && owner.display_name === 'Spotify';
     return(
         <main className="py-10 sm:py-20 pb-42 flex flex-col gap-8">
             <div className="w-[600px] max-w-main mx-auto text-center">
                 <h1 className="text-4xl font-semibold">
-                    These are the top hits {country.toLowerCase() === 'global' ? (
+                    These are {isTopList ? 'the top' : 'some'} hits {country.toLowerCase() === 'global' ? (
                         'globally'
                     ) : (
                         <>
