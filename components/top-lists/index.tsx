@@ -34,7 +34,7 @@ const getTopByCountry = async (country: string) => {
     }
 
     return {
-        href: playlist.href,
+        href: playlist.external_urls.spotify,
         name: playlist.name,
         owner: playlist.owner,
         tracks,
