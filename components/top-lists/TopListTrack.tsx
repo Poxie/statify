@@ -30,7 +30,7 @@ export default function _TopListTrack({ track, index, small }: {
             />
             {!small && (
                 <TopListIndex 
-                    className={"text-6xl"}
+                    className={"text-6xl w-11"}
                     index={index}
                 />
             )}
