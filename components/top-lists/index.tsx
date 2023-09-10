@@ -2,6 +2,7 @@ import { SpotifyPlaylist } from "@/types";
 import { fetchFromSpotify } from "@/utils/fetchFromSpotify";
 import TopListSearch from "./TopListSearch";
 import TopListTracks from "./TopListTracks";
+import Countries from '@/assets/json/countries.json';
 
 const getTopByCountry = async (country: string) => {
     const playlistQuery = `spotify top 50 - ${country}`;
@@ -23,12 +24,16 @@ const getTopByCountry = async (country: string) => {
         tracks: playlist.tracks.items.map(item => item.track),
     }
 }
+const getCountryColors = (country: string) => (
+    Countries.find(c => c.name.toLowerCase() === country.toLowerCase())?.colors
+)
 
 export default async function TopLists({ searchParams: { country='global' } }: {
     searchParams: { country?: string }; 
 }) {
     const { tracks, name, href, owner } = await getTopByCountry(country);
 
+    const colors = getCountryColors(country);
     return(
         <main className="py-20 grid gap-8">
             <div className="w-[800px] max-w-full mx-auto grid gap-3">
@@ -38,7 +43,10 @@ export default async function TopLists({ searchParams: { country='global' } }: {
                     ) : (
                         <>
                         in{' '}
-                        <span>
+                        <span 
+                            className="gradient-text"
+                            style={colors ? { '--gradient-from': colors[0], '--gradient-to': colors[1] } as React.CSSProperties : undefined}
+                        >
                             {country}
                         </span>
                         </>
