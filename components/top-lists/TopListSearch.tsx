@@ -51,8 +51,9 @@ export default function TopListSearch() {
                         )}
                         {filteredCountries.map(country => (
                             <TopListSearchItem 
-                                text={country.name}
                                 onSelect={() => onSelect(country.name)}
+                                text={country.name}
+                                key={country.name}
                             />
                         ))}
                     </motion.ul>
