@@ -30,7 +30,7 @@ export default function _TopListTrack({ track, index, small }: {
             />
             {!small && (
                 <TopListIndex 
-                    className={"text-6xl w-11"}
+                    className={"text-center text-6xl w-11 leading-[54px]"}
                     index={index}
                 />
             )}
@@ -52,7 +52,7 @@ export default function _TopListTrack({ track, index, small }: {
                 />
                 {small && (
                     <TopListIndex 
-                        className={"[--stroke-width:2px] text-4xl"}
+                        className={"[--stroke-width:2px] text-right text-4xl leading-[32px]"}
                         index={index}
                     />
                 )}
@@ -92,7 +92,7 @@ function TopListIndex({ index, className }: {
     return(
         <span
             className={clsx(
-                "text-border absolute z-[1] top-2 right-3 text-center font-extrabold",
+                "text-border absolute z-[1] top-3 right-3 font-extrabold",
                 className,
             )}
         >
