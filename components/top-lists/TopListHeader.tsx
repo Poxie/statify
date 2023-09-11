@@ -1,16 +1,11 @@
 "use client";
-import Countries from '@/assets/json/countries.json';
 import TopListSearch from "./TopListSearch";
-import { SpotifyOwner } from "@/types";
+import { getCountryColors } from "@/utils";
 import { useSearchParams } from "next/navigation";
-
-const getCountryColors = (country: string | null) => {
-    if(!country) return;
-    return Countries.find(c => c.name.toLowerCase() === country.toLowerCase())?.colors;
-}
 
 export default function TopListHeader() {
     const country = useSearchParams().get('country');
+
     const colors = getCountryColors(country);
 
     return(

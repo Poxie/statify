@@ -1,3 +1,4 @@
+import Countries from '@/assets/json/countries.json';
 import Artists from '@/assets/json/defaultArtists.json'
 import { cache } from "react";
 
@@ -14,4 +15,9 @@ export const get = cache(async <T>(query: string, signal?: AbortSignal) => {
 export const getRandomArtist = (excludeId?: string) => {
     const includedArtists = Artists.filter(a => a.id !== excludeId);
     return includedArtists[Math.floor(Math.random() * includedArtists.length)].id;
+}
+
+export const getCountryColors = (country: string | null) => {
+    if(!country) return;
+    return Countries.find(c => c.name.toLowerCase() === country.toLowerCase())?.colors;
 }
