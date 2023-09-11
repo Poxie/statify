@@ -102,7 +102,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                 height={100}
                             />
                         )}
-                        <div className="flex flex-col gap-0.5">
+                        <div className="flex flex-col gap-0.5 overflow-hidden">
                             {type === 'track' ? (
                                 <SpotifyTrackName 
                                     track={firstItem as SpotifyTrack}
