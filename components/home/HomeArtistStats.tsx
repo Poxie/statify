@@ -1,14 +1,7 @@
 import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from "@/types"
-import Artist from "../artist";
-import { POPULARITY_THRESHOLD } from "@/utils/constants";
 import ItemList from "../item-list";
-import ItemContainer from "../item-container";
-import { useRef } from "react";
-import { useAnimateStyle } from "@/hooks/useAnimateStyle";
-import Track from "../track";
-import Link from "next/link";
-import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
-import { QuestionIcon } from "@/assets/icons/QuestionIcon";
+import HomeRelatedArtists from "./HomeRelatedArtists";
+import HomeRelatedTracks from "./HomeRelatedTracks";
 
 // Determining the artist's top album by checking the most occuring album among their top tracks.
 const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] | undefined) => {
@@ -28,8 +21,6 @@ const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] 
     return firstAlbum;
 }
 
-const RELATED_ARTIST_COUNT = 9;
-const RELATED_TRACK_COUNT = 48;
 export default function HomeArtistStats({ albums, tracks, artist, featured, relatedArtists, relatedTracks, loading }: {
     tracks: SpotifyTrack[] | undefined;
     albums: SpotifyAlbum[] | undefined;
@@ -39,23 +30,9 @@ export default function HomeArtistStats({ albums, tracks, artist, featured, rela
     relatedTracks: SpotifyTrack[] | undefined;
     loading: boolean;
 }) {
-    const relatedArtistsContainer = useRef<HTMLDivElement>(null);
-    const relatedTracksContainer = useRef<HTMLDivElement>(null);
-
     const firstFeatured = featured?.at(0);
     const firstTrack = tracks?.at(0);
     const firstAlbum = getTopAlbum(tracks, albums);
-    
-    useAnimateStyle(relatedArtistsContainer, loading, {
-        from: { opacity: 0, transform: 'translateY(20px)' },
-        to: { opacity: 1, transform: 'translateY(0)' },
-        delayIn: 500,
-    })
-    useAnimateStyle(relatedTracksContainer, loading, {
-        from: { opacity: 0, transform: 'translateY(20px)' },
-        to: { opacity: 1, transform: 'translateY(0)' },
-        delayIn: 700,
-    })
     return(
         <div className="py-8 w-main max-w-main mx-auto flex flex-col gap-3">
             <div className="max-w-full flex flex-col gap-3 grid-col-1 sm:grid sm:grid-cols-2 lg:grid-cols-3">
@@ -85,72 +62,16 @@ export default function HomeArtistStats({ albums, tracks, artist, featured, rela
                     index={2}
                 />
             </div>
-            <ItemContainer
-                title={artist ? `Artists related to ${artist?.name}` : undefined}
-                emptyLabel={'This artist does not have enough data to show related artists.'}
-                isEmpty={!relatedArtists?.length}
-                loading={!relatedArtists}
-                ref={relatedArtistsContainer}
-            >
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 max-h-[350px] overflow-auto scrollbar pb-4 pr-4">
-                    {(relatedArtists || Array.from(Array(RELATED_ARTIST_COUNT))).slice(0, RELATED_ARTIST_COUNT).map((artist, key) => (
-                        <Artist 
-                            isPopular={artist?.popularity > POPULARITY_THRESHOLD}
-                            artist={artist}
-                            small
-                            key={key}
-                        />
-                    ))}
-                </div>
-            </ItemContainer>
-            <ItemContainer
-                className="pr-0"
-                title={relatedTracks ? `If you like ${artist?.name}'s songs you may also like...` : ''}
-                emptyLabel={'This artist does not have enough data to show similar songs.'}
-                isEmpty={!relatedTracks?.length}
+            <HomeRelatedArtists 
+                artist={artist}
+                relatedArtists={relatedArtists}
                 loading={loading}
-                ref={relatedTracksContainer}
-            >
-                <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 max-h-[350px] overflow-auto scrollbar pb-4 pr-4">
-                    {(relatedTracks || Array.from(Array(RELATED_TRACK_COUNT))).slice(0, RELATED_TRACK_COUNT).map((track, key) => (
-                        <Track 
-                            track={track}
-                            key={key}
-                        />
-                    ))}
-                </div>
-                {relatedTracks ? (
-                    <div className="flex justify-between flex-wrap gap-3 text-xs text-secondary pt-4 mr-4 border-t-[1px] border-t-tertiary">
-                        <div className="flex sm:items-center gap-2">
-                            <span>
-                                Navigate to our
-                                {' '}
-                                <Link
-                                    href={`/explore`}
-                                    className="transition-colors hover:text-primary"
-                                >
-                                    exploration section
-                                </Link>
-                                {' '}
-                                for more advanced search options.
-                            </span>
-                            <HasTooltip tooltip={'These recommendations are based only on the artist and its top four genres. Visit our exploration section for better recommendations.'}>
-                                <QuestionIcon className="w-3" />
-                            </HasTooltip>
-                        </div>
-                        <Link 
-                            href={'/explore'}
-                            className="transition-colors hover:text-primary"
-                        >
-                            Explore more
-                        </Link>
-                    </div>
-                ) : (
-                    <div className="h-[33px]">
-
-                    </div>
-                )}
-            </ItemContainer>
+            />
+            <HomeRelatedTracks 
+                artist={artist}
+                relatedTracks={relatedTracks}
+                loading={loading}
+            />
         </div>
     )
 }
