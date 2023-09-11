@@ -160,7 +160,7 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                 {type === 'track' ? (
                                     <SpotifyTrackName 
                                         track={item as SpotifyTrack}
-                                        className="flex-1 text-left text-xs whitespace-nowrap overflow-hidden text-ellipsis"
+                                        className="flex-1 text-xs"
                                     />
                                 ) : (
                                     <span className="flex-1 text-xs whitespace-nowrap overflow-hidden text-ellipsis">

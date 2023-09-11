@@ -26,7 +26,7 @@ export default function Track({ track }: {
             <div className="flex flex-col overflow-hidden">
                 <SpotifyTrackName 
                     track={track}
-                    className="text-sm font-semibold text-ellipsis whitespace-nowrap overflow-hidden"
+                    className="text-sm"
                 />
                 <SpotifyTrackArtists artists={track.artists}/>
             </div>

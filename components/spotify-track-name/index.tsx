@@ -13,7 +13,7 @@ export default function SpotifyTrackName({ track, className }: {
         <button 
             onClick={track.preview_url ? () => setTrack(track) : undefined}
             className={clsx(
-                "text-left transition-colors hover:text-c-primary",
+                "text-left font-semibold text-ellipsis whitespace-nowrap overflow-hidden transition-colors hover:text-c-primary",
                 track.id === currentTrack?.id && 'text-c-primary',
                 className
             )}
