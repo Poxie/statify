@@ -30,7 +30,7 @@ const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] 
 
 const RELATED_ARTIST_COUNT = 9;
 const RELATED_TRACK_COUNT = 48;
-export default function HeaderArtistStats({ albums, tracks, artist, featured, relatedArtists, relatedTracks, loading }: {
+export default function HomeArtistStats({ albums, tracks, artist, featured, relatedArtists, relatedTracks, loading }: {
     tracks: SpotifyTrack[] | undefined;
     albums: SpotifyAlbum[] | undefined;
     artist: SpotifyArtist | undefined;

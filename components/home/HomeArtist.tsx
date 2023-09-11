@@ -1,7 +1,7 @@
 "use client";
 import clsx from 'clsx';
 import HomeArtistInfo from './HomeArtistInfo';
-import HeaderArtistStats from './HeaderArtistStats';
+import HomeArtistStats from './HomeArtistStats';
 import { useSearchParams } from 'next/navigation';
 import { getRandomArtist } from '@/utils';
 import { POPULARITY_THRESHOLD } from '@/utils/constants';
@@ -33,7 +33,7 @@ export default function HomeArtist() {
                 artist={info?.artist}
                 loading={loading}
             />
-            <HeaderArtistStats 
+            <HomeArtistStats 
                 tracks={info?.tracks}
                 artist={info?.artist}
                 albums={info?.albums}
