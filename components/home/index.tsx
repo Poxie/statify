@@ -1,5 +1,5 @@
 import ComboProvider from "@/contexts/combo";
-import HomeArtistInfo from "./HomeArtistInfo";
+import HomeArtist from "./HomeArtist";
 import HomeHeader from "./HomeHeader";
 
 export default function Home() {
@@ -7,7 +7,7 @@ export default function Home() {
         <main className="pb-52">
             <ComboProvider>
                 <HomeHeader />
-                <HomeArtistInfo />
+                <HomeArtist />
             </ComboProvider>
         </main>
     )
