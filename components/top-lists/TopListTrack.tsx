@@ -16,7 +16,7 @@ export default function _TopListTrack({ track, index, small }: {
         <div 
             className={clsx(
                 "group p-3 relative flex rounded-lg overflow-hidden hover:[--bg-opacity:.75]",
-                small ? 'flex-col gap-2' : 'flex-col gap-3 sm:flex-row',
+                small ? 'flex-col gap-2' : 'flex-col gap-1 sm:gap-3 sm:flex-row md:last:col-span-2',
             )}
             style={{
                 '--bg-color': `rgb(${track.color})`,
@@ -29,15 +29,9 @@ export default function _TopListTrack({ track, index, small }: {
                 width={100}
                 height={100}
             />
-            {!small && (
-                <TopListIndex 
-                    className={"text-center text-6xl w-11 leading-[54px] top-5 translate-y-0.5 sm:top-3 sm:translate-y-0"}
-                    index={index}
-                />
-            )}
             <div className={clsx(
                 "relative",
-                small ? 'aspect-video' : 'aspect-square w-20 sm:w-28',
+                small ? 'aspect-video' : 'aspect-square w-20 sm:w-24',
             )}>
                 <SpotifyTrackImage 
                     height={100}
@@ -55,21 +49,27 @@ export default function _TopListTrack({ track, index, small }: {
                 />
                 {small && (
                     <TopListIndex 
-                        className={"[--stroke-width:2px] text-right text-4xl leading-[32px]"}
+                        className={"[--stroke-width:2px] absolute z-[1] top-3 right-3 text-right text-4xl leading-[32px]"}
                         index={index}
                     />
                 )}
             </div>
-            <div className="flex flex-col relative z-[2]">
+            <div className="flex-1 flex flex-col relative z-[2] overflow-hidden">
                 <SpotifyTrackName 
                     className={clsx(
                         "font-semibold overflow-hidden text-ellipsis whitespace-nowrap",
-                        small ? 'text-sm' : 'text-xl',
+                        small ? 'text-sm' : 'text-base max-w-full',
                     )}
                     track={track}
                 />
                 <SpotifyTrackArtists artists={track.artists} />
             </div>
+            {!small && (
+                <TopListIndex 
+                    className={"text-center text-6xl leading-[54px] w-10 absolute top-4 right-4 md:relative md:top-[unset] md:right-[unset]"}
+                    index={index}
+                />
+            )}
         </div>
     )
 }
@@ -81,7 +81,7 @@ function TopListIndex({ index, className }: {
     return(
         <span
             className={clsx(
-                "[--stroke-color:var(--bg-color)] text-border absolute z-[1] top-3 right-3 font-extrabold",
+                "[--stroke-color:var(--bg-color)] text-border font-extrabold",
                 className,
             )}
         >

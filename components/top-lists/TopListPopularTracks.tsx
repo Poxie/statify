@@ -11,7 +11,7 @@ export default function TopListPopularTracks({ colors, tracks }: {
 }) {
     return(
         <div className="py-8 border-t-2 border-b-2 border-t-tertiary border-b-tertiary bg-secondary">
-            <ul className="w-[800px] max-w-main mx-auto grid gap-2">
+            <ul className="w-main max-w-main mx-auto grid md:grid-cols-2 gap-2">
                 {tracks.map((track, key) => (
                     <TopListTrack 
                         track={track}
