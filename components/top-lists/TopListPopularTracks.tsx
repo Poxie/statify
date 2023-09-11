@@ -1,23 +1,30 @@
 import React, { CSSProperties } from "react";
 import TopListTrack from './TopListTrack';
-import SpotifyImage from "../spotify-image";
 import { SpotifyTrack } from "@/types";
 
-export default function TopListPopularTracks({ colors, tracks }: {
-    colors: string[] | undefined;
+const PLACEHOLDER_COUNT = 5;
+export default function TopListPopularTracks({ tracks, opacityZero }: {
     tracks: (SpotifyTrack & {
         color: string | undefined
-    })[];
+    })[] | undefined;
+    opacityZero: boolean;
 }) {
     return(
         <div className="py-8 border-t-2 border-b-2 border-t-tertiary border-b-tertiary bg-secondary">
             <ul className="w-main max-w-main mx-auto grid md:grid-cols-2 gap-2">
-                {tracks.map((track, key) => (
+                {tracks?.map((track, key) => (
                     <TopListTrack 
+                        opacityZero={opacityZero}
                         track={track}
                         index={key + 1}
                         small={false}
                         key={track.id}
+                    />
+                ))}
+                {!tracks && Array.from(Array(PLACEHOLDER_COUNT)).map((_,key) => (
+                    <div 
+                        className="h-[120px]"
+                        key={key}
                     />
                 ))}
             </ul>

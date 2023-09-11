@@ -1,17 +1,25 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useRef } from 'react';
 import SpotifyImage from "../spotify-image";
 import SpotifyTrackArtists from '../spotify-track-artists';
 import SpotifyTrackName from '../spotify-track-name';
 import SpotifyTrackImage from '../spotify-track-image';
 import { SpotifyPlaylist } from "@/types";
 import clsx from "clsx";
+import { useAnimateStyle } from '@/hooks/useAnimateStyle';
 
-export default function _TopListTrack({ track, index, small }: {
+export default function _TopListTrack({ track, opacityZero, index, small }: {
     track: SpotifyPlaylist['tracks']['items'][number]['track'];
+    opacityZero: boolean;
     index: number;
     small?: boolean;
 }) {
-    const image = track.album.images.at(-1)?.url;
+    const ref = useRef<HTMLDivElement>(null);
+
+    const { initialStyle } = useAnimateStyle(ref, opacityZero, {
+        from: { opacity: 0, transform: 'translateY(20px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        delayIn: index * 100,
+    })
     return(
         <div 
             className={clsx(
@@ -21,11 +29,13 @@ export default function _TopListTrack({ track, index, small }: {
             style={{
                 '--bg-color': `rgb(${track.color})`,
                 '--bg-with-opacity': `rgb(${track.color} / var(--bg-opacity, 0))`,
+                ...initialStyle,
             } as CSSProperties}
+            ref={ref}
         >
             <SpotifyImage
                 className="absolute top-0 left-0 w-full h-full opacity-10 after:absolute after:w-full after:h-full after:top-0 after:left-0 after:duration-300 after:transition-colors after:bg-[var(--bg-with-opacity)]" 
-                src={image}
+                src={track.album.images.at(-1)?.url}
                 width={100}
                 height={100}
             />

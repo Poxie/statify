@@ -32,4 +32,8 @@ export const useAnimateStyle = (ref: RefObject<HTMLElement | null>, isAnimated: 
             ref.current.style[property as keyof Omit<CSSStyleDeclaration, 'length' | 'parentRule'>] = value;
         }
     }, [ref.current]);
+
+    return {
+        initialStyle: options.from,
+    }
 }

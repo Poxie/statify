@@ -1,17 +1,22 @@
-import { SpotifyOwner } from "@/types";
+"use client";
+import Countries from '@/assets/json/countries.json';
 import TopListSearch from "./TopListSearch";
+import { SpotifyOwner } from "@/types";
+import { useSearchParams } from "next/navigation";
 
-export default function TopListHeader({ country, playlistName, owner, colors }: {
-    country: string;
-    owner: SpotifyOwner;
-    playlistName: string;
-    colors: string[] | undefined;
-}) {
-    const isTopList = playlistName.toLowerCase().includes('top') && owner.display_name === 'Spotify';
+const getCountryColors = (country: string | null) => {
+    if(!country) return;
+    return Countries.find(c => c.name.toLowerCase() === country.toLowerCase())?.colors;
+}
+
+export default function TopListHeader() {
+    const country = useSearchParams().get('country');
+    const colors = getCountryColors(country);
+
     return(
         <div className="w-[600px] max-w-main mx-auto text-center">
             <h1 className="text-4xl font-semibold">
-                These are {isTopList ? 'the top' : 'some'} hits {country.toLowerCase() === 'global' ? (
+                These are some hits {!country ? (
                     'globally'
                 ) : (
                     <>
