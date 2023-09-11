@@ -3,7 +3,7 @@ import SpotifyImage from "../spotify-image";
 
 export default function SearchResult({ name, image, extraText, onSelect }: {
     name: string;
-    image: string;
+    image: string | undefined;
     extraText: string;
     onSelect: () => void;
 }) {

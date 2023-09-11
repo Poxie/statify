@@ -5,6 +5,7 @@ import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { useState, useEffect, useMemo } from "react";
 import { get } from "@/utils";
 import SearchResult from "./SearchResult";
+import { useSearch } from "@/hooks/useSearch";
 
 const WAIT_BEFORE_FETCH = 150;
 export default function SearchInput<T>({ onSelect, type }: {
@@ -13,37 +14,8 @@ export default function SearchInput<T>({ onSelect, type }: {
 }) {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState<(SpotifyArtist | SpotifyTrack)[]>([]);
-
-    useEffect(() => {
-        if(!query.trim()) return setResults([]);
-        setLoading(true);
-
-        const abortController = new AbortController();
-        const timeout = setTimeout(() => {
-            get<(SpotifyArtist | SpotifyTrack)[]>(`/search?q=${query}&type=${type}`, abortController.signal).then(results => {
-                setLoading(false);
-                setResults(results);
-            });
-        }, WAIT_BEFORE_FETCH);
-
-        return () => {
-            abortController.abort();
-            clearTimeout(timeout);
-        }
-    }, [query]);
-
-    const sortedResults = useMemo(() => (
-        results
-            .filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
-            .sort((a,b) => {
-                if(type === 'artist') {
-                    return (b as SpotifyArtist).followers.total - (a as SpotifyArtist).followers.total
-                }
-                return b.popularity - a.popularity;
-            })
-    ), [results]);
+    
+    const { loading, results } = useSearch<SpotifyArtist | SpotifyTrack>('artist', query);
 
     return(
         <div className="relative max-w-full">
@@ -64,7 +36,7 @@ export default function SearchInput<T>({ onSelect, type }: {
                         transition={{ duration: .15, bounce: false }}
                         className="max-h-[220px] w-full p-2 pr-0 overflow-auto scrollbar absolute z-10 top-[calc(100%+.5rem)] bg-secondary border-[1px] border-tertiary rounded-lg"
                     >
-                        {!sortedResults.length && (
+                        {!results.length && (
                             <span className="block text-xs text-secondary">
                                 {!loading ? (
                                     !query ? (
@@ -77,14 +49,17 @@ export default function SearchInput<T>({ onSelect, type }: {
                                 )}
                             </span>
                         )}
-                        {sortedResults.map(item => {
-                            let image = '';
-                            if(type === 'artist') image = (item as SpotifyArtist).images.at(-1)?.url as string;
-                            if(type === 'track') image = (item as SpotifyTrack).album.images.at(-1)?.url as string;
-
+                        {results.map(item => {
+                            let image: string | undefined;
                             let extraText = '';
-                            if(type === 'artist') extraText = `${(item as SpotifyArtist).followers.total.toLocaleString()} followers`;
-                            if(type === 'track') extraText = `with ${(item as SpotifyTrack).artists[0].name}`;
+
+                            if(type === 'artist') {
+                                image = (item as SpotifyArtist).images.at(-1)?.url;
+                                extraText = `${(item as SpotifyArtist).followers.total.toLocaleString()} followers`;
+                            } else if(type === 'track') {
+                                image = (item as SpotifyTrack).album.images.at(-1)?.url;
+                                extraText = `with ${(item as SpotifyTrack).artists[0].name}`;
+                            }
 
                             return(
                                 <SearchResult 
