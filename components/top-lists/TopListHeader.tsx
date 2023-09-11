@@ -9,7 +9,7 @@ export default function TopListHeader() {
     const colors = getCountryColors(country);
 
     return(
-        <div className="w-[600px] max-w-main mx-auto text-center">
+        <div className="text-center max-w-main mx-auto">
             <h1 className="text-4xl font-semibold">
                 These are some hits {!country ? (
                     'globally'
@@ -25,7 +25,7 @@ export default function TopListHeader() {
                     </>
                 )}
             </h1>
-            <span className="block mt-4 mb-6 sm:text-xl text-secondary">
+            <span className="block w-[600px] max-w-full mx-auto  mt-4 mb-6 sm:text-xl text-secondary">
                 It is time to leave your country’s bubble. This is a way to explore the culture of countries all around the world.
             </span>
             <TopListSearch />

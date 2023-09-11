@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import TopListSearchItem from "./TopListSearchItem";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { SearchIcon } from "@/assets/icons/SearchIcon";
 
 export default function TopListSearch() {
     const router = useRouter();
@@ -35,8 +36,8 @@ export default function TopListSearch() {
     return(
         <div className="relative w-[600px] max-w-full mx-auto">
             <Input 
+                icon={<SearchIcon className="w-5 text-secondary" />}
                 placeholder={'Find your country...'}
-                className="text-base py-4"
                 onFocus={() => setOpen(true)}
                 onChange={setSearch}
                 ref={inputRef}
@@ -49,7 +50,7 @@ export default function TopListSearch() {
                             initial={{ scale: .98, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ duration: .2, bounce: false }}
-                            className="absolute z-20 top-[calc(100%+8px)] w-full rounded-lg bg-secondary border-[1px] border-tertiary p-2 max-h-[350px] overflow-auto scrollbar"
+                            className="absolute z-20 top-[calc(100%+8px)] w-full rounded-lg bg-secondary border-[1px] border-tertiary p-2 max-h-[260px] overflow-auto scrollbar"
                         >
                             {!search && (
                                 <TopListSearchItem 
