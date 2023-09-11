@@ -1,19 +1,14 @@
 import React from 'react';
 import TopListTrack from './TopListTrack';
-import { SpotifyOwner, SpotifyPlaylist, SpotifyTrack } from "@/types";
-import Link from 'next/link';
 import TopListOrigin from './TopListOrigin';
+import { ToplistInfo } from '@/hooks/useCountryTopList';
 
 const INITIAL_INDEX = 6;
 const PLACEHOLDER_COUNT = 10;
 export default function TopListTracks({ tracks, playlistInfo, loading }: {
     loading: boolean;
-    tracks: SpotifyPlaylist['tracks']['items'][number]['track'][] | undefined;
-    playlistInfo: {
-        name: string;
-        href: string;
-        owner: SpotifyOwner;
-    } | undefined;
+    tracks: ToplistInfo['tracks'] | undefined;
+    playlistInfo: ToplistInfo['playlistInfo'] | undefined;
 }) {
     return(
         <div className="w-main max-w-main mx-auto">

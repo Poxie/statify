@@ -1,12 +1,10 @@
 import React, { CSSProperties } from "react";
 import TopListTrack from './TopListTrack';
-import { SpotifyTrack } from "@/types";
+import { ToplistInfo } from "@/hooks/useCountryTopList";
 
 const PLACEHOLDER_COUNT = 5;
 export default function TopListPopularTracks({ tracks, loading }: {
-    tracks: (SpotifyTrack & {
-        color: string | undefined
-    })[] | undefined;
+    tracks: ToplistInfo['tracks'] | undefined;
     loading: boolean;
 }) {
     return(

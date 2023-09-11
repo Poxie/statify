@@ -3,12 +3,12 @@ import SpotifyImage from "../spotify-image";
 import SpotifyTrackArtists from '../spotify-track-artists';
 import SpotifyTrackName from '../spotify-track-name';
 import SpotifyTrackImage from '../spotify-track-image';
-import { SpotifyPlaylist } from "@/types";
-import clsx from "clsx";
 import { useAnimateStyle } from '@/hooks/useAnimateStyle';
+import { ToplistInfo } from '@/hooks/useCountryTopList';
+import clsx from "clsx";
 
 export default function _TopListTrack({ track, loading, index, small }: {
-    track: SpotifyPlaylist['tracks']['items'][number]['track'];
+    track: ToplistInfo['tracks'][number];
     loading: boolean;
     index: number;
     small?: boolean;

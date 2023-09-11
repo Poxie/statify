@@ -1,16 +1,12 @@
 import { useAnimateStyle } from "@/hooks/useAnimateStyle";
-import { SpotifyOwner } from "@/types";
+import { ToplistInfo } from "@/hooks/useCountryTopList";
 import Link from "next/link";
 import { useRef } from "react";
 
 const TRACK_COUNT = 15;
 const TRACK_DELAY = 100;
 export default function TopListOrigin({ playlistInfo }: {
-    playlistInfo: {
-        href: string;
-        name: string;
-        owner: SpotifyOwner;
-    } | undefined;
+    playlistInfo: ToplistInfo['playlistInfo'] | undefined;
 }) {
     const ref = useRef<HTMLSpanElement>(null);
 

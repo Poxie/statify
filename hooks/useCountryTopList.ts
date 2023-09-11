@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { SpotifyOwner, SpotifyTrack } from "@/types"
 import { get } from '@/utils';
 
-type TopInfo = {
+export type ToplistInfo = {
     playlistInfo: {
         name: string;
         href: string;
@@ -16,7 +16,7 @@ type Options = {
     extraDuration?: number;
 }
 
-const cache: {[country: string]: TopInfo | undefined} = {};
+const cache: {[country: string]: ToplistInfo | undefined} = {};
 const getInfoFromCache = (country: string) => cache[country];
 
 const DEFAULT_EXTRA_DURATION = 0;
@@ -24,14 +24,14 @@ export const useCountryTopList = (country: string, options: Options={}) => {
     if(!options.extraDuration) options.extraDuration = DEFAULT_EXTRA_DURATION;
 
     const [loading, setLoading] = useState(true);
-    const [info, setInfo] = useState<TopInfo | null>(null);
+    const [info, setInfo] = useState<ToplistInfo | null>(null);
 
     useEffect(() => {
         setLoading(true);
 
         const timeouts: NodeJS.Timeout[] = [];
         let abortController: AbortController | undefined;
-        let req: Promise<TopInfo> | undefined;
+        let req: Promise<ToplistInfo> | undefined;
         let shouldCancel = false;
         
         const cachedInfo = getInfoFromCache(country);
