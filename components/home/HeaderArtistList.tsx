@@ -1,9 +1,10 @@
 "use client";
-import { SpotifyArtist } from "@/types"
+import clsx from "clsx";
 import HeaderArtist from "./HeaderArtist";
+import { SpotifyArtist } from "@/types"
 import { HeaderArtistItem } from "./HeaderArtists";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
-import clsx from "clsx";
+
 export default function HeaderArtistList({ artists, positions }: {
     artists: SpotifyArtist[];
     positions: HeaderArtistItem[];
