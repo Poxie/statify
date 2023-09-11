@@ -9,13 +9,13 @@ export default function PreviewHistory() {
     return(
         <div
             className={clsx(
-                "border-t-[1px] border-t-primary grid grid-rows-[0fr] overflow-hidden duration-300 transition-[grid-template-rows]",
+                "max-h-[80dvh] border-t-[1px] border-t-primary grid grid-rows-[0fr] overflow-hidden duration-500 transition-[grid-template-rows]",
                 expanded && 'grid-rows-[1fr]',
             )}
         >
             <div className={clsx(
                 "min-h-0 px-4 transition-[padding]",
-                expanded ? 'py-4 scrollbar-dark max-h-full overflow-auto' : 'py-0',
+                expanded ? 'py-4 scrollbar-dark overflow-auto' : 'py-0',
             )}>
                 <div className="mb-1 flex justify-between items-center text-xs">
                     <span>
