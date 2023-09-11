@@ -23,7 +23,7 @@ export default function _TopListTrack({ track, loading, index, small }: {
     return(
         <li 
             className={clsx(
-                "group p-3 relative flex rounded-lg hover:[--bg-opacity:.75]",
+                "group p-3 relative flex rounded-lg hover:[--bg-opacity:.75] border-[1px] border-[var(--bg-color)]",
                 small ? 'flex-col gap-2' : 'flex-col gap-1 sm:gap-3 sm:flex-row md:last:col-span-2',
             )}
             style={{

@@ -21,7 +21,7 @@ export default function TopListPopularTracks({ tracks, loading }: {
                 ))}
                 {!tracks && Array.from(Array(PLACEHOLDER_COUNT)).map((_,key) => (
                     <div 
-                        className="h-[120px]"
+                        className="h-[122px]"
                         key={key}
                     />
                 ))}
