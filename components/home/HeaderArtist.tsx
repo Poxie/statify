@@ -17,7 +17,7 @@ const MIN_PARALLAX = 4;
 const MAX_PARALLAX = 18;
 const MAX_TRANSLATION_X = 5;
 const MAX_TRANSLATION_Y = 1;
-export default function HeaderArtist({ id, popularity, images, top, left, right, parallax }: SpotifyArtist & HeaderArtistItem) {
+export default function HeaderArtist({ id, name, popularity, images, top, left, right, parallax }: SpotifyArtist & HeaderArtistItem) {
     const paramArtistId = useSearchParams().get('a');
     const activeArtistId = useActiveArtistId();
     const isActive = id === activeArtistId;
@@ -89,6 +89,7 @@ export default function HeaderArtist({ id, popularity, images, top, left, right,
                     )
                 )}
                 replace={isPlaying}
+                aria-label={`View ${name}'s stats`}
             >
                 <SpotifyImage 
                     src={images.at(-1)?.url}
