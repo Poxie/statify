@@ -9,11 +9,12 @@ import PreviewHistory from './PreviewHistory';
 type Track = SpotifyTrack | null;
 const PreviewContext = React.createContext<null | {
     track: Track;
-    setTrack: (Track: Track) => void;
+    addTrack: (track: SpotifyTrack) => void;
+    closePreview: () => void;
     audio: RefObject<HTMLAudioElement>;
     expanded: boolean;
     setExpanded: (expanded: boolean) => void;
-    history: NonNullable<Track>[];
+    history: SpotifyTrack[];
     clearHistory: () => void;
 }>(null);
 
@@ -29,35 +30,42 @@ export default function PreviewProvider({ children }: {
 }) {
     const [track, setTrack] = useState<Track>(null);
     const [expanded, setExpanded] = useState(false);
-    const [history, setHistory] = useState<NonNullable<Track>[]>([]);
+    const [history, setHistory] = useState<SpotifyTrack[]>([]);
     const audio = useRef<null | HTMLAudioElement>(null);
 
-    useEffect(() => {
+    const addTrack = useCallback((track: SpotifyTrack) => {
+        if(!track.preview_url) return;
+
         if(!audio.current) {
             const audioElement = new Audio();
             audioElement.volume = DEFAULT_VOLUME;
             audio.current = audioElement;
         }
 
-        if(!track?.preview_url) {
-            audio.current.currentTime = 0;
-            audio.current.srcObject = null;
-            return;
-        } 
+        audio.current.src = track.preview_url;
+        audio.current.currentTime = 0;
+        audio.current.play();
 
         setHistory(prev => (
             [...[track], ...prev.filter(t => t.id !== track.id)]
         ));
-        audio.current.src = track.preview_url;
-        audio.current.currentTime = 0;
-        audio.current.play();
-    }, [track?.id]);
+        setTrack(track);
+    }, [setTrack]);
 
+    const closePreview = useCallback(() => {
+        if(!audio.current) return;
+
+        audio.current.srcObject = null;
+        audio.current = null;
+        setTrack(null);
+    }, [setTrack]);
+    
     const clearHistory = useCallback(() => setHistory([]), [setHistory]);
 
     const value = {
         track,
-        setTrack,
+        addTrack,
+        closePreview,
         audio,
         expanded,
         setExpanded,

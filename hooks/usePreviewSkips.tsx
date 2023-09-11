@@ -1,16 +1,14 @@
 import { usePreview } from "@/contexts/preview";
 
 export const usePreviewSkips = () => {
-    const { setTrack, audio } = usePreview();
+    const { closePreview, audio } = usePreview();
 
     const rewind = () => {
         if(!audio.current) return;
         audio.current.currentTime = 0;
         audio.current.play();
     }
-    const forward = () => {
-        setTrack(null);
-    }
+    const forward = closePreview;
 
     return { rewind, forward };
 }

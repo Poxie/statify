@@ -15,12 +15,16 @@ export default function SpotifyTrackImage(props: Omit<SpotifyImageProps, 'classN
 }) {
     const { track, imageClassName, buttonClassName } = props;
 
-    const { setTrack, track: previewTrack } = usePreview();
+    const { addTrack, track: previewTrack } = usePreview();
     const { paused, togglePause } = usePreviewPause();
 
     const handleClick = () => {
         if(!canBePreviewed) return;
-        if(previewTrack?.id !== track.id) return setTrack(track);
+        
+        if(previewTrack?.id !== track.id) {
+            addTrack(track);
+            return;
+        }
         togglePause();
     }
 
