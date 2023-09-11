@@ -13,7 +13,7 @@ export default function TopListTracks({ tracks, playlistInfo, loading }: {
     return(
         <div className="w-main max-w-main mx-auto">
             <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                {tracks?.slice(0,15).map((track, key) => (
+                {tracks?.map((track, key) => (
                     <TopListTrack 
                         track={track}
                         index={INITIAL_INDEX + key}
@@ -23,8 +23,8 @@ export default function TopListTracks({ tracks, playlistInfo, loading }: {
                     />
                 ))}
                 {!tracks && Array.from(Array(PLACEHOLDER_COUNT)).map((_,key) => (
-                    <div
-                        className="h-[184px]"
+                    <li 
+                        className="aspect-[1.25/1]"
                         key={key}
                     />
                 ))}

@@ -18,7 +18,7 @@ export default function TopListOrigin({ playlistInfo, loading }: {
     })
     return(
         <span 
-            className="block mt-3 text-xs text-secondary text-right"
+            className="block h-[16px] mt-3 text-xs text-secondary text-right"
             ref={ref}
         >
             {playlistInfo && (
