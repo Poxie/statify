@@ -4,7 +4,7 @@ import { TooltipPosition } from ".";
 import clsx from "clsx";
 
 const SPACE_FROM_ORIGIN = 10;
-const SPACE_FROM_EDGE = 30;
+const SPACE_FROM_EDGE = 25;
 const INITIAL_SCALE = 0.92;
 const TRANSITION_DURATION = 0.15;
 export const Tooltip: React.FC<{
