@@ -37,11 +37,14 @@
     --bg-to: rgb(255 184 0 / var(--bg-opacity));
     @apply bg-[linear-gradient(0.25turn,var(--bg-from),var(--bg-to))];
   }
-  .scrollbar::-webkit-scrollbar {
+  .scrollbar::-webkit-scrollbar, .scrollbar-dark::-webkit-scrollbar {
     @apply w-4;
   }
   .scrollbar::-webkit-scrollbar-thumb {
     @apply border-[5px] border-solid border-secondary bg-tertiary rounded-lg;
+  }
+  .scrollbar-dark::-webkit-scrollbar-thumb {
+    @apply border-[5px] border-solid border-tertiary bg-primary rounded-lg;
   }
   .multiline-ellipsis {
     display: -webkit-box;
