@@ -9,7 +9,7 @@ export default function PreviewHistory() {
     return(
         <div
             className={clsx(
-                "max-h-[80dvh] border-t-[1px] border-t-primary grid grid-rows-[0fr] overflow-hidden duration-500 transition-[grid-template-rows]",
+                "max-h-[70dvh] border-t-[1px] border-t-primary grid grid-rows-[0fr] overflow-hidden duration-500 transition-[grid-template-rows]",
                 expanded && 'grid-rows-[1fr]',
             )}
         >
