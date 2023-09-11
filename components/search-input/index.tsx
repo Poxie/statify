@@ -2,7 +2,7 @@ import Input from "../input";
 import { AnimatePresence, motion } from 'framer-motion';
 import { SpotifyArtist, SpotifyTrack } from "@/types";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import SearchResult from "./SearchResult";
 import { useSearch } from "@/hooks/useSearch";
 import { useClickOutside } from "@/hooks/useClickOutside";
@@ -18,7 +18,7 @@ export default function SearchInput<T>({ onSelect, type }: {
 
     const { query, setQuery, loading, results } = useSearch<SpotifyArtist | SpotifyTrack>('artist');
 
-    const onClickOutside = useMemo(() => () => setOpen(false), [setOpen]);
+    const onClickOutside = useCallback(() => setOpen(false), [setOpen]);
     useClickOutside({
         ref: inputRef,
         allowedRef: resultsContainer,
