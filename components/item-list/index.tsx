@@ -1,5 +1,4 @@
 import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import ItemContainer from "../item-container";
 import { useRef } from "react";

@@ -2,24 +2,7 @@ import { SpotifyAlbum, SpotifyArtist, SpotifyFeaturedAlbum, SpotifyTrack } from 
 import ItemList from "../item-list";
 import HomeRelatedArtists from "./HomeRelatedArtists";
 import HomeRelatedTracks from "./HomeRelatedTracks";
-
-// Determining the artist's top album by checking the most occuring album among their top tracks.
-const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] | undefined) => {
-    let firstAlbum = albums?.at(0);
-    if(tracks?.length) {
-        const topTrackAlbums = tracks.map(track => track.album);
-        const topTrackAlbumIds = topTrackAlbums.map(album => album.id);
-        const firstAlbumId = (
-            topTrackAlbumIds
-                .sort((a,b) => (
-                    topTrackAlbumIds.filter(i => i === a).length -
-                    topTrackAlbumIds.filter(i => i === b).length
-                )
-        ).pop());
-        firstAlbum = topTrackAlbums.find(album => album.id === firstAlbumId);
-    }
-    return firstAlbum;
-}
+import { getTopAlbumFromTracks } from "@/utils";
 
 export default function HomeArtistStats({ albums, tracks, artist, featured, relatedArtists, relatedTracks, loading }: {
     tracks: SpotifyTrack[] | undefined;
@@ -32,7 +15,7 @@ export default function HomeArtistStats({ albums, tracks, artist, featured, rela
 }) {
     const firstFeatured = featured?.at(0);
     const firstTrack = tracks?.at(0);
-    const firstAlbum = getTopAlbum(tracks, albums);
+    const firstAlbum = getTopAlbumFromTracks(tracks, albums);
     return(
         <div className="py-8 w-main max-w-main mx-auto flex flex-col gap-3">
             <div className="max-w-full flex flex-col gap-3 grid-col-1 sm:grid sm:grid-cols-2 lg:grid-cols-3">
