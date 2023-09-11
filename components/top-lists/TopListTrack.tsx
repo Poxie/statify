@@ -56,7 +56,7 @@ export default function _TopListTrack({ track, index, small }: {
             </div>
             <div className="flex-1 flex flex-col relative z-[2] overflow-hidden">
                 <SpotifyTrackName 
-                    className={small ? 'text-sm' : 'text-base max-w-full'}
+                    className={small ? 'text-sm' : 'text-lg max-w-full'}
                     track={track}
                 />
                 <SpotifyTrackArtists artists={track.artists} />
