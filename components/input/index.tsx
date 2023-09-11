@@ -1,29 +1,32 @@
+import React from 'react';
 import clsx from "clsx";
 
-export default function Input({
-    containerClassName='',
-    className='',
-    placeholder,
-    icon,
-    defaultValue,
-    onChange,
-    onFocus,
-    onBlur,
-}: {
+const Input = React.forwardRef<HTMLInputElement, {
     containerClassName?: string;
     className?: string;
     placeholder?: string;
     icon?: React.ReactNode;
     defaultValue?: string;
     onChange?: (text: string) => void;
-    onFocus?: () => void;
-    onBlur?: () => void;
-}) {
+    onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+}>(({
+    containerClassName,
+    className,
+    placeholder,
+    icon,
+    defaultValue,
+    onChange,
+    onFocus,
+    onBlur,
+}, ref) => {
     return(
-        <div className={clsx(
-            "flex outline-1 outline-white focus-within:outline bg-secondary border-[1px] border-tertiary rounded-lg",
-            containerClassName,
-        )}>
+        <div 
+            className={clsx(
+                "flex outline-1 outline-white focus-within:outline bg-secondary border-[1px] border-tertiary rounded-lg",
+                containerClassName,
+            )}
+        >
             {icon && (
                 <div className="pl-3 flex items-center">
                     {icon}
@@ -43,8 +46,11 @@ export default function Input({
                     if(!onChange) return;
                     onChange(e.target.value);
                 }}
+                ref={ref}
             />
         </div>
     )
-};
+})
 Input.displayName = 'Input';
+
+export default Input;
