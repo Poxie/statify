@@ -20,12 +20,12 @@ const getInfoFromCache = (type: SearchType, query: string) => cache[type][query]
 
 const WAIT_BEFORE_FETCH = 250;
 export const useSearch = <T>(
-    type: SearchType, 
-    query: string, 
+    type: SearchType,
     options: SearchOptions={
         waitBeforeFetch: WAIT_BEFORE_FETCH,
     }
 ) => {
+    const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<SearchResult[]>([]);
 
@@ -68,6 +68,8 @@ export const useSearch = <T>(
     }, [type, query, options.waitBeforeFetch]);
 
     return {
+        query,
+        setQuery,
         loading,
         results: results as T[],
     }

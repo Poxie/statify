@@ -2,8 +2,7 @@ import Input from "../input";
 import { AnimatePresence, motion } from 'framer-motion';
 import { SpotifyArtist, SpotifyTrack } from "@/types";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
-import { useState, useEffect, useMemo } from "react";
-import { get } from "@/utils";
+import { useState } from "react";
 import SearchResult from "./SearchResult";
 import { useSearch } from "@/hooks/useSearch";
 
@@ -13,9 +12,8 @@ export default function SearchInput<T>({ onSelect, type }: {
     type: 'artist' | 'track';
 }) {
     const [open, setOpen] = useState(false);
-    const [query, setQuery] = useState('');
     
-    const { loading, results } = useSearch<SpotifyArtist | SpotifyTrack>('artist', query);
+    const { query, setQuery, loading, results } = useSearch<SpotifyArtist | SpotifyTrack>('artist');
 
     return(
         <div className="relative max-w-full">
