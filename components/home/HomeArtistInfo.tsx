@@ -11,77 +11,33 @@ import { POPULARITY_THRESHOLD } from '@/utils/constants';
 import { useAnimateStyle } from '@/hooks/useAnimateStyle';
 import { useCombo } from '@/contexts/combo';
 import clsx from 'clsx';
+import { useArtistInfo } from '@/hooks/useArtistInfo';
 
+const RANDOM_ARTIST_ID = getRandomArtist();
 const OPACITY_TRANSITION = 500;
 export default function HomeArtistInfo() {
     const { isPlaying } = useCombo();
     const artistId = useSearchParams().get('a');
 
-    const [opacityZero, setOpacityZero] = useState(true);
-    const [artistInfo, setArtistInfo] = useState<null | {
-        artist: SpotifyArtist;
-        tracks: SpotifyTrack[];
-        albums: SpotifyAlbum[];
-        featured: SpotifyFeaturedAlbum[];
-        related: SpotifyArtist[];
-        relatedTracks: SpotifyTrack[];
-    }>(null);
-    const isPopular = (artistInfo?.artist.popularity || -1) > POPULARITY_THRESHOLD;
-
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if(isPlaying) {
-            setOpacityZero(true);
-            if(artistInfo) {
-                setTimeout(() => {
-                    setArtistInfo(null);
-                }, OPACITY_TRANSITION);
-            }
-            return;
-        }
-        
-        const abortController = new AbortController();
-        const signal = abortController.signal;
-
-        const id = artistId || getRandomArtist();
-        const requests = Promise.all(
-            [ 
-                get<SpotifyArtist>(`/artist/${id}`, signal),
-                get<SpotifyTrack[]>(`/artist/${id}/tracks`, signal),
-                get<SpotifyAlbum[]>(`/artist/${id}/albums`, signal),
-                get<SpotifyFeaturedAlbum[]>(`/artist/${id}/featured`, signal),
-                get<SpotifyArtist[]>(`/artist/${id}/related`, signal),
-                get<SpotifyTrack[]>(`/artist/${id}/related-tracks`),
-            ],
-        )
-
-        setOpacityZero(true);
-
-        const timeout = setTimeout(() => {
-            requests.then(([ artist, tracks, albums, featured, related, relatedTracks ]) => {
-                setArtistInfo({ artist, tracks, albums, featured, related, relatedTracks });
-                setOpacityZero(false);
-            })
-        }, OPACITY_TRANSITION);
-
-        return () => {
-            if(timeout) clearTimeout(timeout);
-            abortController.abort();
-        }
-    }, [artistId, isPlaying]);
-
-    useAnimateStyle(ref, opacityZero, {
+    const { info, loading } = useArtistInfo(
+        !isPlaying ? artistId || RANDOM_ARTIST_ID : null, 
+        { extraDuration: OPACITY_TRANSITION }
+    );
+    useAnimateStyle(ref, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
     })
+    
+    const isPopular = (info?.artist.popularity || -1) > POPULARITY_THRESHOLD;
     return(
         <div 
             className={clsx(
                 "mt-36 relative z-10 bg-secondary",
                 isPopular ? 'gradient-border [--border-left:0] [--border-right:0]' : 'border-[1px] border-tertiary',
             )}
-            data-artist-id={artistInfo?.artist.id || artistId || ''}
+            data-artist-id={artistId || info?.artist.id || ''}
         >
             <div className={clsx(
                 "w-[800px] max-w-[90%] mx-auto absolute left-2/4 -translate-x-2/4 -translate-y-full flex rounded-t-lg sm:max-w-[80%]",
@@ -99,17 +55,17 @@ export default function HomeArtistInfo() {
                         ref={ref}
                     >
                         <Artist
-                            artist={artistInfo?.artist}
+                            artist={info?.artist}
                             hasPopularityExplanation
                             isPopular={isPopular}
                         />
-                        {artistInfo && (
+                        {info && (
                             <Link
                                 target="_blank" 
-                                href={artistInfo.artist.external_urls.spotify}
+                                href={info.artist.external_urls.spotify}
                                 className="text-xs text-secondary hover:text-primary transition-colors"
                             >
-                                Follow {artistInfo.artist.name}
+                                Follow {info.artist.name}
                             </Link>
                         )}
                     </div>
@@ -122,13 +78,13 @@ export default function HomeArtistInfo() {
                 )} />
             </div>
             <HeaderArtistStats 
-                tracks={artistInfo?.tracks}
-                artist={artistInfo?.artist}
-                albums={artistInfo?.albums}
-                featured={artistInfo?.featured}
-                related={artistInfo?.related}
-                relatedTracks={artistInfo?.relatedTracks}
-                opacityZero={opacityZero}
+                tracks={info?.tracks}
+                artist={info?.artist}
+                albums={info?.albums}
+                featured={info?.featured}
+                related={info?.relatedArtists}
+                relatedTracks={info?.relatedTracks}
+                loading={loading}
             />
         </div>
     )

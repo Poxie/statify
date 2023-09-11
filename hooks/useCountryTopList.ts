@@ -32,7 +32,6 @@ export const useCountryTopList = (country: string, options: Options={}) => {
         const timeouts: NodeJS.Timeout[] = [];
         let abortController: AbortController | undefined;
         let req: Promise<ToplistInfo> | undefined;
-        let shouldCancel = false;
         
         const cachedInfo = getInfoFromCache(country);
         if(!cachedInfo) {

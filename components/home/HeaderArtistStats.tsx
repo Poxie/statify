@@ -30,14 +30,14 @@ const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] 
 
 const RELATED_ARTIST_COUNT = 9;
 const RELATED_TRACK_COUNT = 48;
-export default function HeaderArtistStats({ albums, tracks, artist, featured, related, relatedTracks, opacityZero }: {
+export default function HeaderArtistStats({ albums, tracks, artist, featured, related, relatedTracks, loading }: {
     tracks: SpotifyTrack[] | undefined;
     albums: SpotifyAlbum[] | undefined;
     artist: SpotifyArtist | undefined;
     featured: SpotifyFeaturedAlbum[] | undefined;
     related: SpotifyArtist[] | undefined;
     relatedTracks: SpotifyTrack[] | undefined;
-    opacityZero: boolean;
+    loading: boolean;
 }) {
     const relatedArtists = useRef<HTMLDivElement>(null);
     const relatedTracksContainer = useRef<HTMLDivElement>(null);
@@ -46,12 +46,12 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
     const firstTrack = tracks?.at(0);
     const firstAlbum = getTopAlbum(tracks, albums);
     
-    useAnimateStyle(relatedArtists, opacityZero, {
+    useAnimateStyle(relatedArtists, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delayIn: 500,
     })
-    useAnimateStyle(relatedTracksContainer, opacityZero, {
+    useAnimateStyle(relatedTracksContainer, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delayIn: 700,
@@ -64,8 +64,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     firstItem={firstTrack}
                     items={tracks}
                     type={'track'}
-                    loading={!tracks}
-                    opacityZero={opacityZero}
+                    loading={loading}
                     index={0}
                 />
                 <ItemList 
@@ -73,8 +72,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     firstItem={firstAlbum}
                     items={albums}
                     type={'album'}
-                    loading={!albums}
-                    opacityZero={opacityZero}
+                    loading={loading}
                     index={1}
                 />
                 <ItemList 
@@ -82,8 +80,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                     firstItem={firstFeatured}
                     items={featured}
                     type={'featured'}
-                    loading={!featured}
-                    opacityZero={opacityZero}
+                    loading={loading}
                     className="sm:col-span-2 lg:col-span-1"
                     index={2}
                 />
@@ -111,7 +108,7 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
                 title={relatedTracks ? `If you like ${artist?.name}'s songs you may also like...` : ''}
                 emptyLabel={'This artist does not have enough data to show similar songs.'}
                 isEmpty={!relatedTracks?.length}
-                loading={!relatedTracks}
+                loading={loading}
                 ref={relatedTracksContainer}
             >
                 <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 max-h-[350px] overflow-auto scrollbar pb-4 pr-4">

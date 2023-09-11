@@ -57,19 +57,18 @@ const getTooltipExplanation = (type: ListType) => {
     return 'There is no special reason for this album to be featured, it just is.'
 }
 
-export default function ItemList({ artist, firstItem, items, type, index, loading, className='', opacityZero }: {
+export default function ItemList({ artist, firstItem, items, type, index, loading, className='' }: {
     artist?: SpotifyArtist;
     firstItem?: ListItem;
     items?: ListItem[];
     type: ListType;
     index: number;
-    loading?: boolean;
     className?: string;
-    opacityZero: boolean;
+    loading: boolean;
 }) {
     const ref = useRef<HTMLDivElement>(null);
 
-    useAnimateStyle(ref, opacityZero, {
+    useAnimateStyle(ref, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delayIn: 200 + index * 100,
