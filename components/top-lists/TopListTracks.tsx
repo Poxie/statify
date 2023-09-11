@@ -6,8 +6,8 @@ import TopListOrigin from './TopListOrigin';
 
 const INITIAL_INDEX = 6;
 const PLACEHOLDER_COUNT = 10;
-export default function TopListTracks({ tracks, playlistInfo, opacityZero }: {
-    opacityZero: boolean;
+export default function TopListTracks({ tracks, playlistInfo, loading }: {
+    loading: boolean;
     tracks: SpotifyPlaylist['tracks']['items'][number]['track'][] | undefined;
     playlistInfo: {
         name: string;
@@ -22,7 +22,7 @@ export default function TopListTracks({ tracks, playlistInfo, opacityZero }: {
                     <TopListTrack 
                         track={track}
                         index={INITIAL_INDEX + key}
-                        opacityZero={opacityZero}
+                        loading={loading}
                         small
                         key={track.id}
                     />

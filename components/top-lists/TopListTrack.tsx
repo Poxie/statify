@@ -7,15 +7,15 @@ import { SpotifyPlaylist } from "@/types";
 import clsx from "clsx";
 import { useAnimateStyle } from '@/hooks/useAnimateStyle';
 
-export default function _TopListTrack({ track, opacityZero, index, small }: {
+export default function _TopListTrack({ track, loading, index, small }: {
     track: SpotifyPlaylist['tracks']['items'][number]['track'];
-    opacityZero: boolean;
+    loading: boolean;
     index: number;
     small?: boolean;
 }) {
     const ref = useRef<HTMLLIElement>(null);
 
-    const { initialStyle } = useAnimateStyle(ref, opacityZero, {
+    const { initialStyle } = useAnimateStyle(ref, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delayIn: index * 100,
