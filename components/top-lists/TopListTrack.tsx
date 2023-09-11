@@ -15,7 +15,7 @@ export default function _TopListTrack({ track, index, small }: {
     return(
         <div 
             className={clsx(
-                "group p-3 relative flex rounded-lg overflow-hidden hover:[--bg-opacity:.75]",
+                "group p-3 relative flex rounded-lg hover:[--bg-opacity:.75]",
                 small ? 'flex-col gap-2' : 'flex-col gap-1 sm:gap-3 sm:flex-row md:last:col-span-2',
             )}
             style={{
