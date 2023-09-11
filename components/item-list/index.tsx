@@ -123,7 +123,10 @@ export default function ItemList({ artist, firstItem, items, type, index, loadin
                                     tooltip={getTooltipExplanation(type)}
                                     delay={250}
                                 >
-                                    <QuestionIcon className="w-3" />
+                                    <QuestionIcon 
+                                        className="w-3"
+                                        ariaLabel={getTooltipExplanation(type)}
+                                    />
                                 </HasTooltip>
                             </span>
                         </div>

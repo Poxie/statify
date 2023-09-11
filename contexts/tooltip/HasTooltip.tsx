@@ -44,7 +44,6 @@ export const HasTooltip: React.FC<{
         onMouseLeave,
         onClick,
         onMouseEnter: () => onMouseEnter(false),
-        'aria-label': tooltip,
         ref,
     }
 
