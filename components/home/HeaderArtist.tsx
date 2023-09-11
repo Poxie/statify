@@ -1,64 +1,27 @@
 "use client";
-import { SpotifyArtist } from "@/types";
-import Image from "next/image";
+import clsx from "clsx";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
 import SpotifyImage from "../spotify-image";
+import { SpotifyArtist } from "@/types";
+import { useRef } from "react";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
 import { useActiveArtistId } from "@/hooks/useActiveArtistId";
 import { getRandomArtist } from "@/utils";
 import { useCombo } from "@/contexts/combo";
 import { HeaderArtistItem } from "./HeaderArtists";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
-import clsx from "clsx";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
-const MIN_PARALLAX = 4;
-const MAX_PARALLAX = 18;
-const MAX_TRANSLATION_X = 5;
-const MAX_TRANSLATION_Y = 1;
 export default function HeaderArtist({ id, name, popularity, images, top, left, right, parallax }: SpotifyArtist & HeaderArtistItem) {
-    const paramArtistId = useSearchParams().get('a');
     const activeArtistId = useActiveArtistId();
+    const isSmallScreen = useIsSmallScreen();
+    const { increaseCombo, cancelCombo, isPlaying } = useCombo();
+
+    const ref = useRef<HTMLDivElement>(null);
+    useMouseParallax(ref, { parallax });
+
     const isActive = id === activeArtistId;
     const isPopular = popularity > POPULARITY_THRESHOLD;
-    
-    const isSmallScreen = useIsSmallScreen();
-
-    const { increaseCombo, cancelCombo, isPlaying } = useCombo();
-    
-    const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if(!ref.current) return;
-        if(isSmallScreen) {
-            ref.current.style.transform = '';
-            return;
-        }
-
-        const onMouseMove = (e: MouseEvent) => {
-            if(!ref.current) return;
-
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const mouseXPos = e.clientX;
-            const mouseYPos = e.clientY;
-
-            const widthPart = width / 2;
-            const relativeXPos = widthPart - mouseXPos;
-            const translateXPercentage = relativeXPos / widthPart;
-
-            const heightPart = height / 2;
-            const relativeYPart = heightPart - mouseYPos;
-            const translateYPercentage = relativeYPart / heightPart;
-
-            ref.current.style.transform = `translateY(${translateYPercentage * -(MAX_TRANSLATION_Y + parallax)}px) translateX(${translateXPercentage * -(MAX_TRANSLATION_X + parallax)}px)`;
-        }
-
-        window.addEventListener('mousemove', onMouseMove);
-        return () => window.removeEventListener('mousemove', onMouseMove);
-    }, [isSmallScreen]);
-
     return(
         <div 
             className={clsx(
