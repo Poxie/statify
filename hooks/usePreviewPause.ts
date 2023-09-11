@@ -15,7 +15,7 @@ export const usePreviewPause = () => {
             audio.current?.removeEventListener('pause', onPause);
             audio.current?.removeEventListener('play', onPlay);
         }
-    }, []);
+    }, [audio.current]);
     const togglePause = () => {
         if(audio.current?.paused) return audio.current?.play();
         audio.current?.pause();
