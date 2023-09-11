@@ -13,7 +13,7 @@ export default function _TopListTrack({ track, opacityZero, index, small }: {
     index: number;
     small?: boolean;
 }) {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLLIElement>(null);
 
     const { initialStyle } = useAnimateStyle(ref, opacityZero, {
         from: { opacity: 0, transform: 'translateY(20px)' },
@@ -21,7 +21,7 @@ export default function _TopListTrack({ track, opacityZero, index, small }: {
         delayIn: index * 100,
     })
     return(
-        <div 
+        <li 
             className={clsx(
                 "group p-3 relative flex rounded-lg hover:[--bg-opacity:.75]",
                 small ? 'flex-col gap-2' : 'flex-col gap-1 sm:gap-3 sm:flex-row md:last:col-span-2',
@@ -77,7 +77,7 @@ export default function _TopListTrack({ track, opacityZero, index, small }: {
                     index={index}
                 />
             )}
-        </div>
+        </li>
     )
 }
 
