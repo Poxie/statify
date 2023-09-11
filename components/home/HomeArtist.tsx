@@ -38,7 +38,7 @@ export default function HomeArtist() {
                 artist={info?.artist}
                 albums={info?.albums}
                 featured={info?.featured}
-                related={info?.relatedArtists}
+                relatedArtists={info?.relatedArtists}
                 relatedTracks={info?.relatedTracks}
                 loading={loading}
             />

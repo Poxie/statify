@@ -30,23 +30,23 @@ const getTopAlbum = (tracks: SpotifyTrack[] | undefined, albums: SpotifyAlbum[] 
 
 const RELATED_ARTIST_COUNT = 9;
 const RELATED_TRACK_COUNT = 48;
-export default function HeaderArtistStats({ albums, tracks, artist, featured, related, relatedTracks, loading }: {
+export default function HeaderArtistStats({ albums, tracks, artist, featured, relatedArtists, relatedTracks, loading }: {
     tracks: SpotifyTrack[] | undefined;
     albums: SpotifyAlbum[] | undefined;
     artist: SpotifyArtist | undefined;
     featured: SpotifyFeaturedAlbum[] | undefined;
-    related: SpotifyArtist[] | undefined;
+    relatedArtists: SpotifyArtist[] | undefined;
     relatedTracks: SpotifyTrack[] | undefined;
     loading: boolean;
 }) {
-    const relatedArtists = useRef<HTMLDivElement>(null);
+    const relatedArtistsContainer = useRef<HTMLDivElement>(null);
     const relatedTracksContainer = useRef<HTMLDivElement>(null);
 
     const firstFeatured = featured?.at(0);
     const firstTrack = tracks?.at(0);
     const firstAlbum = getTopAlbum(tracks, albums);
     
-    useAnimateStyle(relatedArtists, loading, {
+    useAnimateStyle(relatedArtistsContainer, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delayIn: 500,
@@ -88,12 +88,12 @@ export default function HeaderArtistStats({ albums, tracks, artist, featured, re
             <ItemContainer
                 title={artist ? `Artists related to ${artist?.name}` : undefined}
                 emptyLabel={'This artist does not have enough data to show related artists.'}
-                isEmpty={!related?.length}
-                loading={!related}
-                ref={relatedArtists}
+                isEmpty={!relatedArtists?.length}
+                loading={!relatedArtists}
+                ref={relatedArtistsContainer}
             >
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 max-h-[350px] overflow-auto scrollbar pb-4 pr-4">
-                    {(related || Array.from(Array(RELATED_ARTIST_COUNT))).slice(0, RELATED_ARTIST_COUNT).map((artist, key) => (
+                    {(relatedArtists || Array.from(Array(RELATED_ARTIST_COUNT))).slice(0, RELATED_ARTIST_COUNT).map((artist, key) => (
                         <Artist 
                             isPopular={artist?.popularity > POPULARITY_THRESHOLD}
                             artist={artist}
