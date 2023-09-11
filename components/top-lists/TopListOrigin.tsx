@@ -5,12 +5,13 @@ import { useRef } from "react";
 
 const TRACK_COUNT = 15;
 const TRACK_DELAY = 100;
-export default function TopListOrigin({ playlistInfo }: {
+export default function TopListOrigin({ playlistInfo, loading }: {
     playlistInfo: ToplistInfo['playlistInfo'] | undefined;
+    loading: boolean;
 }) {
     const ref = useRef<HTMLSpanElement>(null);
 
-    useAnimateStyle(ref, !playlistInfo, {
+    useAnimateStyle(ref, loading, {
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delayIn: (TRACK_COUNT + 1) * TRACK_DELAY,

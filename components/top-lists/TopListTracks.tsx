@@ -29,7 +29,10 @@ export default function TopListTracks({ tracks, playlistInfo, loading }: {
                     />
                 ))}
             </ul>
-            <TopListOrigin playlistInfo={playlistInfo} />
+            <TopListOrigin 
+                playlistInfo={playlistInfo}
+                loading={loading}
+            />
         </div>
     )
 }
