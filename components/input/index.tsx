@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, {
         >
             {icon && (
                 <div className={twMerge(
-                    "pl-3 flex items-center",
+                    "p-3 flex items-center",
                     iconContainerClassName,
                 )}>
                     {icon}
@@ -41,6 +41,7 @@ const Input = React.forwardRef<HTMLInputElement, {
                 type="text"
                 className={twMerge(
                     "py-3 px-4 flex-1 bg-transparent outline-none placeholder:text-secondary",
+                    icon && 'pl-0',
                     className,
                 )}
                 placeholder={placeholder}

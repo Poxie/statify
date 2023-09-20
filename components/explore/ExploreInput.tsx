@@ -18,8 +18,8 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
     return(
         <div className="p-3 pb-0 flex flex-col flex-1 bg-secondary rounded-md">
             <SearchInput 
-                inputClassName="py-2.5 px-2.5 text-sm"
-                iconContainerClassName="pl-2.5"
+                inputClassName="py-2.5 pr-2.5 text-sm"
+                iconContainerClassName="p-2.5"
                 iconClassName="w-4"
                 onSelect={onSelect}
                 type={type}
