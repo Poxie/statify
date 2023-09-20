@@ -1,17 +1,22 @@
+import { twMerge } from 'tailwind-merge';
 import { CloseIcon } from "@/assets/icons/CloseIcon";
 import SpotifyImage from "../spotify-image";
 
-export default function ExploreChip({ id, text, image, onRemove }: {
+export default function ExploreChip({ id, text, image, onRemove, className }: {
     id: string;
     text: string;
     image?: string;
     onRemove?: () => void;
+    className?: string;
 }) {
     return(
-        <div className="p-2 flex items-center gap-2 rounded-md bg-tertiary">
+        <div className={twMerge(
+            "p-2 flex items-center gap-2 rounded-md bg-tertiary whitespace-nowrap",
+            className,
+        )}>
             {image && (
                 <SpotifyImage 
-                    className="w-5 aspect-square rounded-full"
+                    className="w-5 min-w-[1.25rem] aspect-square rounded-full"
                     src={image}
                     width={32}
                     height={32}

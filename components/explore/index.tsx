@@ -1,23 +1,26 @@
 "use client";
-import Button from "../button";
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../../tailwind.config';
 import ExploreInput from "./ExploreInput";
 import TopListTrack from '@/components/top-lists/TopListTrack';
-import { useState } from 'react';
+import ExploreChip from "./ExploreChip";
+import { useState, useEffect, useMemo } from 'react';
 import { SpotifyArtist, SpotifyTrack, SpotifyTrackWithColor } from '@/types';
 import { get } from "@/utils";
+import { AnimatePresence, motion } from 'framer-motion';
 
 const background = resolveConfig(tailwindConfig).theme?.backgroundColor?.primary;
 
 export default function Explore() {
     const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
     const [artists, setArtists] = useState<SpotifyArtist[]>([]);
-    const [loading, setLoading] = useState(false);
     
     const [recommendations, setRecommendations] = useState<SpotifyTrackWithColor[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const getRecommendations = () => {
+        if(!tracks.length && !artists.length) return setLoading(true);
+
         const url = new URL(`${window.location.origin}/recommendations`);
         url.searchParams.set('seed_artists', artists.map(artist => artist.id).join(','));
         url.searchParams.set('seed_tracks', tracks.map(track => track.id).join(','));
@@ -31,7 +34,9 @@ export default function Explore() {
             }, 0)
         })
     }
+    useEffect(getRecommendations, [artists.length, tracks.length]);
 
+    const basedOnItems = useMemo(() => ([...tracks, ...artists]), [tracks.length, artists.length]);
     return(
         <main className="pt-20">
             <div className="text-center flex flex-col gap-4">
@@ -53,37 +58,64 @@ export default function Explore() {
                                 type={'artist'}
                                 items={artists}
                                 onItemAdd={artist => setArtists(prev => prev.concat(artist))}
-                                onItemRemove={artistId => setArtists(prev => prev.filter(item => item.id !== artistId))}
+                                onItemRemove={artistId => setArtists(prev => prev.filter(artist => artist.id !== artistId))}
                             />
                             <ExploreInput<SpotifyTrack> 
                                 type={'track'}
                                 items={tracks}
                                 onItemAdd={track => setTracks(prev => prev.concat(track))}
-                                onItemRemove={trackId => setTracks(prev => prev.filter(item => item.id !== trackId))}
+                                onItemRemove={trackId => setTracks(prev => prev.filter(track => track.id !== trackId))}
                             />
-                        </div>
-                        <div className="mt-3 flex justify-end">
-                            <Button
-                                className="py-3 text-xs"
-                                disabled={loading || (!tracks.length && !artists.length)}
-                                onClick={getRecommendations}
-                            >
-                                Get recommendations
-                            </Button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="w-main max-w-main mx-auto grid grid-cols-5 gap-3">
-                {recommendations.map((track, index) => (
-                    <TopListTrack
-                        index={index}
-                        track={track}
-                        loading={loading}
-                        showIndex={false}
-                        small
-                    />
-                ))}
+            <div className="w-main max-w-main mx-auto">
+                <div className="mb-4 p-4 rounded-lg bg-secondary overflow-hidden">
+                    <span className="mb-2 block text-xs font-semibold">
+                        Here are some songs we recommend based on...
+                    </span>
+                    <div className="flex gap-1.5">
+                        <AnimatePresence>
+                            {basedOnItems.map(item => {
+                                let image: undefined | string;
+
+                                if('images' in item) image = item.images.at(-1)?.url;
+                                if('album' in item) image = item.album.images.at(-1)?.url;
+
+                                return(
+                                    <motion.div
+                                        className="p-2 grid overflow-hidden bg-tertiary rounded-md"
+                                        // Margin calulation is based on container gap and item padding.
+                                        exit={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
+                                        initial={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
+                                        animate={{ gridTemplateColumns: '1fr', paddingLeft: '0.5rem', paddingRight: '0.5rem', marginRight: 0 }}
+                                        transition={{ bounce: false, duration: .5 }}
+                                        key={item.id}
+                                    >
+                                        <ExploreChip 
+                                            id={item.id}
+                                            text={item.name}
+                                            image={image}
+                                            className="min-w-0 p-0"
+                                        />
+                                    </motion.div>
+                                )
+                            })}
+                        </AnimatePresence>
+                    </div>
+                </div>
+                <div className="grid grid-cols-5 gap-3">
+                    {recommendations.map((track, index) => (
+                        <TopListTrack
+                            index={index}
+                            track={track}
+                            loading={loading}
+                            showIndex={false}
+                            small
+                        />
+                    ))}
+                </div>
             </div>
         </main>
     )
