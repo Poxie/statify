@@ -8,8 +8,8 @@ export default function ExploreBasedOn({ items, setTracks, setArtists }: {
     setArtists: React.Dispatch<React.SetStateAction<SpotifyArtist[]>>;
 }) {
     return(
-        <AnimatePresence mode='wait'>
-            <div className="pt-8 bg-primary sticky -top-4 z-[1] rounded-b-lg">
+        <div className="pt-8 bg-primary sticky -top-4 z-[1] rounded-b-lg">
+            <AnimatePresence mode='wait'>
                 {items.length === 0 && (
                     <motion.span
                         className="block w-full text-xs text-secondary text-center"
@@ -73,7 +73,7 @@ export default function ExploreBasedOn({ items, setTracks, setArtists }: {
                         </div>
                     </motion.div>
                 )}
-            </div>
-        </AnimatePresence>
+            </AnimatePresence>
+        </div>
     )
 }
