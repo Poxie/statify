@@ -42,11 +42,11 @@ export default function Explore() {
     const basedOnItems = useMemo(() => ([...artists, ...tracks]), [tracks.length, artists.length]);
     return(
         <main className="pt-20">
-            <div className="text-center flex flex-col gap-4">
+            <div className="max-w-main mx-auto text-center flex flex-col gap-4">
                 <h1 className="text-4xl font-semibold">
                     Explore with us.
                 </h1>
-                <p className="text-lg text-secondary">
+                <p className="text-secondary sm:text-lg">
                     Find songs you might like based on your favorite songs, artists, and genres!
                 </p>
             </div>
@@ -56,7 +56,7 @@ export default function Explore() {
             >
                 <div className="py-8">
                     <div className="w-[900px] max-w-main mx-auto">
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid gap-2 md:grid-cols-2">
                             <ExploreInput<SpotifyArtist> 
                                 type={'artist'}
                                 items={artists}
@@ -86,7 +86,7 @@ export default function Explore() {
                             <span className="mb-2 block text-xs font-semibold">
                                 Here are some songs we recommend based on...
                             </span>
-                            <div className="flex gap-1.5">
+                            <div className="flex flex-wrap gap-1.5">
                                 <AnimatePresence>
                                     {basedOnItems.map(item => {
                                         let image: undefined | string;
@@ -118,7 +118,7 @@ export default function Explore() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid gap-3 grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
                     {recommendations.map((track, index) => (
                         <TopListTrack
                             index={index}
