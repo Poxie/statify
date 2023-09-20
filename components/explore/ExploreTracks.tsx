@@ -2,6 +2,7 @@ import { SpotifyTrackWithColor } from "@/types";
 import clsx from "clsx";
 import TopListTrack from "../top-lists/TopListTrack";
 
+const TRACKS_PER_FETCH = 20;
 export default function ExploreTracks({ tracks, loading }: {
     tracks: SpotifyTrackWithColor[];
     loading: boolean;
@@ -13,7 +14,7 @@ export default function ExploreTracks({ tracks, loading }: {
         )}>
             {tracks.map((track, index) => (
                 <TopListTrack
-                    index={index}
+                    index={index % TRACKS_PER_FETCH}
                     track={track}
                     loading={loading}
                     showIndex={false}
