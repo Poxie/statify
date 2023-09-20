@@ -40,6 +40,7 @@ export const useInfiniteScroll = <T>(query: string, scrollContainer: typeof wind
         const container = 'current' in scrollContainer ? scrollContainer.current : scrollContainer;
 
         const onScroll = async () => {
+            if(!query) return setLoading(true);
             if(scrollThresholdMet() && !fetching.current) {
                 const results = await fetchItems(query);
                 setResults(prev => [...prev, ...results]);
