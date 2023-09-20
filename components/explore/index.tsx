@@ -18,7 +18,7 @@ export default function Explore() {
     const [recommendations, setRecommendations] = useState<SpotifyTrackWithColor[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const getRecommendations = () => {
+    useEffect(() => {
         if(!tracks.length && !artists.length) return setLoading(true);
 
         const url = new URL(`${window.location.origin}/recommendations`);
@@ -26,17 +26,20 @@ export default function Explore() {
         url.searchParams.set('seed_tracks', tracks.map(track => track.id).join(','));
         
         setLoading(true);
-        get<SpotifyTrackWithColor[]>(`${url.pathname}${url.search}`).then(recommendations => {
+        
+        const abortController = new AbortController();
+        get<SpotifyTrackWithColor[]>(`${url.pathname}${url.search}`, abortController.signal).then(recommendations => {
             setRecommendations(recommendations);
             
             setTimeout(() => {
                 setLoading(false);
             }, 0)
         })
-    }
-    useEffect(getRecommendations, [artists.length, tracks.length]);
 
-    const basedOnItems = useMemo(() => ([...tracks, ...artists]), [tracks.length, artists.length]);
+        return () => abortController.abort();
+    }, [artists.length, tracks.length]);
+
+    const basedOnItems = useMemo(() => ([...artists, ...tracks]), [tracks.length, artists.length]);
     return(
         <main className="pt-20">
             <div className="text-center flex flex-col gap-4">
@@ -71,40 +74,50 @@ export default function Explore() {
                 </div>
             </div>
             <div className="w-main max-w-main mx-auto">
-                <div className="mb-4 p-4 rounded-lg bg-secondary overflow-hidden">
-                    <span className="mb-2 block text-xs font-semibold">
-                        Here are some songs we recommend based on...
-                    </span>
-                    <div className="flex gap-1.5">
-                        <AnimatePresence>
-                            {basedOnItems.map(item => {
-                                let image: undefined | string;
+                <AnimatePresence>
+                    {basedOnItems.length !== 0 && (
+                        <motion.div 
+                            className="mb-4 p-4 rounded-lg bg-secondary overflow-hidden"
+                            exit={{ opacity: 0, translateY: 25 }}
+                            initial={{ opacity: 0, translateY: 25 }}
+                            animate={{ opacity: 1, translateY: 0 }}
+                            transition={{ bounce: false, duration: .5 }}
+                        >
+                            <span className="mb-2 block text-xs font-semibold">
+                                Here are some songs we recommend based on...
+                            </span>
+                            <div className="flex gap-1.5">
+                                <AnimatePresence>
+                                    {basedOnItems.map(item => {
+                                        let image: undefined | string;
 
-                                if('images' in item) image = item.images.at(-1)?.url;
-                                if('album' in item) image = item.album.images.at(-1)?.url;
+                                        if('images' in item) image = item.images.at(-1)?.url;
+                                        if('album' in item) image = item.album.images.at(-1)?.url;
 
-                                return(
-                                    <motion.div
-                                        className="p-2 grid overflow-hidden bg-tertiary rounded-md"
-                                        // Margin calulation is based on container gap and item padding.
-                                        exit={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
-                                        initial={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
-                                        animate={{ gridTemplateColumns: '1fr', paddingLeft: '0.5rem', paddingRight: '0.5rem', marginRight: 0 }}
-                                        transition={{ bounce: false, duration: .5 }}
-                                        key={item.id}
-                                    >
-                                        <ExploreChip 
-                                            id={item.id}
-                                            text={item.name}
-                                            image={image}
-                                            className="min-w-0 p-0"
-                                        />
-                                    </motion.div>
-                                )
-                            })}
-                        </AnimatePresence>
-                    </div>
-                </div>
+                                        return(
+                                            <motion.div
+                                                className="p-2 grid overflow-hidden bg-tertiary rounded-md"
+                                                // Margin calulation is based on container gap and item padding.
+                                                exit={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
+                                                initial={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
+                                                animate={{ gridTemplateColumns: '1fr', paddingLeft: '0.5rem', paddingRight: '0.5rem', marginRight: 0 }}
+                                                transition={{ bounce: false, duration: .5 }}
+                                                key={item.id}
+                                            >
+                                                <ExploreChip 
+                                                    id={item.id}
+                                                    text={item.name}
+                                                    image={image}
+                                                    className="min-w-0 p-0"
+                                                />
+                                            </motion.div>
+                                        )
+                                    })}
+                                </AnimatePresence>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
                 <div className="grid grid-cols-5 gap-3">
                     {recommendations.map((track, index) => (
                         <TopListTrack
