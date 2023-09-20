@@ -7,11 +7,12 @@ import { useAnimateStyle } from '@/hooks/useAnimateStyle';
 import { ToplistInfo } from '@/hooks/useCountryTopList';
 import clsx from "clsx";
 
-export default function _TopListTrack({ track, loading, index, small }: {
+export default function TopListTrack({ track, loading, index, small=false, showIndex=true }: {
     track: ToplistInfo['tracks'][number];
     loading: boolean;
     index: number;
     small?: boolean;
+    showIndex?: boolean;
 }) {
     const ref = useRef<HTMLLIElement>(null);
 
@@ -57,7 +58,7 @@ export default function _TopListTrack({ track, loading, index, small }: {
                         "after:w-12 after:aspect-square after:rounded-full after:bg-[var(--bg-color)] after:absolute after:top-2/4 after:left-2/4 after:-translate-x-2/4 after:-translate-y-2/4",
                     )}
                 />
-                {small && (
+                {small && showIndex && (
                     <TopListIndex 
                         className={"[--stroke-width:2px] absolute z-[1] top-3 right-3 text-right text-4xl leading-[32px]"}
                         index={index}
@@ -71,7 +72,7 @@ export default function _TopListTrack({ track, loading, index, small }: {
                 />
                 <SpotifyTrackArtists artists={track.artists} />
             </div>
-            {!small && (
+            {!small && showIndex && (
                 <TopListIndex 
                     className={"text-center text-6xl leading-[54px] w-10 absolute top-4 right-4 md:relative md:top-[unset] md:right-[unset]"}
                     index={index}

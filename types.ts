@@ -55,6 +55,9 @@ export type SpotifyTrack = {
     uri: string;
     href: string;
 }
+export type SpotifyTrackWithColor = SpotifyTrack & {
+    color: string;
+}
 export type SpotifyFeaturedAlbum = {
     album_group: string;
     album_type: string;

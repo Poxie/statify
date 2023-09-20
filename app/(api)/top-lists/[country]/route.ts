@@ -2,6 +2,7 @@ import Vibrant from "node-vibrant";
 import { SpotifyPlaylist } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import { fetchFromSpotify } from "@/utils/fetchFromSpotify";
+import { getTrackColors } from "../../utils";
 
 const TOP_TRACKS_COUNT = 15;
 export async function GET(req: NextRequest, { params: { country } }: {
@@ -18,19 +19,7 @@ export async function GET(req: NextRequest, { params: { country } }: {
     if(!playlistId) throw new Error('Playlist not found.');
 
     const playlist = await fetchFromSpotify<SpotifyPlaylist>(`/playlists/${playlistId}`);
-
-    const tracks = [];
-    for(const item of playlist.tracks.items.slice(0, TOP_TRACKS_COUNT)) {
-        const colors = await new Vibrant(item.track.album.images.at(-1)?.url || '', { colorCount: 5 }).getPalette();
-        const rgb = colors.DarkVibrant?.rgb;
-        if(!rgb) {
-            tracks.push(item.track);
-            continue;
-        }
-
-        item.track.color = `${rgb[0]} ${rgb[1]} ${rgb[2]}`;
-        tracks.push(item.track);
-    }
+    const tracks = await getTrackColors(playlist.tracks.items.map(item => item.track));
 
     return NextResponse.json({
         playlistInfo: {
