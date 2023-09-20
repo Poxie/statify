@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 const Input = React.forwardRef<HTMLInputElement, {
     containerClassName?: string;
+    iconClassName?: string;
     className?: string;
     placeholder?: string;
     icon?: React.ReactNode;
@@ -12,6 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, {
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }>(({
     containerClassName,
+    iconClassName,
     className,
     placeholder,
     icon,
@@ -28,7 +30,10 @@ const Input = React.forwardRef<HTMLInputElement, {
             )}
         >
             {icon && (
-                <div className="pl-3 flex items-center">
+                <div className={clsx(
+                    "pl-3 flex items-center",
+                    iconClassName,
+                )}>
                     {icon}
                 </div>
             )}

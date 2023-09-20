@@ -6,11 +6,14 @@ import { useCallback, useRef, useState } from "react";
 import SearchResult from "./SearchResult";
 import { useSearch } from "@/hooks/useSearch";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import clsx from "clsx";
 
 const WAIT_BEFORE_FETCH = 150;
-export default function SearchInput<T>({ onSelect, type }: {
+export default function SearchInput<T>({ onSelect, type, iconClassName, containerClassName }: {
     onSelect: (item: T) => void;
     type: 'artist' | 'track';
+    containerClassName?: string;
+    iconClassName?: string;
 }) {
     const [open, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -32,9 +35,15 @@ export default function SearchInput<T>({ onSelect, type }: {
     return(
         <div className="relative max-w-full">
             <Input
-                containerClassName={'w-[400px] max-w-full'}
-                icon={<SearchIcon className="w-5 text-secondary" />}
-                placeholder={'Search artist or song...'}
+                iconClassName={iconClassName}
+                containerClassName={containerClassName}
+                icon={
+                    <SearchIcon className={clsx(
+                        "w-5 text-secondary",
+                        iconClassName,
+                    )} />
+                }
+                placeholder={`Search ${type}...`}
                 onFocus={() => setOpen(true)}
                 onChange={setQuery}
                 ref={inputRef}

@@ -11,6 +11,7 @@ export default function HeaderOptions() {
             <SearchInput<SpotifyArtist> 
                 onSelect={item => router.push(`/?a=${item.id}`, { scroll: false })}
                 type={'artist'}
+                containerClassName="w-[400px] max-w-full"
             />
             <span className="uppercase text-secondary text-xs font-semibold">
                 or
