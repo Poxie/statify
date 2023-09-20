@@ -19,7 +19,7 @@ export default function SearchInput<T>({ onSelect, type, iconClassName, containe
     const inputRef = useRef<HTMLInputElement>(null);
     const resultsContainer = useRef<HTMLDivElement>(null);
 
-    const { query, setQuery, loading, results } = useSearch<SpotifyArtist | SpotifyTrack>('artist');
+    const { query, setQuery, loading, results } = useSearch<SpotifyArtist | SpotifyTrack>(type);
 
     const onClickOutside = useCallback(() => setOpen(false), [setOpen]);
     useClickOutside({
@@ -75,12 +75,12 @@ export default function SearchInput<T>({ onSelect, type, iconClassName, containe
                                 let image: string | undefined;
                                 let extraText = '';
 
-                                if(type === 'artist') {
-                                    image = (item as SpotifyArtist).images.at(-1)?.url;
-                                    extraText = `${(item as SpotifyArtist).followers.total.toLocaleString()} followers`;
-                                } else if(type === 'track') {
-                                    image = (item as SpotifyTrack).album.images.at(-1)?.url;
-                                    extraText = `with ${(item as SpotifyTrack).artists[0].name}`;
+                                if('images' in item) {
+                                    image = item.images.at(-1)?.url;
+                                    extraText = `${item.followers.total.toLocaleString()} followers`;
+                                } else if('album' in item) {
+                                    image = item.album.images.at(-1)?.url;
+                                    extraText = `with ${item.artists[0].name}`;
                                 }
 
                                 return(
