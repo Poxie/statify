@@ -19,7 +19,7 @@ export default function ExploreTracks({ tracks, loading }: {
                     loading={loading}
                     showIndex={false}
                     small
-                    key={track.id}
+                    key={index}
                 />
             ))}
         </div>
