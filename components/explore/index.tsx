@@ -74,7 +74,19 @@ export default function Explore() {
                 </div>
             </div>
             <div className="w-main max-w-main mx-auto">
-                <AnimatePresence>
+                <AnimatePresence mode='wait'>
+                    {basedOnItems.length === 0 && (
+                        <motion.span
+                            className="block w-full text-xs text-secondary text-center"
+                            exit={{ opacity: 0, translateY: 25 }}
+                            initial={{ opacity: 0, translateY: 25 }}
+                            animate={{ opacity: 1, translateY: 0 }}
+                            transition={{ bounce: false, duration: .5 }}
+                            key={'no-selection'}
+                        >
+                            Select an artist, a song, or a genre to view recommendations.
+                        </motion.span>
+                    )}
                     {basedOnItems.length !== 0 && (
                         <motion.div 
                             className="mb-4 p-4 rounded-lg bg-secondary overflow-hidden"
@@ -82,6 +94,7 @@ export default function Explore() {
                             initial={{ opacity: 0, translateY: 25 }}
                             animate={{ opacity: 1, translateY: 0 }}
                             transition={{ bounce: false, duration: .5 }}
+                            key={'based-on-container'}
                         >
                             <span className="mb-2 block text-xs font-semibold">
                                 Here are some songs we recommend based on...
