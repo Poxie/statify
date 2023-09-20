@@ -16,7 +16,7 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
     }
 
     return(
-        <div className="p-3 pb-0 flex flex-col flex-1 bg-secondary rounded-md">
+        <div className="p-3 pb-0 flex flex-col bg-secondary rounded-md">
             <SearchInput 
                 inputClassName="py-2.5 pr-2.5 text-sm"
                 iconContainerClassName="p-2.5"

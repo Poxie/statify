@@ -11,7 +11,7 @@ export default function ExploreChip({ id, text, image, onRemove, className }: {
 }) {
     return(
         <div className={twMerge(
-            "p-2 flex items-center gap-2 rounded-md bg-tertiary whitespace-nowrap",
+            "p-2 flex items-center gap-2 rounded-md bg-tertiary",
             className,
         )}>
             {image && (

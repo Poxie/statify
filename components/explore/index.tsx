@@ -26,7 +26,7 @@ export default function Explore() {
         url.searchParams.set('seed_tracks', tracks.map(track => track.id).join(','));
         
         setLoading(true);
-        
+
         const abortController = new AbortController();
         get<SpotifyTrackWithColor[]>(`${url.pathname}${url.search}`, abortController.signal).then(recommendations => {
             setRecommendations(recommendations);
@@ -56,7 +56,7 @@ export default function Explore() {
             >
                 <div className="py-8">
                     <div className="w-[900px] max-w-main mx-auto">
-                        <div className="flex gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                             <ExploreInput<SpotifyArtist> 
                                 type={'artist'}
                                 items={artists}
@@ -96,7 +96,7 @@ export default function Explore() {
 
                                         return(
                                             <motion.div
-                                                className="p-2 grid overflow-hidden bg-tertiary rounded-md"
+                                                className="p-2 grid overflow-hidden bg-tertiary rounded-md whitespace-nowrap"
                                                 // Margin calulation is based on container gap and item padding.
                                                 exit={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
                                                 initial={{ gridTemplateColumns: '0fr', paddingLeft: 0, paddingRight: 0, marginRight: 'calc(-1 * 0.375rem)' }}
