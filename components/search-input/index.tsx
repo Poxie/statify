@@ -7,13 +7,16 @@ import SearchResult from "./SearchResult";
 import { useSearch } from "@/hooks/useSearch";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 const WAIT_BEFORE_FETCH = 150;
-export default function SearchInput<T>({ onSelect, type, iconClassName, containerClassName }: {
+export default function SearchInput<T>({ onSelect, type, iconClassName, iconContainerClassName, containerClassName, inputClassName }: {
     onSelect: (item: T) => void;
     type: 'artist' | 'track';
     containerClassName?: string;
     iconClassName?: string;
+    iconContainerClassName?: string;
+    inputClassName?: string;
 }) {
     const [open, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -35,10 +38,11 @@ export default function SearchInput<T>({ onSelect, type, iconClassName, containe
     return(
         <div className="relative max-w-full">
             <Input
-                iconClassName={iconClassName}
+                className={inputClassName}
+                iconContainerClassName={iconContainerClassName}
                 containerClassName={containerClassName}
                 icon={
-                    <SearchIcon className={clsx(
+                    <SearchIcon className={twMerge(
                         "w-5 text-secondary",
                         iconClassName,
                     )} />

@@ -1,9 +1,9 @@
 import React from 'react';
-import clsx from "clsx";
+import { twMerge } from 'tailwind-merge';
 
 const Input = React.forwardRef<HTMLInputElement, {
     containerClassName?: string;
-    iconClassName?: string;
+    iconContainerClassName?: string;
     className?: string;
     placeholder?: string;
     icon?: React.ReactNode;
@@ -13,7 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, {
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }>(({
     containerClassName,
-    iconClassName,
+    iconContainerClassName,
     className,
     placeholder,
     icon,
@@ -24,22 +24,22 @@ const Input = React.forwardRef<HTMLInputElement, {
 }, ref) => {
     return(
         <div 
-            className={clsx(
+            className={twMerge(
                 "flex outline-1 outline-white focus-within:outline bg-secondary border-[1px] border-tertiary rounded-lg",
                 containerClassName,
             )}
         >
             {icon && (
-                <div className={clsx(
+                <div className={twMerge(
                     "pl-3 flex items-center",
-                    iconClassName,
+                    iconContainerClassName,
                 )}>
                     {icon}
                 </div>
             )}
             <input 
                 type="text"
-                className={clsx(
+                className={twMerge(
                     "py-3 px-4 flex-1 bg-transparent outline-none placeholder:text-secondary",
                     className,
                 )}
