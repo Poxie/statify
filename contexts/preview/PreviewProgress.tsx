@@ -45,7 +45,7 @@ export default function PreviewProgress() {
     });
     return(
         <div 
-            className="[--container-height:1rem] [--track-height:.35rem] [--track-hover-height:.65rem] group h-[var(--container-height)] w-full absolute bottom-[calc(100%-(var(--container-height)-var(--track-height)*1.8))] left-0 flex items-center"
+            className="group [--container-height:1rem] [--track-height:.35rem] [--track-hover-height:.65rem] h-[var(--container-height)] w-full absolute bottom-[calc(100%-(var(--container-height)-var(--track-height)*1.8))] left-0 flex items-center"
             ref={slider}
         >
             <div className={`absolute left-0 w-full h-[var(--track-height)] group-hover:h-[var(--track-hover-height)] group-active:h-[var(--track-hover-height)] transition-[height] bg-t-secondary`} />
