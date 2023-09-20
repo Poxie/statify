@@ -13,7 +13,7 @@ export default function ExploreInputs({ tracks, setTracks, artists, setArtists }
 }) {
     return(
         <div 
-            className="my-8 gradient-border [--border-left:0] [--border-right:0]"
+            className="relative z-[2] mt-8 gradient-border [--border-left:0] [--border-right:0]"
             style={{ '--background': background } as React.CSSProperties}
         >
             <div className="py-8">

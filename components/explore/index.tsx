@@ -44,7 +44,11 @@ export default function Explore() {
                 setTracks={setTracks}
             />
             <div className="w-main max-w-main mx-auto">
-                <ExploreBasedOn items={basedOnItems} />
+                <ExploreBasedOn 
+                    items={basedOnItems}
+                    setTracks={setTracks}
+                    setArtists={setArtists}
+                />
                 <ExploreTracks 
                     tracks={results}
                     loading={loading}
