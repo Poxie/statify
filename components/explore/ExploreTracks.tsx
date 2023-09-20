@@ -8,6 +8,7 @@ export default function ExploreTracks({ tracks, loading }: {
     loading: boolean;
 }) {
     return(
+        <>
         <div className={clsx(
             "grid gap-3 grid-cols-2 md:grid-cols-4 lg:grid-cols-5",
             loading && 'pointer-events-none'
@@ -23,5 +24,11 @@ export default function ExploreTracks({ tracks, loading }: {
                 />
             ))}
         </div>
+        {tracks.length !== 0 && (
+            <span className="block w-full text-sm py-4 text-secondary text-center">
+                Loading more recommendations...
+            </span>
+        )}
+        </>
     )
 }
