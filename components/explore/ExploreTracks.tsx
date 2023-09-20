@@ -24,7 +24,7 @@ export default function ExploreTracks({ tracks, loading }: {
                 />
             ))}
         </div>
-        {tracks.length !== 0 && (
+        {(!loading && tracks.length !== 0) && (
             <span className="block w-full text-sm py-4 text-secondary text-center">
                 Loading more recommendations...
             </span>
