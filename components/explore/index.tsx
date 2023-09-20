@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { SpotifyArtist, SpotifyTrack, SpotifyTrackWithColor } from '@/types';
 import { get } from "@/utils";
 import { AnimatePresence, motion } from 'framer-motion';
+import clsx from 'clsx';
 
 const background = resolveConfig(tailwindConfig).theme?.backgroundColor?.primary;
 
@@ -131,7 +132,10 @@ export default function Explore() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-                <div className="grid gap-3 grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+                <div className={clsx(
+                    "grid gap-3 grid-cols-2 md:grid-cols-4 lg:grid-cols-5",
+                    loading && 'pointer-events-none'
+                )}>
                     {recommendations.map((track, index) => (
                         <TopListTrack
                             index={index}
