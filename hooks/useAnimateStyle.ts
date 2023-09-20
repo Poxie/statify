@@ -23,7 +23,9 @@ export const useAnimateStyle = (ref: RefObject<HTMLElement | null>, isAnimated: 
         const shouldHaveDelay = (isAnimated && options.delayOut) || (!isAnimated && options.delayIn);
         ref.current.style.transitionDelay = shouldHaveDelay ? `${shouldHaveDelay}ms` : '0ms';
 
-        updateStyle(isAnimated ? options.from : options.to);
+        setTimeout(() => {
+            updateStyle(isAnimated ? options.from : options.to);
+        }, 0);
     }, [isAnimated]);
     const updateStyle = useCallback((style: CSSProperties) => {
         if(!ref.current) return;
