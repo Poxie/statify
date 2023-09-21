@@ -24,7 +24,7 @@ export const useInfiniteScroll = <T>(query: string, options: Partial<Options>={}
     }, [setLoading, setResults]);
     useEffect(() => {
         setLoading(true);
-        if(!query) return;
+        if(!query) return setResults([]);
 
         const abortController = new AbortController();
         fetchItems(query, abortController.signal)

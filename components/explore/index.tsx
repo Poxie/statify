@@ -20,18 +20,12 @@ export default function Explore() {
     
     // Scrolling to top and disabling overflow on deselect
     if(disabled) {
-        document.body.style.overflow = 'hidden';
         document.documentElement.style.scrollBehavior = 'smooth';
         setTimeout(() => {
             window.scrollTo({ top: 0 });
             document.documentElement.style.scrollBehavior = '';
         }, 0);
-    } else {
-        document.body.style.overflow = '';
-        document.body.style.scrollBehavior = '';
     }
-    // Making sure overflow is returned to normal on unmount
-    useEffect(() => () => {document.body.style.overflow = ''}, [])
 
     const basedOnItems = useMemo(() => ([...artists, ...tracks]), [tracks.length, artists.length]);
     return(
