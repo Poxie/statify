@@ -1,8 +1,17 @@
 import { get } from '@/utils';
 import { useCallback, useState, useEffect, useRef, RefObject } from 'react';
 
-const SCROLL_THRESHOLD = 200;
-export const useInfiniteScroll = <T>(query: string, scrollContainer: typeof window | RefObject<HTMLElement>=window) => {
+type Options = {
+    scrollContainer: typeof window | RefObject<HTMLElement>;
+    scrollThreshold: number;
+}
+
+const DEFAULT_SCROLL_THRESHOLD = 200;
+export const useInfiniteScroll = <T>(query: string, options: Partial<Options>={}) => {
+    if(!options.scrollContainer) options.scrollContainer = window;
+    if(options.scrollThreshold === undefined) options.scrollThreshold = DEFAULT_SCROLL_THRESHOLD;
+    const { scrollThreshold, scrollContainer } = options;
+
     const [loading, setLoading] = useState(true);
     const [results, setResults] = useState<T[]>([]);
     const fetching = useRef(false);
@@ -34,8 +43,8 @@ export const useInfiniteScroll = <T>(query: string, scrollContainer: typeof wind
         const scroll = 'scrollHeight' in container ? container.scrollHeight - container.scrollTop - container.clientHeight : container.innerHeight + container.scrollY;
         const height = 'innerHeight' in container ? document.body.offsetHeight : container.offsetHeight;
         
-        return scroll + SCROLL_THRESHOLD >= height
-    }, [query]);
+        return scroll + scrollThreshold >= height
+    }, [query, scrollThreshold, scrollContainer]);
     useEffect(() => {
         const container = 'current' in scrollContainer ? scrollContainer.current : scrollContainer;
 
@@ -49,7 +58,7 @@ export const useInfiniteScroll = <T>(query: string, scrollContainer: typeof wind
 
         container?.addEventListener('scroll', onScroll);
         return () => container?.removeEventListener('scroll', onScroll);
-    }, [query]);
+    }, [query, scrollThreshold, scrollContainer]);
 
     return { loading, results };
 }
