@@ -32,7 +32,7 @@ export default function Explore() {
 
     const basedOnItems = useMemo(() => ([...artists, ...tracks, ...genres]), [tracks.length, artists.length, genres.length]);
     return(
-        <main className="pt-20">
+        <main className="pt-10 sm:pt-20">
             <ExploreHeader />
             <ExploreInputs 
                 genres={genres}
