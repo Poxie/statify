@@ -2,8 +2,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import ExploreChip from "./ExploreChip";
 import { SpotifyArtist, SpotifyTrack } from "@/types";
 
-export default function ExploreBasedOn({ items, setTracks, setArtists }: {
-    items: (SpotifyArtist | SpotifyTrack)[];
+export default function ExploreBasedOn({ items, setTracks, setGenres, setArtists }: {
+    items: (SpotifyArtist | SpotifyTrack | string)[];
+    setGenres: React.Dispatch<React.SetStateAction<string[]>>;
     setTracks: React.Dispatch<React.SetStateAction<SpotifyTrack[]>>;
     setArtists: React.Dispatch<React.SetStateAction<SpotifyArtist[]>>;
 }) {
@@ -37,6 +38,17 @@ export default function ExploreBasedOn({ items, setTracks, setArtists }: {
                         <div className="flex flex-wrap gap-1.5">
                             <AnimatePresence>
                                 {items.map(item => {
+                                    if(typeof item === 'string') {
+                                        return(
+                                            <ExploreChip 
+                                                onRemove={() => setGenres(prev => prev.filter(g => g !== item))}
+                                                text={item}
+                                                id={item}
+                                                key={item}
+                                            />
+                                        )
+                                    }
+
                                     let image: undefined | string;
                                     let onItemRemove: (() => void) | undefined;
 

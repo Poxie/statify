@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, { params: { country } }: {
     if(!playlistId) throw new Error('Playlist not found.');
 
     const playlist = await fetchFromSpotify<SpotifyPlaylist>(`/playlists/${playlistId}`);
-    const tracks = await getTrackColors(playlist.tracks.items.map(item => item.track));
+    const tracks = await getTrackColors(playlist.tracks.items.map(item => item.track).slice(0,15));
 
     return NextResponse.json({
         playlistInfo: {

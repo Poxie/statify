@@ -5,9 +5,11 @@ import { SpotifyArtist, SpotifyTrack } from "@/types";
 
 const background = resolveConfig(tailwindConfig).theme?.backgroundColor?.primary;
 
-export default function ExploreInputs({ tracks, setTracks, artists, setArtists }: {
+export default function ExploreInputs({ genres, setGenres, tracks, setTracks, artists, setArtists }: {
+    genres: string[];
     tracks: SpotifyTrack[];
     artists: SpotifyArtist[];
+    setGenres: React.Dispatch<React.SetStateAction<string[]>>;
     setTracks: React.Dispatch<React.SetStateAction<SpotifyTrack[]>>;
     setArtists: React.Dispatch<React.SetStateAction<SpotifyArtist[]>>;
 }) {
@@ -18,7 +20,7 @@ export default function ExploreInputs({ tracks, setTracks, artists, setArtists }
         >
             <div className="py-8">
                 <div className="w-[900px] max-w-main mx-auto">
-                    <div className="grid gap-2 md:grid-cols-2">
+                    <div className="mb-2 grid gap-2 md:grid-cols-2">
                         <ExploreInput<SpotifyArtist> 
                             type={'artist'}
                             items={artists}
@@ -32,6 +34,12 @@ export default function ExploreInputs({ tracks, setTracks, artists, setArtists }
                             onItemRemove={trackId => setTracks(prev => prev.filter(track => track.id !== trackId))}
                         />
                     </div>
+                    <ExploreInput<string> 
+                        type={'genre'}
+                        items={genres}
+                        onItemAdd={genre => setGenres(prev => prev.concat(genre))}
+                        onItemRemove={genre => setGenres(prev => prev.filter(g => g !== genre))}
+                    />
                 </div>
             </div>
         </div>

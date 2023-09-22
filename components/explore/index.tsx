@@ -8,15 +8,18 @@ import { SpotifyArtist, SpotifyTrack, SpotifyTrackWithColor } from '@/types';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 export default function Explore() {
+    const [genres, setGenres] = useState<string[]>([]);
     const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
     const [artists, setArtists] = useState<SpotifyArtist[]>([]);
-    const disabled = !artists.length && !tracks.length;
+    const disabled = !artists.length && !tracks.length && !genres.length;
     
     const url = new URL(`${window.location.origin}/recommendations`);
     url.searchParams.set('seed_artists', artists.map(artist => artist.id).join(','));
     url.searchParams.set('seed_tracks', tracks.map(track => track.id).join(','));
+    url.searchParams.set('seed_genres', genres.join(','));
     
-    const { results, loading } = useInfiniteScroll<SpotifyTrackWithColor>(!disabled ? `${url.pathname}${url.search}` : '');
+    const query = `${url.pathname}${url.search}`;
+    const { results, loading } = useInfiniteScroll<SpotifyTrackWithColor>(!disabled ? query : '');
     
     // Scrolling to top and disabling overflow on deselect
     if(disabled) {
@@ -27,13 +30,15 @@ export default function Explore() {
         }, 0);
     }
 
-    const basedOnItems = useMemo(() => ([...artists, ...tracks]), [tracks.length, artists.length]);
+    const basedOnItems = useMemo(() => ([...artists, ...tracks, ...genres]), [tracks.length, artists.length, genres.length]);
     return(
         <main className="pt-20">
             <ExploreHeader />
             <ExploreInputs 
+                genres={genres}
                 artists={artists}
                 tracks={tracks}
+                setGenres={setGenres}
                 setArtists={setArtists}
                 setTracks={setTracks}
             />
@@ -42,6 +47,7 @@ export default function Explore() {
                     items={basedOnItems}
                     setTracks={setTracks}
                     setArtists={setArtists}
+                    setGenres={setGenres}
                 />
                 <ExploreTracks 
                     tracks={results}
