@@ -1,63 +1,43 @@
-import { SpotifyArtist, SpotifyTrack } from '@/types';
 import { get } from '@/utils';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
-type SearchType = 'track' | 'artist';
-type SearchResult = SpotifyTrack | SpotifyArtist;
 type SearchOptions = {
-    waitBeforeFetch: number;
+    waitBeforeFetch?: number;
 }
 
 const cache: {
-    [key in SearchType]: {
-        [query: string]: SearchResult[];
-    }
-} = {
-    track: {},
-    artist: {},
-};
-const getInfoFromCache = (type: SearchType, query: string) => cache[type][query];
+    [path: string]: any[];
+} = {};
+const getInfoFromCache = (path: string) => cache[path];
 
 const WAIT_BEFORE_FETCH = 250;
 export const useSearch = <T>(
-    type: SearchType,
+    path?: string,
     options: SearchOptions={
         waitBeforeFetch: WAIT_BEFORE_FETCH,
     }
 ) => {
-    const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState<SearchResult[]>([]);
+    const [results, setResults] = useState<T[]>([]);
 
     useEffect(() => {
-        if(!query) {
+        if(!path) {
             setLoading(false);
             setResults([]);
             return;
         }
 
-        const cachedInfo = getInfoFromCache(type, query);
+        const cachedInfo = getInfoFromCache(path);
         if(cachedInfo) return setResults(cachedInfo);
 
         setLoading(true);
 
         const abortController = new AbortController();
         const timeout = setTimeout(async () => {
-            const results = await get<SearchResult[]>(`/search?type=${type}&q=${query}`, abortController.signal);
+            const results = await get<T[]>(path, abortController.signal);
 
-            const sortedResults = (
-                results
-                    .filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
-                    .sort((a,b) => {
-                        if(type === 'artist') {
-                            return (b as SpotifyArtist).followers.total - (a as SpotifyArtist).followers.total
-                        }
-                        return b.popularity - a.popularity;
-                    })
-            )
-
-            cache[type][query] = sortedResults;
-            setResults(sortedResults);
+            cache[path] = results;
+            setResults(results);
             setLoading(false);
         }, options.waitBeforeFetch);
 
@@ -65,11 +45,9 @@ export const useSearch = <T>(
             abortController.abort();
             clearTimeout(timeout);
         }
-    }, [type, query, options.waitBeforeFetch]);
+    }, [path, options.waitBeforeFetch]);
 
     return {
-        query,
-        setQuery,
         loading,
         results: results as T[],
     }

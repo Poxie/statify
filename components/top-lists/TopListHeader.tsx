@@ -1,12 +1,10 @@
 "use client";
-import TopListSearch from "./TopListSearch";
-import { getCountryColors } from "@/utils";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import CustomSearchInput from "../custom-search-input";
 
 export default function TopListHeader() {
+    const router = useRouter();
     const country = useSearchParams().get('country');
-
-    const colors = getCountryColors(country);
 
     return(
         <div className="text-center max-w-main mx-auto">
@@ -16,10 +14,7 @@ export default function TopListHeader() {
                 ) : (
                     <>
                     in{' '}
-                    <span 
-                        className="gradient-text font-extrabold"
-                        style={colors ? { '--gradient-from': colors[0], '--gradient-to': colors[1] } as React.CSSProperties : undefined}
-                    >
+                    <span>
                         {country}
                     </span>
                     </>
@@ -28,7 +23,14 @@ export default function TopListHeader() {
             <span className="block w-[600px] max-w-full mx-auto  mt-4 mb-6 sm:text-xl text-secondary">
                 It is time to leave your country’s bubble. This is a way to explore the culture of countries all around the world.
             </span>
-            <TopListSearch />
+            <CustomSearchInput 
+                path='/country/list'
+                placeholder={'Find your country...'}
+                onSelect={country => {
+                    if(country === 'global') return router.push('/top-lists');
+                    router.push(`/top-lists?country=${country}`, { scroll: false });
+                }}
+            />
         </div>
     )
 }

@@ -1,40 +1,37 @@
 import Input from '../input';
-import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { AnimatePresence, motion } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
-import { get } from '@/utils';
+import { useSearch } from '@/hooks/useSearch';
+import { useSortedResults } from '@/hooks/useSortedResults';
 
-export default function CustomSearchInput({ path, placeholder, onSelect, containerClassName, inputClassName, iconClassName, iconContainerClassName }: {
-    path: string;
+export default function CustomSearchInput<T extends string | Record<string, any>>({ RenderItem, path, placeholder, resultsPlaceholder, onSelect, onChange, containerClassName, inputClassName, iconClassName, iconContainerClassName, sortByKey }: {
+    RenderItem?: React.ComponentType<any>;
+    path: string | undefined;
     placeholder: string;
-    onSelect: (item: string) => void;
+    resultsPlaceholder?: string;
+    onSelect: (item: T) => void;
+    onChange?: (query: string) => void;
     containerClassName?: string;
     inputClassName?: string;
     iconClassName?: string;
     iconContainerClassName?: string;
+    sortByKey?: string;
 }) {
-    const [query, setQuery] = useState('');
-    const [results, setResults] = useState<string[]>([]);
-    const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const resultsContainer = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if(!open || results.length) return;
+    const { results, loading } = useSearch<T>(path);
+    const { setQuery, results: sortedResults } = useSortedResults<T>(results, sortByKey);
 
-        const abortController = new AbortController();
-        get<string[]>(path, abortController.signal)
-            .then(results => {
-                setLoading(false);
-                setResults(results);
-            })
-
-        return () => abortController.abort();
-    }, [path, open, results.length]);
+    const handleChange = (query: string) => {
+        setQuery(query);
+        if(onChange) onChange(query);
+    }
 
     const onClickOutside = useCallback(() => setOpen(false), [setOpen]);
     useClickOutside({
@@ -42,10 +39,6 @@ export default function CustomSearchInput({ path, placeholder, onSelect, contain
         allowedRef: resultsContainer,
         onClickOutside,
     })
-
-    const filteredGenres = useMemo(() => (
-        results.filter(item => item.toLowerCase().includes(query.toLowerCase()))
-    ), [results, query])
     return(
         <div className="relative max-w-full">
             <Input
@@ -60,7 +53,7 @@ export default function CustomSearchInput({ path, placeholder, onSelect, contain
                 }
                 placeholder={placeholder}
                 onFocus={() => setOpen(true)}
-                onChange={setQuery}
+                onChange={handleChange}
                 ref={inputRef}
             />
             <div ref={resultsContainer}>
@@ -73,26 +66,44 @@ export default function CustomSearchInput({ path, placeholder, onSelect, contain
                             transition={{ duration: .15, bounce: false }}
                             className="max-h-[220px] w-full p-2 pr-0 overflow-auto scrollbar absolute z-10 top-[calc(100%+.5rem)] bg-secondary border-[1px] border-tertiary rounded-lg"
                         >
-                            {!filteredGenres.length && (
+                            {!sortedResults.length && (
                                 <span className="block text-xs text-secondary">
                                     {!loading ? (
-                                        'No results were found.'
+                                        (!path && resultsPlaceholder) ? (
+                                            resultsPlaceholder
+                                        ) : (
+                                            'No results were found.'
+                                        )
                                     ) : (
                                         'Loading results...'
                                     )}
                                 </span>
                             )}
-                            {filteredGenres.map(item => {
+                            {sortedResults.map((item, key) => {
                                 return(
-                                    <li key={item}>
+                                    <li key={key}>
                                         <button 
-                                            className="px-2 py-1.5 w-full text-sm text-left rounded-md transition-colors hover:bg-tertiary"
+                                            className="w-full text-sm text-left rounded-md transition-colors hover:bg-tertiary"
                                             onClick={() => {
-                                                onSelect(item);
+                                                onSelect(item as T);
                                                 setOpen(false);
                                             }}
                                         >
-                                            {item}
+                                            {typeof item === 'string' ? (
+                                                <span className="block px-2 py-1.5">
+                                                    {item}
+                                                </span>
+                                            ) : (
+                                                RenderItem ? (
+                                                    <RenderItem 
+                                                        {...item}
+                                                    />
+                                                ) : (
+                                                    <span className="block px-2 py-1.5">
+                                                        Render item not specificed.
+                                                    </span>
+                                                )
+                                            )}
                                         </button>
                                     </li>
                                 )

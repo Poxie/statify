@@ -2,6 +2,8 @@ import { SpotifyArtist, SpotifyTrack } from "@/types";
 import SearchInput from "../search-input";
 import ExploreChip from "./ExploreChip";
 import CustomSearchInput from "../custom-search-input";
+import { useState } from "react";
+import SearchResult from "../search-input/SearchResult";
 
 export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }: {
     type: 'artist' | 'track' | 'genre';
@@ -9,6 +11,8 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
     onItemRemove: (itemId: string) => void;
     items: (SpotifyTrack | SpotifyArtist | string)[];
 }) {
+    const [search, setSearch] = useState('');
+
     const onSelect = (item: SpotifyArtist | SpotifyTrack | string) => {
         // Handling genres
         if(typeof item === 'string') {
@@ -29,17 +33,21 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
     return(
         <div className="p-3 pb-0 flex flex-col bg-secondary rounded-md">
             {type !== 'genre' ? (
-                <SearchInput 
+                <CustomSearchInput<SpotifyArtist | SpotifyTrack>
+                    path={search ? `/search?type=${type}&q=${search}` : undefined}
+                    placeholder={`Search ${type}...`}
                     inputClassName="py-2.5 pr-2.5 text-sm"
                     iconContainerClassName="p-2.5"
                     iconClassName="w-4"
                     onSelect={onSelect}
-                    type={type}
+                    onChange={setSearch}
+                    sortByKey={'name'}
+                    RenderItem={SearchResult}
                 />
             ) : (
-                <CustomSearchInput
-                    path='/genre/list'
-                    placeholder={'Search genre...'}
+                <CustomSearchInput<string>
+                    path={'/genre/list'}
+                    placeholder={`Search ${type}...`}
                     inputClassName="py-2.5 pr-2.5 text-sm"
                     iconContainerClassName="p-2.5"
                     iconClassName="w-4"
