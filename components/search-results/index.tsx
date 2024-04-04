@@ -46,7 +46,7 @@ export default function SearchResults<T>({
             exit={{ scale: .98, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: .15, bounce: false }}
-            className="p-2 max-h-[220px] w-full z-10 absolute top-[calc(100%+8px)] bg-secondary border-[1px] border-tertiary rounded-md overflow-auto"
+            className="scrollbar p-2 max-h-[220px] w-full z-10 absolute top-[calc(100%+8px)] bg-secondary border-[1px] border-tertiary rounded-md overflow-auto"
         >
             <ul>
                 {data.map((item, key) => (
