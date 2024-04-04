@@ -4,6 +4,7 @@ import ExploreChip from "./ExploreChip";
 import CustomSearchInput from "../custom-search-input";
 import { useState } from "react";
 import SearchResult from "../search-input/SearchResult";
+import ListInput from "../list-input";
 
 export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }: {
     type: 'artist' | 'track' | 'genre';
@@ -42,7 +43,7 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
                     iconClassName="w-4"
                 />
             ) : (
-                <CustomSearchInput<string>
+                <ListInput
                     path={'/genre/list'}
                     placeholder={`Search ${type}...`}
                     inputClassName="py-2.5 pr-2.5 text-sm"

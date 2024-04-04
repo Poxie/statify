@@ -52,22 +52,14 @@ export default function SearchInput<T>({ onSelect, type, placeholder, iconClassN
             />
             <AnimatePresence>
                 {showResults && (
-                    <motion.div
-                        initial={{ scale: .98, opacity: 0 }}
-                        exit={{ scale: .98, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: .15, bounce: false }}
-                        className="relative z-10"
-                    >
-                        <SearchResults<T> 
-                            data={data}
-                            renderItem={type}
-                            onSelect={handleSelect}
-                            loading={loading}
-                            hasQuery={!!query}
-                            beginMessage={`Search for your favorite ${type}...`}
-                        />
-                    </motion.div>
+                    <SearchResults<T> 
+                        data={data}
+                        renderItem={type}
+                        onSelect={handleSelect}
+                        loading={loading}
+                        hasQuery={!!query}
+                        beginMessage={`Search for your favorite ${type}...`}
+                    />
                 )}
             </AnimatePresence>
         </div>
