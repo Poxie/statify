@@ -14,8 +14,8 @@ export default function ExploreBasedOn({ items, setTracks, setGenres, setArtists
     return(
         <div className="pt-8 bg-primary sticky -top-4 z-[1] rounded-b-lg">
             <div className={twMerge(
-                "mb-3 p-3 rounded-lg overflow-hidden transition-colors",
-                !empty && 'bg-secondary',
+                "mb-3 p-3 rounded-lg overflow-hidden border-[1px] border-transparent transition-colors",
+                !empty && 'bg-secondary border-tertiary',
             )}>
                 <AnimatePresence mode="wait">
                     {empty && (
