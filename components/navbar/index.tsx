@@ -7,6 +7,7 @@ import { LogoIcon } from "@/assets/icons/LogoIcon";
 import { HamIcon } from "@/assets/icons/HamIcon";
 import { useState } from "react";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
+import NavbarUser from "./NavbarUser";
 
 export default function Navbar() {
     const isSmallScreen = useIsSmallScreen();
@@ -43,12 +44,7 @@ export default function Navbar() {
                     isSmallScreen={isSmallScreen}
                 />
             </div>
-            <Button 
-                small={isSmallScreen}
-                className="z-30"    
-            >
-                Sign in with Spotify
-            </Button>
+            <NavbarUser />
         </div>
     )
 }

@@ -107,7 +107,7 @@ export type SpotifyPlaylist = {
     uri: string;
 }
 export type SpotifyUser = {
-    displayName: string;
+    display_name: string;
     externalUrls: {
         spotify: string;
     };
