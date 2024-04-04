@@ -15,6 +15,9 @@ const config: Config = {
       maxWidth: {
         main: '90%'
       },
+      backgroundImage: {
+        'dotted': 'radial-gradient(circle at 1px 1px, #1C1F22 2px, transparent 0)',
+      },
       backgroundColor: {
         'c-primary': '#6E3FC9',
         'c-primary-accent': '#623DAA',

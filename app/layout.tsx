@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import TooltipProvider from '@/contexts/tooltip'
 import PreviewProvider from '@/contexts/preview'
 import AuthProvider from '@/contexts/auth'
+import ProfileProvider from '@/contexts/profile'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,12 +22,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <TooltipProvider>
-            <PreviewProvider>
-              <Navbar />
-              {children}
-            </PreviewProvider>
-          </TooltipProvider>
+          <ProfileProvider>
+            <TooltipProvider>
+              <PreviewProvider>
+                <Navbar />
+                {children}
+              </PreviewProvider>
+            </TooltipProvider>
+          </ProfileProvider>
         </AuthProvider>
       </body>
     </html>
