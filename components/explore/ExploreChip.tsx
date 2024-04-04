@@ -16,7 +16,7 @@ export default function ExploreChip({ id, text, image, onRemove, className }: {
         )}>
             {image && (
                 <SpotifyImage 
-                    className="w-5 min-w-[1.25rem] aspect-square rounded-full"
+                    className="w-4 aspect-square rounded-sm"
                     src={image}
                     width={32}
                     height={32}
@@ -27,7 +27,7 @@ export default function ExploreChip({ id, text, image, onRemove, className }: {
             </span>
             {onRemove && (
                 <button 
-                    className="p-1 -mx-1"
+                    className="p-1 -m-1"
                     onClick={onRemove}
                 >
                     <CloseIcon className="w-3" />
