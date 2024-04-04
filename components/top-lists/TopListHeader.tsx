@@ -26,7 +26,13 @@ export default function TopListHeader() {
             <ListInput 
                 path='/country/list'
                 placeholder={'Find your country...'}
-                onSelect={country => router.push(`/top-lists?country=${country}`)}
+                onSelect={country => {
+                    if(country === 'Global') {
+                        router.push('/top-lists');
+                        return;
+                    }
+                    router.push(`/top-lists?country=${country}`);
+                }}
             />
         </div>
     )
