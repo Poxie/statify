@@ -33,16 +33,13 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
     return(
         <div className="p-3 pb-0 flex flex-col bg-secondary rounded-md">
             {type !== 'genre' ? (
-                <CustomSearchInput<SpotifyArtist | SpotifyTrack>
-                    path={search ? `/search?type=${type}&q=${search}` : undefined}
+                <SearchInput 
+                    type={type}
+                    onSelect={onSelect}
                     placeholder={`Search ${type}...`}
                     inputClassName="py-2.5 pr-2.5 text-sm"
                     iconContainerClassName="p-2.5"
                     iconClassName="w-4"
-                    onSelect={onSelect}
-                    onChange={setSearch}
-                    sortByKey={'name'}
-                    RenderItem={SearchResult}
                 />
             ) : (
                 <CustomSearchInput<string>
