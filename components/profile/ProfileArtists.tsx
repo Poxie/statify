@@ -44,12 +44,14 @@ export default function ProfileArtists() {
                 ))}
             </ul>
         </div>
-        <button 
-            className="-mr-2 p-2 ml-auto block text-sm text-secondary hover:text-primary transition-colors"
-            onClick={() => setShowAll(!showAll)}
-        >
-            {showAll ? 'Show less' : 'Show all'}
-        </button>
+        <div className="p-4 sticky bottom-0 bg-primary">
+            <button 
+                className="ml-auto block text-sm text-secondary hover:text-primary transition-colors"
+                onClick={() => setShowAll(!showAll)}
+            >
+                {showAll ? 'Show less' : 'Show all'}
+            </button>
+        </div>
         </>
     )
 }
