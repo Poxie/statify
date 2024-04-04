@@ -7,7 +7,10 @@ export const useClickOutside = ({ ref, allowedRef, onClickOutside }: {
 }) => {
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent | FocusEvent) => {
-            if(ref.current && (!ref.current.contains(e.target as Node) && (allowedRef?.current && !allowedRef.current.contains(e.target as Node)))) {
+            if(ref.current && (!ref.current.contains(e.target as Node))) {
+                if(allowedRef?.current && !allowedRef.current.contains(e.target as Node)) {
+                    return;
+                }
                 onClickOutside();
             }
         }
