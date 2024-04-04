@@ -1,8 +1,9 @@
 declare global {
     namespace NodeJS {
       interface ProcessEnv {
-        CLIENT_SECRET: string;
+        NEXT_PUBLIC_CLIENT_ID: string;
         CLIENT_ID: string;
+        CLIENT_SECRET: string;
         TOKEN_URL: string;
         SPOTIFY_API_URL: string;
       }

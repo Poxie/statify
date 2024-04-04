@@ -106,3 +106,22 @@ export type SpotifyPlaylist = {
     type: string;
     uri: string;
 }
+export type SpotifyUser = {
+    displayName: string;
+    externalUrls: {
+        spotify: string;
+    };
+    followers: {
+        href: string | null;
+        total: number;
+    };
+    href: string;
+    id: string;
+    images: {
+        height: number | null;
+        url: string;
+        width: number | null;
+    }[];
+    type: string;
+    uri: string;
+}

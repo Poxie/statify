@@ -3,14 +3,38 @@ import { SpotifyAlbum, SpotifyTrack } from '@/types';
 import { cache } from "react";
 
 export const get = cache(async <T>(query: string, signal?: AbortSignal) => {
-    const res = await fetch(query, { signal });
-    const data = await res.json();
+    let res: Response;
 
+    try {
+        res = await fetch(query, { signal })
+    } catch(error) {
+        if(!(error instanceof Error)) throw error;
+        if(error.name !== 'AbortError') throw error;
+        return [];
+    }
+
+    const data = await res.json();
     if(data.error) {
         throw new Error(data.error.message);
     }
+
     return data as T;
 })
+export const getWithToken = async <T>(query: string) => {
+    const token = localStorage.getItem('token');
+    const res = await fetch(query, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+
+    const data = await res.json();
+    if(data.error) {
+        throw new Error(data.error.message);
+    }
+
+    return data as T;''
+}
 
 export const getRandomArtist = (excludeId?: string) => {
     const includedArtists = Artists.filter(a => a.id !== excludeId);
@@ -33,4 +57,16 @@ export const getTopAlbumFromTracks = (tracks: SpotifyTrack[] | undefined, albums
         firstAlbum = topTrackAlbums.find(album => album.id === firstAlbumId);
     }
     return firstAlbum;
+}
+
+// Auth related functions
+export const getLoginUrl = () => {
+    const scopes = [
+        'user-read-private',
+        'user-top-read',
+    ].join(' ');
+    const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+    const redirectUri = `${window.location.origin}/profile`;
+    
+    return `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 }
