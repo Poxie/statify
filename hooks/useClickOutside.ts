@@ -14,12 +14,19 @@ export const useClickOutside = ({ ref, allowedRef, onClickOutside }: {
                 onClickOutside();
             }
         }
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if(e.key === 'Escape') {
+                onClickOutside();
+            }
+        }
 
         document.addEventListener('focusin', handleClickOutside);
         document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener('focusin', handleClickOutside);
+            document.removeEventListener('keydown', handleKeyDown);
         }
     }, [ref, allowedRef, onClickOutside]);
 }
