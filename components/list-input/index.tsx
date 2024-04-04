@@ -42,7 +42,7 @@ export default function ListInput({ path, placeholder, onSelect, iconClassName, 
                 className={inputClassName}
                 containerClassName={containerClassName}
                 iconContainerClassName={iconContainerClassName}
-                icon={<SearchIcon className={twMerge("w-5", iconClassName)} />}
+                icon={<SearchIcon className={twMerge("w-5 text-secondary", iconClassName)} />}
                 onFocus={() => setShowResults(true)}
             />
             <AnimatePresence>
