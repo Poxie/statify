@@ -8,7 +8,12 @@ export default function ProfileTopArtist({ artist, artistNumber }: {
 }) {
     const image = artist.images.at(-1)?.url;
     return(
-        <div className="flex flex-col">
+        <div className={twMerge(
+            "flex flex-col",
+            artistNumber === 1 && 'order-0 md:order-[unset]',
+            artistNumber === 2 && 'order-1 md:order-[unset]',
+            artistNumber === 3 && 'order-2 md:order-[unset]',
+        )}>
             <div className="flex gap-2 self-center">
                 <SpotifyImage 
                     src={image}
@@ -27,18 +32,17 @@ export default function ProfileTopArtist({ artist, artistNumber }: {
             </div>
             <div className="gradient-border mt-4 rounded-lg overflow-hidden">
                 <div className={twMerge(
-                    "flex-1 flex gap-0.5 items-end font-bold justify-center bg-secondary",
-                    artistNumber === 1 && 'py-10',
-                    artistNumber === 2 && 'py-6',
-                    artistNumber === 3 && 'py-3',
+                    "py-3 flex-1 flex gap-0.5 items-end font-bold justify-center bg-secondary",
+                    artistNumber === 1 && 'md:py-10',
+                    artistNumber === 2 && 'md:py-6',
                 )}>
                     <span className="block text-secondary text-lg translate-y-[0.1rem]">
                         #
                     </span>
                     <span className={twMerge(
                         "text-2xl",
-                        artistNumber === 1 && 'text-5xl',
-                        artistNumber === 2 && 'text-3xl',
+                        artistNumber === 1 && 'md:text-5xl',
+                        artistNumber === 2 && 'md:text-3xl',
                     )}>
                         {artistNumber}
                     </span>
