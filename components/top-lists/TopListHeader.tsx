@@ -1,6 +1,5 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import CustomSearchInput from "../custom-search-input";
 import ListInput from "../list-input";
 
 export default function TopListHeader() {

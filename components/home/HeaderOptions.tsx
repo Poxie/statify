@@ -3,7 +3,6 @@ import { SpotifyArtist } from "@/types";
 import Button from "../button";
 import SearchInput from "../search-input";
 import { useRouter } from "next/navigation";
-import CustomSearchInput from "../custom-search-input";
 
 export default function HeaderOptions() {
     const router = useRouter();

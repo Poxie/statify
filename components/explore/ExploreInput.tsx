@@ -1,10 +1,8 @@
+import { useState } from "react";
 import { SpotifyArtist, SpotifyTrack } from "@/types";
 import SearchInput from "../search-input";
-import ExploreChip from "./ExploreChip";
-import CustomSearchInput from "../custom-search-input";
-import { useState } from "react";
-import SearchResult from "../search-input/SearchResult";
 import ListInput from "../list-input";
+import ExploreChip from "./ExploreChip";
 
 export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }: {
     type: 'artist' | 'track' | 'genre';

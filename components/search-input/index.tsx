@@ -1,6 +1,4 @@
 import { useRef, useState } from "react";
-import SearchResult from "./SearchResult";
-import CustomSearchInput from "../custom-search-input";
 import Input from "../input";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { twMerge } from "tailwind-merge";
