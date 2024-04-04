@@ -19,21 +19,19 @@ export default function ExploreInputs({ genres, setGenres, tracks, setTracks, ar
             style={{ '--background': background } as React.CSSProperties}
         >
             <div className="py-8">
-                <div className="w-[900px] max-w-main mx-auto">
-                    <div className="mb-2 grid gap-2 md:grid-cols-2">
-                        <ExploreInput<SpotifyArtist> 
-                            type={'artist'}
-                            items={artists}
-                            onItemAdd={artist => setArtists(prev => prev.concat(artist))}
-                            onItemRemove={artistId => setArtists(prev => prev.filter(artist => artist.id !== artistId))}
-                        />
-                        <ExploreInput<SpotifyTrack> 
-                            type={'track'}
-                            items={tracks}
-                            onItemAdd={track => setTracks(prev => prev.concat(track))}
-                            onItemRemove={trackId => setTracks(prev => prev.filter(track => track.id !== trackId))}
-                        />
-                    </div>
+                <div className="mb-2 w-main max-w-main mx-auto grid gap-2 lg:grid-cols-3">
+                    <ExploreInput<SpotifyArtist> 
+                        type={'artist'}
+                        items={artists}
+                        onItemAdd={artist => setArtists(prev => prev.concat(artist))}
+                        onItemRemove={artistId => setArtists(prev => prev.filter(artist => artist.id !== artistId))}
+                    />
+                    <ExploreInput<SpotifyTrack> 
+                        type={'track'}
+                        items={tracks}
+                        onItemAdd={track => setTracks(prev => prev.concat(track))}
+                        onItemRemove={trackId => setTracks(prev => prev.filter(track => track.id !== trackId))}
+                    />
                     <ExploreInput<string> 
                         type={'genre'}
                         items={genres}
