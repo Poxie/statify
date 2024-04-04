@@ -51,7 +51,7 @@ export default function ExploreInput<T>({ items, type, onItemAdd, onItemRemove }
                 />
             )}
             <div className="pt-2 pb-4 flex-1 flex items-center justify-center">
-                <div className="min-h-[52px] h-full p-2 flex-1 flex items-start flex-wrap gap-1 bg-primary rounded-lg">
+                <div className="min-h-[52px] h-full p-2 flex-1 flex items-center flex-wrap gap-1 bg-primary rounded-lg">
                     {items.length !== 0 && (
                         items.map(item => {
                             if(typeof item === 'string') {
