@@ -3,15 +3,7 @@ import { SpotifyAlbum, SpotifyTrack } from '@/types';
 import { cache } from "react";
 
 export const get = cache(async <T>(query: string, signal?: AbortSignal) => {
-    let res: Response;
-
-    try {
-        res = await fetch(query, { signal })
-    } catch(error) {
-        if(!(error instanceof Error)) throw error;
-        if(error.name !== 'AbortError') throw error;
-        return [];
-    }
+    let res = await fetch(query, { signal })
 
     const data = await res.json();
     if(data.error) {

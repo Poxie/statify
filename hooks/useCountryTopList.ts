@@ -30,13 +30,13 @@ export const useCountryTopList = (country: string, options: Options={}) => {
         setLoading(true);
 
         const timeouts: NodeJS.Timeout[] = [];
-        let abortController: AbortController | undefined;
-        let req: Promise<ToplistInfo> | undefined;
+        let abortController: AbortController;
+        let req: Promise<ToplistInfo>;
         
         const cachedInfo = getInfoFromCache(country);
         if(!cachedInfo) {
             abortController = new AbortController();
-            req = get<NonNullable<typeof info>>(`/top-lists/${country}`, abortController.signal);
+            req = get<ToplistInfo>(`/top-lists/${country}`, abortController.signal);
         }
 
         const startResultsTimeout = () => timeouts.push(setTimeout(() => setLoading(false), options.extraDuration));
