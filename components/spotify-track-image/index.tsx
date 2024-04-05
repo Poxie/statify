@@ -7,13 +7,15 @@ import { PauseIcon } from "@/assets/icons/PauseIcon";
 import { usePreviewPause } from "@/hooks/usePreviewPause";
 import clsx from "clsx";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
+import { twMerge } from "tailwind-merge";
 
 export default function SpotifyTrackImage(props: Omit<SpotifyImageProps, 'className'> & {
     track: SpotifyTrack;
+    containerClassName?: string;
     imageClassName?: string;
     buttonClassName?: string;
 }) {
-    const { track, imageClassName, buttonClassName } = props;
+    const { track, containerClassName, imageClassName, buttonClassName } = props;
 
     const { addTrack, track: previewTrack } = usePreview();
     const { paused, togglePause } = usePreviewPause();
@@ -32,7 +34,10 @@ export default function SpotifyTrackImage(props: Omit<SpotifyImageProps, 'classN
     const isPreviewTrack = previewTrack?.id === track.id;
     const isPausable = isPreviewTrack && !paused;
     return(
-        <div className="relative">
+        <div className={twMerge(
+            "relative",
+            containerClassName,
+        )}>
             <SpotifyImage 
                 {...props}
                 className={imageClassName}

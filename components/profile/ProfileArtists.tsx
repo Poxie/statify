@@ -19,7 +19,7 @@ export default function ProfileArtists() {
             Your most liked artists
         </h2>
         <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
-            <div className="p-7 grid md:grid-cols-3 items-end gap-7 md:gap-3 bg-dotted bg-[length:31.5px_31.5px] bg-center">
+            <div className="p-7 grid md:grid-cols-3 items-end gap-7 md:gap-3 bg-dotted bg-[length:31px_31px] bg-center">
                 <ProfileTopArtist 
                     artist={topArtists[1]}
                     artistNumber={2}
@@ -44,7 +44,7 @@ export default function ProfileArtists() {
                 ))}
             </ul>
         </div>
-        <div className="p-4 sticky bottom-0 bg-primary">
+        <div className="p-4 z-20 sticky bottom-0 bg-primary">
             <button 
                 className="ml-auto block text-sm text-secondary hover:text-primary transition-colors"
                 onClick={() => setShowAll(!showAll)}

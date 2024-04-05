@@ -1,13 +1,14 @@
 import React from 'react';
-import Link from "next/link";
 import SpotifyTrackImage from "../spotify-track-image";
 import { SpotifyTrack } from "@/types";
 import SpotifyTrackName from '../spotify-track-name';
 import SpotifyTrackArtists from '../spotify-track-artists';
-import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-export default function Track({ track, className }: {
+export default function Track({ track, className, imageContainerClassName, imageClassName }: {
     track: SpotifyTrack | undefined;
+    imageContainerClassName?: string;
+    imageClassName?: string;
     className?: string;
 }) {
     if(!track) return(
@@ -18,13 +19,17 @@ export default function Track({ track, className }: {
 
     return(
         <div 
-            className={clsx(
-                "group flex items-start gap-3",
+            className={twMerge(
+                "group flex gap-3",
                 className,
             )}
         >
             <SpotifyTrackImage
-                imageClassName="min-w-[3.5rem] w-14 aspect-square rounded-md"
+                containerClassName={imageContainerClassName}
+                imageClassName={twMerge(
+                    "min-w-[3.5rem] w-14 aspect-square rounded-md",
+                    imageClassName,
+                )}
                 src={track.album.images.at(-1)?.url} 
                 track={track}
                 height={100}

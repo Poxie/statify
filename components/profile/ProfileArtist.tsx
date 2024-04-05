@@ -1,6 +1,7 @@
 import { SpotifyArtist } from "@/types"
 import SpotifyImage from "../spotify-image";
 import Link from "next/link";
+import ProfileIndexLabel from "./ProfileIndexLabel";
 
 export default function ProfileArtist({ artist, index }: {
     artist: SpotifyArtist;
@@ -9,14 +10,14 @@ export default function ProfileArtist({ artist, index }: {
     const image = artist.images[0]?.url;
     const link = `/?a=${artist.id}`;
     return(
-        <div className="group">
+        <div className="group relative">
+            <ProfileIndexLabel 
+                index={index}
+            />
             <Link 
-                className="block relative border-2 border-tertiary rounded-lg overflow-hidden"
+                className="block border-2 border-tertiary rounded-lg overflow-hidden"
                 href={link}
             >
-                <span className="-ml-[2px] -mt-[2px] py-1.5 px-3 absolute top-0 left-0 bg-secondary bg-opacity-70 border-2 border-tertiary rounded-br-lg font-bold text-sm">
-                    #{index}
-                </span>
                 <SpotifyImage 
                     width={250}
                     height={250}

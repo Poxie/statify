@@ -1,5 +1,5 @@
 "use client";
-import { SpotifyArtist } from '@/types';
+import { SpotifyArtist, SpotifyTrack } from '@/types';
 import { getWithToken } from '@/utils';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../auth';
@@ -7,6 +7,7 @@ import { useAuth } from '../auth';
 const ProfileContext = React.createContext<null | {
     loading: boolean;
     artists: SpotifyArtist[];
+    tracks: SpotifyTrack[];
 }>(null);
 
 export const useProfile = () => {
@@ -23,21 +24,38 @@ export default function ProfileProvider({ children }: {
     const { user } = useAuth();
 
     const [loading, setLoading] = useState(true);
-    const [artists, setArtists] = useState<SpotifyArtist[]>([]);
+    const [info, setInfo] = useState<{
+        artists: SpotifyArtist[];
+        tracks: SpotifyTrack[];
+    }>({
+        artists: [],
+        tracks: [],
+    })
 
     useEffect(() => {
         if(!user) return;
 
-        getWithToken<SpotifyArtist[]>('/profile/me/artists')
-            .then(artists => {
-                setArtists(artists);
+        const reqs = [
+            getWithToken<SpotifyArtist[]>('/profile/me/artists'),
+            getWithToken<SpotifyTrack[]>('/profile/me/tracks'),
+        ]
+
+        Promise.all(reqs)
+            .then(([artists, tracks]) => {
+                setInfo({ 
+                    artists: artists as SpotifyArtist[], 
+                    tracks: tracks as SpotifyTrack[], 
+                });
+            })
+            .finally(() => {
                 setLoading(false);
             })
     }, [user]);
     
     const value = {
         loading,
-        artists,
+        artists: info.artists,
+        tracks: info.tracks,
     }
     return(
         <ProfileContext.Provider value={value}>
