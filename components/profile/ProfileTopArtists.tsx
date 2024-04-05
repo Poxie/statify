@@ -16,7 +16,7 @@ export default function ProfileTopArtist({ artist, artistNumber }: {
             artistNumber === 2 && 'order-1 md:order-[unset]',
             artistNumber === 3 && 'order-2 md:order-[unset]',
         )}>
-            <div className="flex gap-2 self-center">
+            <div className="px-4 md:px-0 flex gap-2 md:self-center">
                 <Link href={link}>
                     <SpotifyImage 
                         src={image}
