@@ -3,6 +3,7 @@ import { useProfile } from "@/contexts/profile"
 import ProfileTopArtist from "./ProfileTopArtists";
 import ProfileArtist from "./ProfileArtist";
 import { useState } from "react";
+import ProfileSectionFooter from "./ProfileSectionFooter";
 
 export default function ProfileArtists() {
     const { loading, artists } = useProfile();
@@ -44,14 +45,10 @@ export default function ProfileArtists() {
                 ))}
             </ul>
         </div>
-        <div className="p-4 z-20 sticky bottom-0 bg-primary">
-            <button 
-                className="ml-auto block text-sm text-secondary hover:text-primary transition-colors"
-                onClick={() => setShowAll(!showAll)}
-            >
-                {showAll ? 'Show less' : 'Show all'}
-            </button>
-        </div>
+        <ProfileSectionFooter 
+            showAll={showAll}
+            setShowAll={setShowAll} 
+        />
         </>
     )
 }

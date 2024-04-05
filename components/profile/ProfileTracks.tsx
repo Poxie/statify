@@ -3,6 +3,7 @@ import { useProfile } from "@/contexts/profile"
 import Track from "../track";
 import ProfileIndexLabel from "./ProfileIndexLabel";
 import { useState } from "react";
+import ProfileSectionFooter from "./ProfileSectionFooter";
 
 const DEFAULT_VISIBLE_TRACKS = 7;
 export default function ProfileTracks() {
@@ -36,14 +37,10 @@ export default function ProfileTracks() {
                     </li>
                 ))}
             </ul>
-            <div className="p-4 z-20 sticky bottom-0 bg-primary">
-                <button 
-                    className="block text-sm text-secondary hover:text-primary transition-colors ml-auto"
-                    onClick={() => setShowAll(!showAll)}
-                >
-                    {showAll ? 'Show less' : 'Show all'}
-                </button>
-            </div>
+            <ProfileSectionFooter 
+                showAll={showAll}
+                setShowAll={setShowAll} 
+            />
         </section>
     )
 }

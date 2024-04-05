@@ -3,6 +3,7 @@ import { QuestionIcon } from "@/assets/icons/QuestionIcon";
 import { useProfile } from "@/contexts/profile"
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import { useState } from "react";
+import ProfileSectionFooter from "./ProfileSectionFooter";
 
 const DEFAULT_VISIBLE_GENRES = 5;
 const MAX_VISIBLE_GENRES = 15;
@@ -43,15 +44,11 @@ export default function ProfileGenres() {
                         />
                     </li>
                 ))}
-                </ul>
-            <div className="p-4 z-20 sticky bottom-0 bg-primary">
-                <button 
-                    className="ml-auto block text-sm text-secondary hover:text-primary transition-colors"
-                    onClick={() => setShowAll(!showAll)}
-                >
-                    {showAll ? 'Show less' : 'Show all'}
-                </button>
-            </div>
+            </ul>
+            <ProfileSectionFooter 
+                showAll={showAll}
+                setShowAll={setShowAll} 
+            />
         </section>
     )
 }
