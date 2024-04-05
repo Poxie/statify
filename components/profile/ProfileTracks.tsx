@@ -4,14 +4,13 @@ import Track from "../track";
 import ProfileIndexLabel from "./ProfileIndexLabel";
 import { useState } from "react";
 import ProfileSectionFooter from "./ProfileSectionFooter";
+import ProfileTrackSkeleton from "../skeleton/profile-track";
 
 const DEFAULT_VISIBLE_TRACKS = 7;
 export default function ProfileTracks() {
     const { loading, tracks } = useProfile();
     
     const [showAll, setShowAll] = useState(false);
-
-    if(loading) return null;
 
     const visibleTracks = tracks.slice(0, showAll ? tracks.length : DEFAULT_VISIBLE_TRACKS);
     return(
@@ -20,6 +19,11 @@ export default function ProfileTracks() {
                 Your most played songs
             </h2>
             <ul className="p-4 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 bg-secondary border-[1px] border-tertiary rounded-lg">
+                {loading && (
+                    Array.from(Array(DEFAULT_VISIBLE_TRACKS)).map((_, key) => (
+                        <ProfileTrackSkeleton key={key} />
+                    ))
+                )}
                 {visibleTracks.map((track, index) => (
                     <li
                         className="relative" 

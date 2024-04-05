@@ -4,6 +4,7 @@ import { useProfile } from "@/contexts/profile"
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import { useState } from "react";
 import ProfileSectionFooter from "./ProfileSectionFooter";
+import ProfileGenreSkeleton from "../skeleton/profile-genre";
 
 const DEFAULT_VISIBLE_GENRES = 5;
 const MAX_VISIBLE_GENRES = 15;
@@ -12,10 +13,7 @@ export default function ProfileGenres() {
 
     const [showAll, setShowAll] = useState(false);
 
-    if(loading) return null;
-
     const genresByCount = Object.entries(genres).sort((a, b) => b[1] - a[1]);
-    const maxCount = genresByCount[0][1];
 
     const visibleGenres = genresByCount.slice(0, showAll ? MAX_VISIBLE_GENRES : DEFAULT_VISIBLE_GENRES);
     return(
@@ -30,20 +28,28 @@ export default function ProfileGenres() {
                 </HasTooltip>
             </h2>
             <ul className="p-4 grid gap-2 bg-secondary border-[1px] border-tertiary rounded-md">
-                {visibleGenres.map(([genre, count]) => (
-                    <li key={genre}>
-                        <span className="mb-2 flex items-center gap-1.5">
-                            {genre}
-                            <span className="mt-1 text-xs text-secondary">
-                                ({count} occurrences)
+                {loading && (
+                    Array.from(Array(DEFAULT_VISIBLE_GENRES)).map((_, key) => (
+                        <ProfileGenreSkeleton key={key} />
+                    ))
+                )}
+                {visibleGenres.map(([genre, count]) => {
+                    const maxCount = genresByCount[0][1];
+                    return(
+                        <li key={genre}>
+                            <span className="mb-2 flex items-center gap-1.5">
+                                {genre}
+                                <span className="mt-1 text-xs text-secondary">
+                                    ({count} occurrences)
+                                </span>
                             </span>
-                        </span>
-                        <div 
-                            className="h-6 bg-c-primary rounded-lg"
-                            style={{ width: `${(count / maxCount) * 100}%` }}
-                        />
-                    </li>
-                ))}
+                            <div 
+                                className="h-6 bg-c-primary rounded-lg"
+                                style={{ width: `${(count / maxCount) * 100}%` }}
+                            />
+                        </li>
+                    )
+                })}
             </ul>
             <ProfileSectionFooter 
                 showAll={showAll}

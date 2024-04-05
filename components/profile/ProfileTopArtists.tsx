@@ -2,13 +2,14 @@ import { SpotifyArtist } from "@/types"
 import SpotifyImage from "../spotify-image";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import ProfileTopArtistSkeleton from "../skeleton/profile-top-artist";
 
 export default function ProfileTopArtist({ artist, artistNumber }: {
-    artist: SpotifyArtist;
+    artist: SpotifyArtist | undefined;
     artistNumber: number;
 }) {
-    const image = artist.images.at(-1)?.url;
-    const link = `/?a=${artist.id}`;
+    const image = artist?.images.at(-1)?.url;
+    const link = `/?a=${artist?.id}`;
     return(
         <div className={twMerge(
             "flex flex-col",
@@ -17,25 +18,32 @@ export default function ProfileTopArtist({ artist, artistNumber }: {
             artistNumber === 3 && 'order-2 md:order-[unset]',
         )}>
             <div className="px-4 md:px-0 flex gap-2 md:self-center">
-                <Link href={link}>
-                    <SpotifyImage 
-                        src={image}
-                        height={120}
-                        width={120}
-                        className="w-16"
-                    />
-                </Link>
-                <div className="flex flex-col">
-                    <Link 
-                        className="text-xl font-semibold hover:text-c-primary transition-colors"
-                        href={link}
-                    >
-                        {artist.name}
+                {artist && (
+                    <>
+                    <Link href={link}>
+                        <SpotifyImage 
+                            src={image}
+                            height={120}
+                            width={120}
+                            className="w-16"
+                        />
                     </Link>
-                    <span className="text-xs text-secondary">
-                        {artist.followers.total.toLocaleString()} followers
-                    </span>
-                </div>
+                    <div className="flex flex-col">
+                        <Link 
+                            className="text-xl font-semibold hover:text-c-primary transition-colors"
+                            href={link}
+                        >
+                            {artist.name}
+                        </Link>
+                        <span className="text-xs text-secondary">
+                            {artist.followers.total.toLocaleString()} followers
+                        </span>
+                    </div>
+                    </>
+                )}
+                {!artist && (
+                    <ProfileTopArtistSkeleton />
+                )}
             </div>
             <div className="gradient-border mt-4 rounded-lg overflow-hidden">
                 <div className={twMerge(
