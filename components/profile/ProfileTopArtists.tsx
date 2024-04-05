@@ -1,12 +1,14 @@
 import { SpotifyArtist } from "@/types"
 import SpotifyImage from "../spotify-image";
 import { twMerge } from "tailwind-merge";
+import Link from "next/link";
 
 export default function ProfileTopArtist({ artist, artistNumber }: {
     artist: SpotifyArtist;
     artistNumber: number;
 }) {
     const image = artist.images.at(-1)?.url;
+    const link = `/?a=${artist.id}`;
     return(
         <div className={twMerge(
             "flex flex-col",
@@ -15,16 +17,21 @@ export default function ProfileTopArtist({ artist, artistNumber }: {
             artistNumber === 3 && 'order-2 md:order-[unset]',
         )}>
             <div className="flex gap-2 self-center">
-                <SpotifyImage 
-                    src={image}
-                    height={120}
-                    width={120}
-                    className="w-16"
-                />
+                <Link href={link}>
+                    <SpotifyImage 
+                        src={image}
+                        height={120}
+                        width={120}
+                        className="w-16"
+                    />
+                </Link>
                 <div className="flex flex-col">
-                    <span className="text-xl font-semibold">
+                    <Link 
+                        className="text-xl font-semibold hover:text-c-primary transition-colors"
+                        href={link}
+                    >
                         {artist.name}
-                    </span>
+                    </Link>
                     <span className="text-xs text-secondary">
                         {artist.followers.total.toLocaleString()} followers
                     </span>
