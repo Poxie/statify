@@ -28,7 +28,7 @@ export default function NavbarUser() {
             <Button 
                 href={getLoginUrl()}
                 small={isSmallScreen}
-                className="z-30"    
+                className="z-30 -my-2.5"
             >
                 Sign in with Spotify
             </Button>
