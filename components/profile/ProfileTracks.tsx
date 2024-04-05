@@ -36,7 +36,7 @@ export default function ProfileTracks() {
                     </li>
                 ))}
             </ul>
-            <div className="p-4 z-20 sticky bottom-0 bg-primary shadow-xl">
+            <div className="p-4 z-20 sticky bottom-0 bg-primary">
                 <button 
                     className="block text-sm text-secondary hover:text-primary transition-colors ml-auto"
                     onClick={() => setShowAll(!showAll)}

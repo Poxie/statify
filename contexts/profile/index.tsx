@@ -8,6 +8,7 @@ const ProfileContext = React.createContext<null | {
     loading: boolean;
     artists: SpotifyArtist[];
     tracks: SpotifyTrack[];
+    genres: Record<string, number>;
 }>(null);
 
 export const useProfile = () => {
@@ -27,9 +28,11 @@ export default function ProfileProvider({ children }: {
     const [info, setInfo] = useState<{
         artists: SpotifyArtist[];
         tracks: SpotifyTrack[];
+        genres: Record<string, number>;
     }>({
         artists: [],
         tracks: [],
+        genres: {},
     })
 
     useEffect(() => {
@@ -42,9 +45,16 @@ export default function ProfileProvider({ children }: {
 
         Promise.all(reqs)
             .then(([artists, tracks]) => {
+                const allGenres = (artists as SpotifyArtist[]).map(artist => artist.genres).flat();
+                const genresByCount = allGenres.reduce((acc, genre) => {
+                    acc[genre] = (acc[genre] || 0) + 1;
+                    return acc;
+                }, {} as Record<string, number>);
+
                 setInfo({ 
                     artists: artists as SpotifyArtist[], 
-                    tracks: tracks as SpotifyTrack[], 
+                    tracks: tracks as SpotifyTrack[],
+                    genres: genresByCount,
                 });
             })
             .finally(() => {
@@ -56,6 +66,7 @@ export default function ProfileProvider({ children }: {
         loading,
         artists: info.artists,
         tracks: info.tracks,
+        genres: info.genres,
     }
     return(
         <ProfileContext.Provider value={value}>
