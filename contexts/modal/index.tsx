@@ -42,6 +42,13 @@ export default function ModalProvider({ children }: {
             window.removeEventListener('keydown', handleKeyDown);
         }
     }, []);
+    useEffect(() => {
+        if(modals.length > 0) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [modals.length]);
 
     const goBack = () => {
         setModals(prev => prev.slice(0, -1));
