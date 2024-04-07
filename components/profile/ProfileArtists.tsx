@@ -8,10 +8,11 @@ import ProfileTopItem from "./ProfileTopItem";
 import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
 import ProfileTopArtist from "./ProfileTopArtist";
 import useProfileArtists from "@/hooks/useProfileArtists";
+import Dropdown from "../dropdown";
 
 const DEFAULT_VISIBLE_ARTISTS = 7;
 export default function ProfileArtists() {
-    const { loading, artists } = useProfileArtists({ timeRange: 'medium_term' });
+    const { loading, artists, timeRange, setTimeRange } = useProfileArtists({ timeRange: 'medium_term' });
 
     const [showAll, setShowAll] = useState(false);
 
@@ -23,9 +24,20 @@ export default function ProfileArtists() {
     const otherArtists = artists.slice(3, showAll ? artists.length : 3 + DEFAULT_VISIBLE_ARTISTS);
     return(
         <section>
-            <h2 className="mb-3 text-2xl md:text-3xl font-medium">
-                Your most liked artists
-            </h2>
+            <div className="flex justify-between items-center">
+                <h2 className="mb-3 text-2xl md:text-3xl font-medium">
+                    Your most liked artists
+                </h2>
+                <Dropdown 
+                    items={[
+                        { id: 'short_term', text: 'Last 4 weeks' },
+                        { id: 'medium_term', text: 'Last 6 months' },
+                        { id: 'long_term', text: 'Last year' },
+                    ]}
+                    currentActiveId={timeRange}
+                    onChange={setTimeRange}
+                />
+            </div>
             <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
                 <ProfileTopSection>
                     {topArtists.map(item => (

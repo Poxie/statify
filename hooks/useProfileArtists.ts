@@ -2,11 +2,13 @@ import { selectProfileArtists, selectProfileArtistsLoading, setProfileArtists, s
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { SpotifyArtist, SpotifyTimeRange } from "@/types";
 import { getWithToken } from "@/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function useProfileArtists({ timeRange='medium_term' }: {
+export default function useProfileArtists({ timeRange: _timeRange }: {
     timeRange: SpotifyTimeRange;
 }) {
+    const [timeRange, setTimeRange] = useState(_timeRange);
+
     const dispatch = useAppDispatch();
 
     const loading = useAppSelector(selectProfileArtistsLoading);
@@ -25,5 +27,5 @@ export default function useProfileArtists({ timeRange='medium_term' }: {
             })
     }, [artists]);
 
-    return { loading, artists };
+    return { loading, artists, timeRange, setTimeRange };
 }
