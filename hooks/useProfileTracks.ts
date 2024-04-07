@@ -2,11 +2,13 @@ import { selectProfileTracks, setProfileTracksLoading, setProfileTracks, selectP
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { SpotifyTimeRange, SpotifyTrack } from "@/types";
 import { getWithToken } from "@/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function useProfileTracks({ timeRange='medium_term' }: {
+export default function useProfileTracks({ timeRange: _timeRange }: {
     timeRange: SpotifyTimeRange;
 }) {
+    const [timeRange, setTimeRange] = useState(_timeRange);
+
     const dispatch = useAppDispatch();
 
     const loading = useAppSelector(selectProfileTracksLoading);
@@ -25,5 +27,5 @@ export default function useProfileTracks({ timeRange='medium_term' }: {
             })
     }, [tracks]);
 
-    return { loading, tracks };
+    return { loading, tracks, timeRange, setTimeRange };
 }

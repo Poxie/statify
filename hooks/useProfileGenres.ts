@@ -1,7 +1,8 @@
 import { SpotifyTimeRange } from "@/types";
 import useProfileArtists from "./useProfileArtists";
+import { useState } from "react";
 
-export default function useProfileGenres({ timeRange='medium_term' }: {
+export default function useProfileGenres({ timeRange }: {
     timeRange: SpotifyTimeRange;
 }) {
     const artists = useProfileArtists({ timeRange });
@@ -16,5 +17,7 @@ export default function useProfileGenres({ timeRange='medium_term' }: {
         loading: artists.loading, 
         genres: allGenres,
         genresByCount,
+        timeRange: artists.timeRange,
+        setTimeRange: artists.setTimeRange,
     };
 }

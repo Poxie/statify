@@ -8,11 +8,12 @@ import ProfileTopSection from "./ProfileTopSection";
 import ProfileTopItem from "./ProfileTopItem";
 import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
 import useProfileTracks from "@/hooks/useProfileTracks";
+import ProfileSectionHeader from "./ProfileSectionHeader";
 
 const TOP_TRACKS = 3;
 const DEFAULT_VISIBLE_TRACKS = 7;
 export default function ProfileTracks() {
-    const { loading, tracks } = useProfileTracks({ timeRange: 'medium_term' });
+    const { loading, tracks, timeRange, setTimeRange } = useProfileTracks({ timeRange: 'medium_term' });
     
     const [showAll, setShowAll] = useState(false);
 
@@ -24,9 +25,11 @@ export default function ProfileTracks() {
     const othersTracks = tracks.slice(TOP_TRACKS, showAll ? tracks.length : DEFAULT_VISIBLE_TRACKS + TOP_TRACKS);
     return(
         <section>
-            <h2 className="mb-3 text-2xl md:text-3xl font-medium">
-                Your most played songs
-            </h2>
+            <ProfileSectionHeader 
+                header="Your most played songs"
+                timeRange={timeRange}
+                setTimeRange={setTimeRange}
+            />
             <div className="border-[1px] border-tertiary rounded-md">
                 <ProfileTopSection>
                     {topTracks.map(item => (
