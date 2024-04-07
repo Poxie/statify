@@ -1,21 +1,21 @@
 "use client";
 import { QuestionIcon } from "@/assets/icons/QuestionIcon";
-import { useProfile } from "@/contexts/profile"
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import { useState } from "react";
 import ProfileSectionFooter from "./ProfileSectionFooter";
 import ProfileGenreSkeleton from "../skeleton/profile-genre";
+import useProfileGenres from "@/hooks/useProfileGenres";
 
 const DEFAULT_VISIBLE_GENRES = 5;
 const MAX_VISIBLE_GENRES = 15;
 export default function ProfileGenres() {
-    const { genres, loading } = useProfile();
+    const { genresByCount, loading } = useProfileGenres({ timeRange: 'medium_term' });
 
     const [showAll, setShowAll] = useState(false);
 
-    const genresByCount = Object.entries(genres).sort((a, b) => b[1] - a[1]);
-
-    const visibleGenres = genresByCount.slice(0, showAll ? MAX_VISIBLE_GENRES : DEFAULT_VISIBLE_GENRES);
+    const genres = Object.entries(genresByCount).sort((a, b) => b[1] - a[1]);
+    
+    const visibleGenres = genres.slice(0, showAll ? MAX_VISIBLE_GENRES : DEFAULT_VISIBLE_GENRES);
     return(
         <section>
             <h2 className="mb-3 flex items-center gap-3 text-2xl md:text-3xl font-medium">
@@ -34,7 +34,7 @@ export default function ProfileGenres() {
                     ))
                 )}
                 {visibleGenres.map(([genre, count]) => {
-                    const maxCount = genresByCount[0][1];
+                    const maxCount = genres[0][1];
                     return(
                         <li key={genre}>
                             <span className="mb-2 flex items-center gap-1.5">
