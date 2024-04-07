@@ -8,11 +8,12 @@ import ProfileTrackSkeleton from "../skeleton/profile-track";
 import ProfileTopSection from "./ProfileTopSection";
 import ProfileTopItem from "./ProfileTopItem";
 import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
+import useProfileTracks from "@/hooks/useProfileTracks";
 
 const TOP_TRACKS = 3;
 const DEFAULT_VISIBLE_TRACKS = 7;
 export default function ProfileTracks() {
-    const { loading, tracks } = useProfile();
+    const { loading, tracks } = useProfileTracks({ timeRange: 'medium_term' });
     
     const [showAll, setShowAll] = useState(false);
 
