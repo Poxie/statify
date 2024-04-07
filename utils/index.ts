@@ -21,11 +21,15 @@ export const getWithToken = async <T>(query: string) => {
     })
 
     const data = await res.json();
-    if(data.error) {
+    if(!res.ok) {
+        // Remove this for refresh token implementation later
+        if(res.status === 401) {
+            window.location.href = getLoginUrl();
+        }
         throw new Error(data.error.message);
     }
 
-    return data as T;''
+    return data as T;
 }
 
 export const getRandomArtist = (excludeId?: string) => {
