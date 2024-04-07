@@ -5,11 +5,13 @@ import SpotifyTrackName from '../spotify-track-name';
 import SpotifyTrackArtists from '../spotify-track-artists';
 import { twMerge } from 'tailwind-merge';
 
-export default function Track({ track, className, imageContainerClassName, imageClassName }: {
+export default function Track({ track, className, imageContainerClassName, imageClassName, trackNameClassName, artistClassName }: {
     track: SpotifyTrack | undefined;
     imageContainerClassName?: string;
     imageClassName?: string;
     className?: string;
+    trackNameClassName?: string;
+    artistClassName?: string;
 }) {
     if(!track) return(
         <div className="w-14 aspect-square">
@@ -38,9 +40,15 @@ export default function Track({ track, className, imageContainerClassName, image
             <div className="flex flex-col overflow-hidden">
                 <SpotifyTrackName 
                     track={track}
-                    className="text-sm"
+                    className={twMerge(
+                        "text-sm",
+                        trackNameClassName,
+                    )}
                 />
-                <SpotifyTrackArtists artists={track.artists}/>
+                <SpotifyTrackArtists 
+                    artists={track.artists}
+                    className={artistClassName}
+                />
             </div>
         </div>
     )

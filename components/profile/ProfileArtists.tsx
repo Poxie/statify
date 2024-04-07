@@ -1,10 +1,13 @@
 "use client";
 import { useProfile } from "@/contexts/profile"
-import ProfileTopArtist from "./ProfileTopArtists";
 import ProfileArtist from "./ProfileArtist";
 import { useState } from "react";
 import ProfileSectionFooter from "./ProfileSectionFooter";
 import ProfileArtistSkeleton from "../skeleton/profile-artist";
+import ProfileTopSection from "./ProfileTopSection";
+import ProfileTopItem from "./ProfileTopItem";
+import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
+import ProfileTopArtist from "./ProfileTopArtist";
 
 const DEFAULT_VISIBLE_ARTISTS = 7;
 export default function ProfileArtists() {
@@ -12,7 +15,11 @@ export default function ProfileArtists() {
 
     const [showAll, setShowAll] = useState(false);
 
-    const topArtists = artists.slice(0,3);
+    const topArtists = [
+        { artist: artists[1], index: 2 },
+        { artist: artists[0], index: 1 },
+        { artist: artists[2], index: 3 },
+    ]
     const otherArtists = artists.slice(3, showAll ? artists.length : 3 + DEFAULT_VISIBLE_ARTISTS);
     return(
         <section>
@@ -20,20 +27,22 @@ export default function ProfileArtists() {
                 Your most liked artists
             </h2>
             <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
-                <div className="p-7 grid md:grid-cols-3 items-end gap-7 md:gap-3 bg-dotted bg-[length:31px_31px] bg-center">
-                    <ProfileTopArtist 
-                        artist={topArtists[1]}
-                        artistNumber={2}
-                    />
-                    <ProfileTopArtist 
-                        artist={topArtists[0]}
-                        artistNumber={1}
-                    />
-                    <ProfileTopArtist 
-                        artist={topArtists[2]}
-                        artistNumber={3} 
-                    />
-                </div>
+                <ProfileTopSection>
+                    {topArtists.map(item => (
+                        <ProfileTopItem index={item.index}>
+                            {item.artist ? (
+                                <ProfileTopArtist 
+                                    artist={item.artist}
+                                    key={item.artist.id}
+                                />
+                            ) : (
+                                <ProfileTopItemSkeleton
+                                    key={item.index} 
+                                />
+                            )}
+                        </ProfileTopItem>
+                    ))}
+                </ProfileTopSection>
                 <ul className="p-7 grid gap-3 grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 bg-secondary">
                     {loading && (
                         Array.from(Array(DEFAULT_VISIBLE_ARTISTS)).map((_, key) => (
