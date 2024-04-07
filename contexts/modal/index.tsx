@@ -1,6 +1,7 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const ModalContext = React.createContext<null | {
     openModal: (content: React.ReactNode) => void;
@@ -18,10 +19,29 @@ export const useModal = () => {
 export default function ModalProvider({ children }: {
     children: React.ReactNode;
 }) {
+    const pathname = usePathname();
+
     const [modals, setModals] = useState<{
         content: React.ReactNode;
         id: string;
     }[]>([]);
+
+    // Close all modals when navigating
+    useEffect(() => {
+        setModals([]);
+    }, [pathname]);
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if(e.key === 'Escape') {
+                goBack();
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        }
+    }, []);
 
     const goBack = () => {
         setModals(prev => prev.slice(0, -1));
