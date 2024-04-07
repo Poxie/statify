@@ -62,7 +62,7 @@ export const Tooltip: React.FC<{
 	return (
 		<motion.div
 			className={clsx(
-				"[--tooltip-bg:#0c0e02] [--tooltip-offset:0px] bg-[var(--tooltip-bg)] pointer-events-none max-w-[240px] fixed z-20 p-3 text-xs font-medium rounded-lg",
+				"[--tooltip-bg:#0c0e02] [--tooltip-offset:0px] bg-[var(--tooltip-bg)] pointer-events-none max-w-[240px] fixed z-50 p-3 text-xs font-medium rounded-lg",
 				"after:border-[7px] after:border-transparent after:absolute data-[position=top]:after:border-t-[var(--tooltip-bg)] data-[position=top]:after:top-full",
 				"data-[position=top]:after:left-[calc(50%+var(--tooltip-offset))] data-[position=top]:after:-translate-x-2/4 data-[position=bottom]:after:border-b-[var(--tooltip-bg)]",
 				"data-[position=bottom]:after:bottom-full data-[position=bottom]:after:left-[calc(50%+var(--tooltip-offset))] data-[position=bottom]:after:-translate-x-2/4"
