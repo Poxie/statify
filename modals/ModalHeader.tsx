@@ -18,8 +18,9 @@ export default function ModalHeader({ children, className }: {
                 {children}
             </h2>
             <HasTooltip
-                tooltip="Close modal"
+                delay={250}
                 onClick={goBack}
+                tooltip="Close modal"
                 className="p-1 -m-1 rounded-md hover:bg-tertiary transition-colors"
                 hideOnSmallScreens
                 closeOnActive
