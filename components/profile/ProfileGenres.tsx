@@ -1,6 +1,4 @@
 "use client";
-import { QuestionIcon } from "@/assets/icons/QuestionIcon";
-import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import { useState } from "react";
 import ProfileSectionFooter from "./ProfileSectionFooter";
 import ProfileGenreSkeleton from "../skeleton/profile-genre";
@@ -23,6 +21,7 @@ export default function ProfileGenres() {
                 header="Your most listened genres"
                 timeRange={timeRange}
                 setTimeRange={setTimeRange}
+                tooltip="Top genres are based on the genres of your top artists. 10 occurrences means 10 of your top 50 artists exhibit traits of that genre."
             />
             <ul className="p-4 grid gap-2 bg-secondary border-[1px] border-tertiary rounded-md">
                 {loading && (
