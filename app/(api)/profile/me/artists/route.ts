@@ -1,5 +1,6 @@
 
 import { SpotifyArtist } from "@/types";
+import { CustomError } from "@/utils/customError";
 import fetchFromSpotifyWithAuth from "@/utils/fetchFromSpotifyWithAuth";
 import getUserToken from "@/utils/getUserToken";
 import { NextRequest, NextResponse } from "next/server";
@@ -9,9 +10,14 @@ export async function GET(req: NextRequest) {
     const timeRange = req.nextUrl.searchParams.get('time_range') || DEFAULT_TIME_RANGE;
 
     const token = getUserToken(req.headers);
-    const data = await fetchFromSpotifyWithAuth<{
-        items: SpotifyArtist[];
-    }>(`/me/top/artists?limit=50&time_range=${timeRange}`, token);
+    try {
+        const data = await fetchFromSpotifyWithAuth<{
+            items: SpotifyArtist[];
+        }>(`/me/top/artists?limit=50&time_range=${timeRange}`, token);
 
-    return NextResponse.json(data.items);
+        return NextResponse.json(data.items);
+    } catch(error) {
+        const { message, status } = error as CustomError;
+        return NextResponse.json({ error: message }, { status: status });
+    }
 }

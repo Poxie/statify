@@ -1,5 +1,6 @@
 import { revalidateTag } from "next/cache";
 import { getToken } from "./getToken"
+import { CustomError } from "./customError";
 
 export const fetchFromSpotify: (<T>(query: string) => Promise<T>) = async <T>(query: string) => {
     const token = await getToken();
@@ -15,6 +16,7 @@ export const fetchFromSpotify: (<T>(query: string) => Promise<T>) = async <T>(qu
             revalidateTag('access-token');
             return await fetchFromSpotify(query);
         }
+        throw new CustomError(data.error.message, res.status);
     }
     return data as T;
 }
