@@ -3,13 +3,13 @@ import { ArrowIcon } from "@/assets/icons/ArrowIcon";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useRef, useState } from "react";
 
-export default function Dropdown<T extends string>({ items, currentActiveId, onChange, closeOnSelect=true }: {
+export default function Dropdown<T extends string>({ items, currentActiveId, onSelect, closeOnSelect=true }: {
     items: {
         id: T;
         text: string;
     }[];
     currentActiveId: string;
-    onChange: (itemId: T) => void;
+    onSelect: (itemId: T) => void;
     closeOnSelect?: boolean;
 }) {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Dropdown<T extends string>({ items, currentActiveId, onC
     const toggleMenu = () => setMenuOpen(prev => !prev);
 
     const handleSelect = (id: T) => {
-        onChange(id);
+        onSelect(id);
         if(closeOnSelect) {
             closeMenu();
         }

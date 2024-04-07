@@ -8,7 +8,7 @@ import ProfileTopItem from "./ProfileTopItem";
 import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
 import ProfileTopArtist from "./ProfileTopArtist";
 import useProfileArtists from "@/hooks/useProfileArtists";
-import Dropdown from "../dropdown";
+import ProfileTimeRange from "./ProfileTimeRange";
 
 const DEFAULT_VISIBLE_ARTISTS = 7;
 export default function ProfileArtists() {
@@ -28,14 +28,9 @@ export default function ProfileArtists() {
                 <h2 className="mb-3 text-2xl md:text-3xl font-medium">
                     Your most liked artists
                 </h2>
-                <Dropdown 
-                    items={[
-                        { id: 'short_term', text: 'Last 4 weeks' },
-                        { id: 'medium_term', text: 'Last 6 months' },
-                        { id: 'long_term', text: 'Last year' },
-                    ]}
-                    currentActiveId={timeRange}
-                    onChange={setTimeRange}
+                <ProfileTimeRange 
+                    timeRange={timeRange}
+                    setTimeRange={setTimeRange}
                 />
             </div>
             <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
