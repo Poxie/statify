@@ -9,6 +9,7 @@ import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
 import ProfileTopArtist from "./ProfileTopArtist";
 import useProfileArtists from "@/hooks/useProfileArtists";
 import ProfileTimeRange from "./ProfileTimeRange";
+import ProfileSectionHeader from "./ProfileSectionHeader";
 
 const DEFAULT_VISIBLE_ARTISTS = 7;
 export default function ProfileArtists() {
@@ -24,15 +25,11 @@ export default function ProfileArtists() {
     const otherArtists = artists.slice(3, showAll ? artists.length : 3 + DEFAULT_VISIBLE_ARTISTS);
     return(
         <section>
-            <div className="flex justify-between items-center">
-                <h2 className="mb-3 text-2xl md:text-3xl font-medium">
-                    Your most liked artists
-                </h2>
-                <ProfileTimeRange 
-                    timeRange={timeRange}
-                    setTimeRange={setTimeRange}
-                />
-            </div>
+            <ProfileSectionHeader 
+                header="Your most liked artists"
+                timeRange={timeRange}
+                setTimeRange={setTimeRange}
+            />
             <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
                 <ProfileTopSection>
                     {topArtists.map(item => (
