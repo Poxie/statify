@@ -1,13 +1,18 @@
 import { CloseIcon } from "@/assets/icons/CloseIcon";
 import { useModal } from "@/contexts/modal";
+import { twMerge } from "tailwind-merge";
 
-export default function ModalHeader({ children }: {
+export default function ModalHeader({ children, className }: {
     children: React.ReactNode;
+    className?: string;
 }) {
     const { goBack } = useModal(); 
 
     return(
-        <div className="p-4 flex items-center justify-between">
+        <div className={twMerge(
+            "p-4 flex items-center justify-between",
+            className,
+        )}>
             <h2 className="text-lg font-medium">
                 {children}
             </h2>
