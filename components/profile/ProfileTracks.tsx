@@ -30,7 +30,10 @@ export default function ProfileTracks() {
             <div className="border-[1px] border-tertiary rounded-md">
                 <ProfileTopSection>
                     {topTracks.map(item => (
-                        <ProfileTopItem index={item.index}>
+                        <ProfileTopItem 
+                            index={item.index}
+                            key={item.index}
+                        >
                             {item.track ? (
                                 <Track 
                                     track={item.track}
@@ -38,9 +41,7 @@ export default function ProfileTracks() {
                                     imageClassName="w-24"
                                 />
                             ) : (
-                                <ProfileTopItemSkeleton
-                                    key={item.index} 
-                                />
+                                <ProfileTopItemSkeleton />
                             )}
                         </ProfileTopItem>
                     ))}

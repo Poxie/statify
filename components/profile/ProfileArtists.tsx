@@ -29,16 +29,16 @@ export default function ProfileArtists() {
             <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
                 <ProfileTopSection>
                     {topArtists.map(item => (
-                        <ProfileTopItem index={item.index}>
+                        <ProfileTopItem 
+                            index={item.index}
+                            key={item.index}
+                        >
                             {item.artist ? (
                                 <ProfileTopArtist 
                                     artist={item.artist}
-                                    key={item.artist.id}
                                 />
                             ) : (
-                                <ProfileTopItemSkeleton
-                                    key={item.index} 
-                                />
+                                <ProfileTopItemSkeleton />
                             )}
                         </ProfileTopItem>
                     ))}
