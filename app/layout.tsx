@@ -6,6 +6,7 @@ import TooltipProvider from '@/contexts/tooltip'
 import PreviewProvider from '@/contexts/preview'
 import AuthProvider from '@/contexts/auth'
 import StoreProvider from '@/redux/StoreProvider'
+import ModalProvider from '@/contexts/modal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,10 +25,12 @@ export default function RootLayout({
         <StoreProvider>
           <AuthProvider>
             <TooltipProvider>
-              <PreviewProvider>
-                <Navbar />
-                {children}
-              </PreviewProvider>
+              <ModalProvider>
+                <PreviewProvider>
+                  <Navbar />
+                  {children}
+                </PreviewProvider>
+              </ModalProvider>
             </TooltipProvider>
           </AuthProvider>
         </StoreProvider>
