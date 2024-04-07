@@ -1,17 +1,24 @@
 import { SpotifyArtist } from "@/types";
 import SpotifyImage from "../spotify-image";
 import Link from "next/link";
+import { useModal } from "@/contexts/modal";
+import ArtistModal from "@/modals/artist";
 
 export default function ProfileTopArtist({ artist }: {
     artist: SpotifyArtist;
 }) {
-    const link = `/?a=${artist.id}`;
+    const { openModal } = useModal(); 
+
+    const openArtistModal = () => {
+        openModal(<ArtistModal artist={artist} />);
+    }
+
     const image = artist.images.at(-1)?.url;
     return(
         <div className="flex gap-2">
-            <Link 
-                href={link}
+            <button 
                 aria-label={artist.name}
+                onClick={openArtistModal}
             >
                 <SpotifyImage 
                     height={120}
@@ -19,14 +26,14 @@ export default function ProfileTopArtist({ artist }: {
                     src={image}
                     className="w-24"
                 />
-            </Link>
+            </button>
             <div className="flex flex-col">
-                <Link 
-                    className="text-lg md:text-xl font-semibold hover:text-c-primary transition-colors"
-                    href={link}
+                <button 
+                    className="text-left text-lg md:text-xl font-semibold hover:text-c-primary transition-colors"
+                    onClick={openArtistModal}
                 >
                     {artist.name}
-                </Link>
+                </button>
                 <span className="text-xs text-secondary">
                     {artist.followers.total.toLocaleString()} followers
                 </span>

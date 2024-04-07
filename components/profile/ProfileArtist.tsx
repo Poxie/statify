@@ -2,21 +2,29 @@ import { SpotifyArtist } from "@/types"
 import SpotifyImage from "../spotify-image";
 import Link from "next/link";
 import ProfileIndexLabel from "./ProfileIndexLabel";
+import { useModal } from "@/contexts/modal";
+import ArtistModal from "@/modals/artist";
 
 export default function ProfileArtist({ artist, index }: {
     artist: SpotifyArtist;
     index: number;
 }) {
+    const { openModal } = useModal();
+
+    const openArtistModal = () => {
+        openModal(<ArtistModal artist={artist} />);
+    }
+
     const image = artist.images[0]?.url;
-    const link = `/?a=${artist.id}`;
     return(
         <div className="group relative">
             <ProfileIndexLabel 
                 index={index}
             />
-            <Link 
-                className="block border-2 border-tertiary rounded-lg overflow-hidden"
-                href={link}
+            <button 
+                className="w-full block border-2 border-tertiary rounded-lg overflow-hidden"
+                aria-label={artist.name}
+                onClick={openArtistModal}
             >
                 <SpotifyImage 
                     width={250}
@@ -24,13 +32,13 @@ export default function ProfileArtist({ artist, index }: {
                     src={image}
                     className="aspect-video"
                 />
-            </Link>
-            <Link
-                href={link}
-                className="block mt-1 text-center text-sm group-hover:text-c-primary transition-colors"
+            </button>
+            <button
+                className="block mt-1 mx-auto text-sm group-hover:text-c-primary transition-colors"
+                onClick={openArtistModal}
             >
                 {artist.name}
-            </Link>
+            </button>
         </div>
     )
 }
