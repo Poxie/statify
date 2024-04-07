@@ -8,7 +8,7 @@ export default function ArtistModal({ artist }: {
 }) {
     return(
         <>
-            <ModalHeader>
+            <ModalHeader className="pb-2">
                 About the artist
             </ModalHeader>
             <div className="p-4 pt-0">
