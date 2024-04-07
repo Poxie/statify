@@ -8,10 +8,11 @@ import ProfileTopSection from "./ProfileTopSection";
 import ProfileTopItem from "./ProfileTopItem";
 import ProfileTopItemSkeleton from "../skeleton/profile-top-item";
 import ProfileTopArtist from "./ProfileTopArtist";
+import useProfileArtists from "@/hooks/useProfileArtists";
 
 const DEFAULT_VISIBLE_ARTISTS = 7;
 export default function ProfileArtists() {
-    const { loading, artists } = useProfile();
+    const { loading, artists } = useProfileArtists({ timeRange: 'medium_term' });
 
     const [showAll, setShowAll] = useState(false);
 

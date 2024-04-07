@@ -125,3 +125,4 @@ export type SpotifyUser = {
     type: string;
     uri: string;
 }
+export type SpotifyTimeRange = 'short_term' | 'medium_term' | 'long_term';
