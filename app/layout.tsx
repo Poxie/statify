@@ -5,7 +5,6 @@ import { Inter } from 'next/font/google'
 import TooltipProvider from '@/contexts/tooltip'
 import PreviewProvider from '@/contexts/preview'
 import AuthProvider from '@/contexts/auth'
-import ProfileProvider from '@/contexts/profile'
 import StoreProvider from '@/redux/StoreProvider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,14 +23,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <AuthProvider>
-            <ProfileProvider>
-              <TooltipProvider>
-                <PreviewProvider>
-                  <Navbar />
-                  {children}
-                </PreviewProvider>
-              </TooltipProvider>
-            </ProfileProvider>
+            <TooltipProvider>
+              <PreviewProvider>
+                <Navbar />
+                {children}
+              </PreviewProvider>
+            </TooltipProvider>
           </AuthProvider>
         </StoreProvider>
       </body>

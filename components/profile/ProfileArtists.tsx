@@ -1,5 +1,4 @@
 "use client";
-import { useProfile } from "@/contexts/profile"
 import ProfileArtist from "./ProfileArtist";
 import { useState } from "react";
 import ProfileSectionFooter from "./ProfileSectionFooter";

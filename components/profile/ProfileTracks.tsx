@@ -1,5 +1,4 @@
 "use client";
-import { useProfile } from "@/contexts/profile"
 import Track from "../track";
 import ProfileIndexLabel from "./ProfileIndexLabel";
 import React, { useState } from "react";
