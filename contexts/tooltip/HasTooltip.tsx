@@ -8,9 +8,10 @@ export const HasTooltip: React.FC<{
     className?: string;
     position?: TooltipPosition;
     hideOnSmallScreens?: boolean;
+    closeOnActive?: boolean;
     onClick?: () => void;
     delay?: number;
-}> = ({ children, className, onClick, hideOnSmallScreens, tooltip, position='top', delay=0 }) => {
+}> = ({ children, className, onClick, hideOnSmallScreens, tooltip, closeOnActive, position='top', delay=0 }) => {
     const isSmallScreen = useIsSmallScreen();
     const { setTooltip, close } = useTooltip();
 
@@ -44,6 +45,7 @@ export const HasTooltip: React.FC<{
         onMouseLeave,
         onClick,
         onMouseEnter: () => onMouseEnter(false),
+        onMouseDown: closeOnActive ? close : undefined,
         ref,
     }
 
