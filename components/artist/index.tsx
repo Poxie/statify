@@ -28,6 +28,9 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
         followers: { total: totalFollowers },
         images,
     } = artist;
+
+    const popularityPercentage = 100 - popularity;
+    const popularityString = popularityPercentage <= 0 ? '1' : popularityPercentage;
     return(
         <div className="flex items-start gap-3">
             <SpotifyImage 
@@ -48,7 +51,7 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
                     {isPopular && (
                         <HasTooltip 
                             className="cursor-default flex"
-                            tooltip={`${artist.name} has a popularity index that\'s greater than ${POPULARITY_THRESHOLD}.`}
+                            tooltip={`${artist.name} is in the top ${100 - POPULARITY_THRESHOLD}% of artists.`}
                             delay={250}
                         >
                             <Chip 
@@ -64,7 +67,7 @@ export default function Artist({ artist, hasPopularityExplanation, isPopular, sm
                     {totalFollowers.toLocaleString()} followers
                 </span>
                 <span className="text-xs text-secondary flex items-center gap-1.5">
-                    Current popularity {popularity}
+                    Top {popularityString}% of artists
                     
                     {hasPopularityExplanation && (
                         <HasTooltip 
