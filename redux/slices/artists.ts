@@ -1,11 +1,12 @@
-import { SpotifyArtist, SpotifyTrack } from "@/types";
+import { SpotifyAlbum, SpotifyTrack } from "@/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 const initialState: {
-    [id: string]: {
+    [id: string]: Partial<{
         topTracks: SpotifyTrack[];
-    } | undefined;
+        topAlbums: SpotifyAlbum[];
+    }> | undefined;
 } = {};
 
 const getPrevArtist = (state: typeof initialState, artistId: string) => (
@@ -23,14 +24,25 @@ const artistsSlice = createSlice({
                 ...prevArtist,
                 topTracks: action.payload.topTracks,
             }
+        },
+        setArtistTopAlbums: (state, action: PayloadAction<{ artistId: string, topAlbums: SpotifyAlbum[] }>) => {
+            const prevArtist = getPrevArtist(state, action.payload.artistId);
+
+            state[action.payload.artistId] = {
+                ...prevArtist,
+                topAlbums: action.payload.topAlbums,
+            }
         }
     }
 })
 
-export const { setArtistTopTracks } = artistsSlice.actions;
+export const { setArtistTopTracks, setArtistTopAlbums } = artistsSlice.actions;
 export default artistsSlice.reducer;
 
 // Hooks
 export const selectArtistTopTracks = (state: RootState, artistId: string) => (
     state.artists[artistId]?.topTracks
+);
+export const selectArtistTopAlbums = (state: RootState, artistId: string) => (
+    state.artists[artistId]?.topAlbums
 );
