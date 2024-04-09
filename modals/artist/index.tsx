@@ -3,6 +3,8 @@ import ModalHeader from "../ModalHeader";
 import Artist from "@/components/artist";
 import { POPULARITY_THRESHOLD } from "@/utils/constants";
 import TopTracks from "./TopTracks";
+import TopAlbums from "./TopAlbums";
+import ModalSectionHeader from "../ModalSectionHeader";
 
 export default function ArtistModal({ artist }: {
     artist: SpotifyArtist;
@@ -20,6 +22,11 @@ export default function ArtistModal({ artist }: {
                     />
                 </div>
                 <TopTracks artistId={artist.id} />
+                <ModalSectionHeader 
+                    text="Albums"
+                    className="mt-3 mb-2"
+                />
+                <TopAlbums artistId={artist.id} />
             </div>
         </>
     )
