@@ -87,7 +87,7 @@ export default function ModalProvider({ children }: {
                     {activeModal && (
                         <motion.div
                             key={activeModal.id}
-                            className="w-[500px] max-w-full max-h-[100dvh] absolute top-2/4 left-2/4 translate-x-2/4 translate-y-2/4 bg-primary rounded-lg pointer-events-auto"
+                            className="scrollbar w-[500px] max-w-full max-h-[100dvh] sm:max-h-[90dvh] absolute top-2/4 left-2/4 translate-x-2/4 translate-y-2/4 bg-primary rounded-lg pointer-events-auto overflow-auto"
                             initial={{ opacity: 0, scale: .8, translateX: '-50%', translateY: '-50%' }}
                             animate={{ opacity: 1, scale: 1, translateX: '-50%', translateY: '-50%'  }}
                             exit={{ opacity: 0, scale: .8, translateX: '-50%', translateY: '-50%'  }}
