@@ -8,6 +8,7 @@ const initialState: {
         topAlbums: SpotifyAlbum[];
         featuredAlbums: SpotifyFeaturedAlbum[];
         relatedArtists: SpotifyArtist[];
+        relatedTracks: SpotifyTrack[];
     }> | undefined;
 } = {};
 
@@ -50,11 +51,25 @@ const artistsSlice = createSlice({
                 ...prevArtist,
                 relatedArtists: action.payload.relatedArtists,
             }
-        }
+        },
+        setArtistRelatedTracks: (state, action: PayloadAction<{ artistId: string, relatedTracks: SpotifyTrack[] }>) => {
+            const prevArtist = getPrevArtist(state, action.payload.artistId);
+
+            state[action.payload.artistId] = {
+                ...prevArtist,
+                relatedTracks: action.payload.relatedTracks,
+            }
+        },
     }
 })
 
-export const { setArtistTopTracks, setArtistTopAlbums, setArtistFeaturedAlbums, setArtistRelatedArtists } = artistsSlice.actions;
+export const { 
+    setArtistTopTracks, 
+    setArtistTopAlbums, 
+    setArtistFeaturedAlbums, 
+    setArtistRelatedArtists, 
+    setArtistRelatedTracks, 
+} = artistsSlice.actions;
 export default artistsSlice.reducer;
 
 // Hooks
@@ -69,4 +84,7 @@ export const selectArtistFeaturedAlbums = (state: RootState, artistId: string) =
 );
 export const selectArtistRelatedArtists = (state: RootState, artistId: string) => (
     state.artists[artistId]?.relatedArtists
+);
+export const selectArtistRelatedTracks = (state: RootState, artistId: string) => (
+    state.artists[artistId]?.relatedTracks
 );
