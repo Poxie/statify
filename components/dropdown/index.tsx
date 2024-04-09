@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowIcon } from "@/assets/icons/ArrowIcon";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 export default function Dropdown<T extends string>({ items, currentActiveId, onSelect, closeOnSelect=true }: {
     items: {
@@ -14,6 +14,29 @@ export default function Dropdown<T extends string>({ items, currentActiveId, onS
 }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const itemsRef = useRef<HTMLUListElement>(null);
+
+    useLayoutEffect(() => {
+        if(!menuOpen) return;
+
+        const onResize = () => {
+            if(!itemsRef.current) return;
+
+            const { left, width } = itemsRef.current.getBoundingClientRect();
+            if(left < 0) {
+                itemsRef.current.style.right = '';
+                itemsRef.current.style.left = `0px`;
+            }
+            if(left > width) {
+                itemsRef.current.style.left = '';
+                itemsRef.current.style.right = `0px`;
+            }
+        }
+        onResize();
+
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, [itemsRef.current, menuOpen]);
 
     const closeMenu = () => setMenuOpen(false);
     const toggleMenu = () => setMenuOpen(prev => !prev);
@@ -46,11 +69,12 @@ export default function Dropdown<T extends string>({ items, currentActiveId, onS
             <AnimatePresence>
                 {menuOpen && (
                     <motion.ul 
-                        className="min-w-[200px] p-2 absolute right-0 top-[calc(100%+.5rem)] bg-secondary shadow-2xl rounded-md"
+                        className="min-w-[200px] p-2 z-10 absolute right-0 top-[calc(100%+.5rem)] bg-secondary shadow-2xl rounded-md"
                         initial={{ opacity: 0, scale: .96 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: .96 }}
                         transition={{ duration: .2, bounce: false }}
+                        ref={itemsRef}
                     >
                         {items.map(item => (
                             <li key={item.id}>
