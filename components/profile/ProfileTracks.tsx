@@ -29,6 +29,7 @@ export default function ProfileTracks() {
                 header="Your most played songs"
                 timeRange={timeRange}
                 setTimeRange={setTimeRange}
+                className="mb-3"
             />
             <div className="border-[1px] border-tertiary rounded-md">
                 <ProfileTopSection>

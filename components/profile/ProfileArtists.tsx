@@ -29,6 +29,7 @@ export default function ProfileArtists() {
                 header="Your most liked artists"
                 timeRange={timeRange}
                 setTimeRange={setTimeRange}
+                className="mb-3"
             />
             <div className="border-[1px] border-tertiary rounded-md overflow-hidden">
                 <ProfileTopSection>

@@ -22,6 +22,7 @@ export default function ProfileGenres() {
                 timeRange={timeRange}
                 setTimeRange={setTimeRange}
                 tooltip="Top genres are based on the genres of your top artists. 10 occurrences means 10 of your top 50 artists exhibit traits of that genre."
+                className="mb-3"
             />
             <ul className="p-4 grid gap-2 bg-secondary border-[1px] border-tertiary rounded-md">
                 {loading && (
