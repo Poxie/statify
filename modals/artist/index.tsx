@@ -21,6 +21,10 @@ export default function ArtistModal({ artist }: {
                         isPopular={artist.popularity > POPULARITY_THRESHOLD}
                     />
                 </div>
+                <ModalSectionHeader 
+                    text={"Top tracks"}
+                    className="mb-2"
+                />
                 <TopTracks artistId={artist.id} />
                 <ModalSectionHeader 
                     text="Albums"
