@@ -12,7 +12,7 @@ export default function TabSelector<T extends string>({ items, selectedItemId, o
     const selectedTab = items.find(item => item.id === selectedItemId);
     return(
         <ul className={twMerge(
-            "flex gap-4",
+            "flex gap-4 whitespace-nowrap overflow-auto",
             className,
         )}>
             {items.map(item => {
