@@ -10,7 +10,7 @@ export default function ProfileTimeRange({ timeRange, setTimeRange }: {
             items={[
                 { text: 'Last 4 weeks', id: 'short_term' },
                 { text: 'Last 6 months', id: 'medium_term' },
-                { text: 'All time', id: 'long_term' },
+                { text: 'Last 12 months', id: 'long_term' },
             ]}
             currentActiveId={timeRange}
             onSelect={setTimeRange}
