@@ -5,26 +5,26 @@ import { SpotifyArtist, SpotifyTimeRange, SpotifyTrack } from "@/types";
 
 const initialState: {
     artists: {
-        loading: boolean;
+        loading: null | SpotifyTimeRange;
         short_term: SpotifyArtist[];
         medium_term: SpotifyArtist[];
         long_term: SpotifyArtist[];
     };
     tracks: {
-        loading: boolean;
+        loading: null | SpotifyTimeRange;
         short_term: SpotifyTrack[];
         medium_term: SpotifyTrack[];
         long_term: SpotifyTrack[];
     }
 } = {
     artists: {
-        loading: true,
+        loading: 'medium_term',
         short_term: [],
         medium_term: [],
         long_term: [],
     },
     tracks: {
-        loading: true,
+        loading: 'medium_term',
         short_term: [],
         medium_term: [],
         long_term: [],
@@ -35,7 +35,7 @@ export const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
-        setProfileArtistsLoading: (state, action: PayloadAction<boolean>) => {
+        setProfileArtistsLoading: (state, action: PayloadAction<SpotifyTimeRange>) => {
             state.artists.loading = action.payload;
         },
         setProfileArtists: (state, action: PayloadAction<{
@@ -43,10 +43,10 @@ export const profileSlice = createSlice({
             artists: SpotifyArtist[];
         }>) => {
             state.artists[action.payload.timeRange] = action.payload.artists;
-            state.artists.loading = false;
+            state.artists.loading = null;
         },
 
-        setProfileTracksLoading: (state, action: PayloadAction<boolean>) => {
+        setProfileTracksLoading: (state, action: PayloadAction<SpotifyTimeRange>) => {
             state.tracks.loading = action.payload;
         },
         setProfileTracks: (state, action: PayloadAction<{
@@ -54,7 +54,7 @@ export const profileSlice = createSlice({
             tracks: SpotifyTrack[];
         }>) => {
             state.tracks[action.payload.timeRange] = action.payload.tracks;
-            state.tracks.loading = false;
+            state.tracks.loading = null;
         },
     },
 })
@@ -70,16 +70,23 @@ export const {
 const selectTimeRange = (_: RootState, timeRange: SpotifyTimeRange) => timeRange;
 
 const selectArtistsObject = (state: RootState) => state.profile.artists;
+const selectTracksObject = (state: RootState) => state.profile.tracks;
 
-export const selectProfileArtistsLoading = (state: RootState) => state.profile.artists.loading;
+export const selectProfileArtistsLoading = createSelector(
+    [selectTimeRange, selectArtistsObject],
+    (timeRange, artists) => artists.loading === timeRange
+)
 export const selectProfileArtists = createSelector(
     [selectTimeRange, selectArtistsObject],
     (timeRange, artists) => artists[timeRange]
 )
 
-export const selectProfileTracksLoading = (state: RootState) => state.profile.tracks.loading;
+export const selectProfileTracksLoading = createSelector(
+    [selectTimeRange, selectTracksObject],
+    (timeRange, tracks) => tracks.loading === timeRange
+)
 export const selectProfileTracks = createSelector(
-    [selectTimeRange, (state: RootState) => state.profile.tracks],
+    [selectTimeRange, selectTracksObject],
     (timeRange, tracks) => tracks[timeRange]
 )
 

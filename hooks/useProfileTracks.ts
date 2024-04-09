@@ -11,13 +11,13 @@ export default function useProfileTracks({ timeRange: _timeRange }: {
 
     const dispatch = useAppDispatch();
 
-    const loading = useAppSelector(selectProfileTracksLoading);
+    const loading = useAppSelector(state => selectProfileTracksLoading(state, timeRange));
     const tracks = useAppSelector(state => selectProfileTracks(state, timeRange));
 
     useEffect(() => {
         if(tracks.length) return;
 
-        dispatch(setProfileTracksLoading(true));
+        dispatch(setProfileTracksLoading(timeRange));
         getWithToken<SpotifyTrack[]>(`/profile/me/tracks?time_range=${timeRange}`)
             .then(tracks => {
                 dispatch(setProfileTracks({

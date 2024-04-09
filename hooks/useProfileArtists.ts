@@ -11,13 +11,13 @@ export default function useProfileArtists({ timeRange: _timeRange }: {
 
     const dispatch = useAppDispatch();
 
-    const loading = useAppSelector(selectProfileArtistsLoading);
+    const loading = useAppSelector(state => selectProfileArtistsLoading(state, timeRange));
     const artists = useAppSelector(state => selectProfileArtists(state, timeRange));
 
     useEffect(() => {
         if(artists.length) return;
 
-        dispatch(setProfileArtistsLoading(true));
+        dispatch(setProfileArtistsLoading(timeRange));
         getWithToken<SpotifyArtist[]>(`/profile/me/artists?time_range=${timeRange}`)
             .then(artists => {
                 dispatch(setProfileArtists({
