@@ -43,6 +43,9 @@
   .scrollbar::-webkit-scrollbar-thumb {
     @apply border-[5px] border-solid border-secondary bg-tertiary rounded-lg;
   }
+  .scrollbar-light::-webkit-scrollbar-thumb {
+    @apply border-[5px] border-solid border-primary bg-tertiary rounded-lg;
+  }
   .scrollbar-dark::-webkit-scrollbar-thumb {
     @apply border-[5px] border-solid border-tertiary bg-primary rounded-lg;
   }
