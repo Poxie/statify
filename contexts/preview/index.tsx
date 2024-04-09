@@ -83,7 +83,7 @@ export default function PreviewProvider({ children }: {
                         initial={{ translateY: '100%' }}
                         animate={{ translateY: 0 }}
                         transition={{ bounce: false }}
-                        className="w-full fixed bottom-0 left-0 z-20 bg-tertiary"
+                        className="w-full fixed bottom-0 left-0 z-50 bg-tertiary"
                     >
                         <PreviewProgress />
                         <PreviewContent />
