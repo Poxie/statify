@@ -25,12 +25,12 @@ export default function RootLayout({
         <StoreProvider>
           <AuthProvider>
             <TooltipProvider>
-              <ModalProvider>
-                <PreviewProvider>
+              <PreviewProvider>
+                <ModalProvider>
                   <Navbar />
                   {children}
-                </PreviewProvider>
-              </ModalProvider>
+                </ModalProvider>
+              </PreviewProvider>
             </TooltipProvider>
           </AuthProvider>
         </StoreProvider>
