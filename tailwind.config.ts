@@ -32,6 +32,7 @@ const config: Config = {
         secondary: '#11151B',
         tertiary: '#1C1F22',
         'text-secondary': '#6B809D',
+        'text-primary': '#fff',
       },
       textColor: {
         primary: '#fff',
