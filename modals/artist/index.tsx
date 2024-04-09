@@ -8,11 +8,13 @@ import ModalSectionHeader from "../ModalSectionHeader";
 import FeaturedAlbums from "./FeaturedAlbums";
 import TabSelector from "@/components/tab-selector";
 import { useState } from "react";
+import RelatedArtists from "./RelatedArtists";
 
 const SELECTABLE_TABS = [
     { id: 'TOP_TRACKS', text: 'Top tracks' },
     { id: 'ALBUMS', text: 'Albums' },
     { id: 'FEATURED_ALBUMS', text: 'Featured albums' },
+    { id: 'RELATED_ARTISTS', text: 'Related artists' },
 ] as const;
 export default function ArtistModal({ artist }: {
     artist: SpotifyArtist;
@@ -45,6 +47,9 @@ export default function ArtistModal({ artist }: {
                 )}
                 {selectedTab === 'FEATURED_ALBUMS' && (
                     <FeaturedAlbums artistId={artist.id} />
+                )}
+                {selectedTab === 'RELATED_ARTISTS' && (
+                    <RelatedArtists artistId={artist.id} />
                 )}
             </div>
         </>
