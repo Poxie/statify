@@ -6,10 +6,19 @@ import TopTracks from "./TopTracks";
 import TopAlbums from "./TopAlbums";
 import ModalSectionHeader from "../ModalSectionHeader";
 import FeaturedAlbums from "./FeaturedAlbums";
+import TabSelector from "@/components/tab-selector";
+import { useState } from "react";
 
+const SELECTABLE_TABS = [
+    { id: 'TOP_TRACKS', text: 'Top tracks' },
+    { id: 'ALBUMS', text: 'Albums' },
+    { id: 'FEATURED_ALBUMS', text: 'Featured albums' },
+] as const;
 export default function ArtistModal({ artist }: {
     artist: SpotifyArtist;
 }) {
+    const [selectedTab, setSelectedTab] = useState<typeof SELECTABLE_TABS[number]['id']>(SELECTABLE_TABS[0].id);
+
     return(
         <>
             <ModalHeader className="pb-2">
@@ -22,21 +31,21 @@ export default function ArtistModal({ artist }: {
                         isPopular={artist.popularity > POPULARITY_THRESHOLD}
                     />
                 </div>
-                <ModalSectionHeader 
-                    text={"Top tracks"}
+                <TabSelector 
+                    items={SELECTABLE_TABS}
+                    selectedItemId={selectedTab}
+                    onSelect={setSelectedTab}
                     className="mb-2"
                 />
-                <TopTracks artistId={artist.id} />
-                <ModalSectionHeader 
-                    text="Albums"
-                    className="mt-3 mb-2"
-                />
-                <TopAlbums artistId={artist.id} />
-                <ModalSectionHeader 
-                    text="Featured albums"
-                    className="mt-3 mb-2"
-                />
-                <FeaturedAlbums artistId={artist.id} />
+                {selectedTab === 'TOP_TRACKS' && (
+                    <TopTracks artistId={artist.id} />
+                )}
+                {selectedTab === 'ALBUMS' && (
+                    <TopAlbums artistId={artist.id} />
+                )}
+                {selectedTab === 'FEATURED_ALBUMS' && (
+                    <FeaturedAlbums artistId={artist.id} />
+                )}
             </div>
         </>
     )
