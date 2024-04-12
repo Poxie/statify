@@ -7,6 +7,7 @@ import PreviewProvider from '@/contexts/preview'
 import AuthProvider from '@/contexts/auth'
 import StoreProvider from '@/redux/StoreProvider'
 import ModalProvider from '@/contexts/modal'
+import MenuProvider from '@/contexts/menu'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,14 +25,16 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <AuthProvider>
-            <TooltipProvider>
-              <PreviewProvider>
-                <ModalProvider>
-                  <Navbar />
-                  {children}
-                </ModalProvider>
-              </PreviewProvider>
-            </TooltipProvider>
+            <MenuProvider>
+              <TooltipProvider>
+                <PreviewProvider>
+                  <ModalProvider>
+                    <Navbar />
+                    {children}
+                  </ModalProvider>
+                </PreviewProvider>
+              </TooltipProvider>
+            </MenuProvider>
           </AuthProvider>
         </StoreProvider>
       </body>

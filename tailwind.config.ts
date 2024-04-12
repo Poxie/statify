@@ -7,6 +7,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './contexts/**/*.{js,ts,jsx,tsx,mdx}',
     './modals/**/*.{js,ts,jsx,tsx,mdx}',
+    './menus/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -26,6 +27,7 @@ const config: Config = {
         primary: '#0D1117',
         secondary: '#11151B',
         tertiary: '#1C1F22',
+        danger: '#da373c',
       },
       borderColor: {
         primary: '#0D1117',
@@ -37,7 +39,8 @@ const config: Config = {
       textColor: {
         primary: '#fff',
         secondary: '#6B809D',
-        'c-primary': '#6E3FC9'
+        'c-primary': '#6E3FC9',
+        danger: '#da373c',
       },
       animation: {
         'shake-large': 'shake-large .5s ease-in-out',
