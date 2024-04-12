@@ -13,11 +13,16 @@ export default function useProfileGenres({ timeRange }: {
         return acc;
     }, {} as Record<string, number>);
 
+    const getArtistsByGenre = (genre: string) => {
+        return artists.artists.filter(artist => artist.genres.includes(genre));
+    }
+
     return { 
         loading: artists.loading, 
         genres: allGenres,
         genresByCount,
         timeRange: artists.timeRange,
         setTimeRange: artists.setTimeRange,
+        getArtistsByGenre,
     };
 }
