@@ -46,7 +46,7 @@ export default function NavbarUser() {
             </button>
         ) : (
             <Button 
-                href={getLoginUrl()}
+                href={typeof window !== 'undefined' ? getLoginUrl() : undefined}
                 small={isSmallScreen}
                 className="z-30 -my-2.5"
             >
