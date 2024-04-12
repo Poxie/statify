@@ -3,17 +3,34 @@ import Button from "../button";
 import { useAuth } from "@/contexts/auth";
 import SpotifyImage from "../spotify-image";
 import { getLoginUrl } from "@/utils";
+import { useMenu } from "@/contexts/menu";
+import ProfileMenu from "@/menus/profile";
+import { useRef } from "react";
 
 export default function NavbarUser() {
+    const { setMenu } = useMenu();
     const { user, loading } = useAuth();
     const isSmallScreen = useIsSmallScreen();
 
+    const ref = useRef<HTMLButtonElement>(null);
+
     if(loading) return null;
+
+    const openProfileMenu = () => {
+        setMenu({
+            menu: <ProfileMenu />,
+            ref,
+        })
+    }
 
     const image = user?.images.at(-1)?.url;
     return(
         user ? (
-            <div className="flex items-center gap-2">
+            <button 
+                className="p-2 -m-2 flex items-center gap-2 hover:bg-secondary transition-colors rounded-md" 
+                onClick={openProfileMenu}
+                ref={ref}
+            >
                 <SpotifyImage 
                     src={image}
                     height={64}
@@ -23,7 +40,7 @@ export default function NavbarUser() {
                 <span>
                     {user.display_name}
                 </span>
-            </div>
+            </button>
         ) : (
             <Button 
                 href={getLoginUrl()}
