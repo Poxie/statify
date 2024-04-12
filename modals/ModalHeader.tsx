@@ -24,6 +24,7 @@ export default function ModalHeader({ children, className }: {
                 className="p-1 -m-1 rounded-md text-secondary hover:bg-tertiary hover:text-primary transition-colors"
                 hideOnSmallScreens
                 closeOnActive
+                autoFocus
             >
                 <CloseIcon className="w-6" />
             </HasTooltip>

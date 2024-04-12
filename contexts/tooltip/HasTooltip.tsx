@@ -11,7 +11,8 @@ export const HasTooltip: React.FC<{
     closeOnActive?: boolean;
     onClick?: () => void;
     delay?: number;
-}> = ({ children, className, onClick, hideOnSmallScreens, tooltip, closeOnActive, position='top', delay=0 }) => {
+    autoFocus?: boolean;
+}> = ({ children, className, onClick, hideOnSmallScreens, tooltip, closeOnActive, autoFocus, position='top', delay=0 }) => {
     const isSmallScreen = useIsSmallScreen();
     const { setTooltip, close } = useTooltip();
 
@@ -46,6 +47,7 @@ export const HasTooltip: React.FC<{
         onClick,
         onMouseEnter: () => onMouseEnter(false),
         onMouseDown: closeOnActive ? close : undefined,
+        autoFocus,
         ref,
     }
 
