@@ -6,15 +6,18 @@ import { getLoginUrl } from "@/utils";
 import { useMenu } from "@/contexts/menu";
 import ProfileMenu from "@/menus/profile";
 import { useRef } from "react";
+import NavbarProfileSkeleton from "../skeleton/navbar-profile";
 
 export default function NavbarUser() {
     const { setMenu } = useMenu();
-    const { user, loading } = useAuth();
+    const { user, loading, token } = useAuth();
     const isSmallScreen = useIsSmallScreen();
 
     const ref = useRef<HTMLButtonElement>(null);
-
-    if(loading) return null;
+    
+    if(token && loading) {
+        return <NavbarProfileSkeleton />
+    }
 
     const openProfileMenu = () => {
         setMenu({
