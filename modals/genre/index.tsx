@@ -7,7 +7,10 @@ import SpotifyImage from "@/components/spotify-image";
 import { HasTooltip } from "@/contexts/tooltip/HasTooltip";
 import ArtistModal from "../artist";
 import { useModal } from "@/contexts/modal";
+import Carousel from "@/components/carousel";
+import ArtistGroup from "./ArtistGroup";
 
+const ARTISTS_PER_CHUNK = 5;
 export default function GenreModal({ genre, timeRange }: {
     genre: string;
     timeRange: SpotifyTimeRange;
@@ -23,37 +26,24 @@ export default function GenreModal({ genre, timeRange }: {
     }
 
     const artists = getArtistsByGenre(genre);
+
+    const artistItems = artists.map((artist, index) => {
+        return(
+            <ArtistGroup 
+                key={artist.id}
+                artist={artist}
+            />
+        )
+    });
     return(
         <>
             <ModalHeader>
                 What artists is this genre from?
             </ModalHeader>
-            <div className="p-4 pt-0">
-                <ModalSectionHeader 
-                    text={`Your ${genre} artists (${artists.length})`}
-                    className="mb-2"
-                />
-                <ul className="grid grid-cols-6 sm:grid-cols-10 gap-1">
-                    {artists.map(artist => {
-                        const image = artist.images.at(-1)?.url;
-                        return(
-                            <li key={artist.id}>
-                                <HasTooltip
-                                    tooltip={artist.name}
-                                    onClick={() => openArtistModal(artist)}
-                                    className="block"
-                                >
-                                    <SpotifyImage 
-                                        height={128}
-                                        width={128}
-                                        src={image}
-                                    />
-                                </HasTooltip>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
+            <Carousel 
+                items={artistItems}
+                className="m-4 mt-0 rounded-md"
+            />
         </>
     )
 }
