@@ -27,6 +27,8 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
     const isLastChunk = activeIndex === chunks.length - 1;
 
     useEffect(() => {
+        if(!hasMultiplePages) return;
+
         if(preventEffect.current) {
             preventEffect.current = false;
             return;
@@ -82,7 +84,9 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
         setActiveIndex((prev) => prev + 1);
     }
 
-    const initialTranslate = -(lastChunk.length / itemsPerPage) * 100;
+    const initialTranslate = hasMultiplePages ? (
+        -(lastChunk.length / itemsPerPage) * 100
+    ) : 0;
     return(
         <div className="relative">
             {hasMultiplePages && (
@@ -100,12 +104,14 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                     style={{ transform: `translateX(${initialTranslate}%)` }}
                     ref={contentRef}
                 >
-                    <CarouselItem
-                        itemCount={lastChunk.length}
-                        itemsPerPage={itemsPerPage}
-                    >
-                        {lastChunk}
-                    </CarouselItem>
+                    {hasMultiplePages && (
+                        <CarouselItem
+                            itemCount={lastChunk.length}
+                            itemsPerPage={itemsPerPage}
+                        >
+                            {lastChunk}
+                        </CarouselItem>
+                    )}
                     {chunks.map((item, index) => (
                         <CarouselItem
                             key={index}
@@ -115,12 +121,14 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                             {item}
                         </CarouselItem>
                     ))}
-                    <CarouselItem
-                        itemCount={firstChunk.length}
-                        itemsPerPage={itemsPerPage}
-                    >
-                        {firstChunk}
-                    </CarouselItem>
+                    {hasMultiplePages && (
+                        <CarouselItem
+                            itemCount={firstChunk.length}
+                            itemsPerPage={itemsPerPage}
+                        >
+                            {firstChunk}
+                        </CarouselItem>
+                    )}
                 </div>
             </div>
             {hasMultiplePages && (
