@@ -108,6 +108,7 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                         <CarouselItem
                             itemCount={lastChunk.length}
                             itemsPerPage={itemsPerPage}
+                            hasMultiplePages={hasMultiplePages}
                         >
                             {lastChunk}
                         </CarouselItem>
@@ -117,6 +118,7 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                             key={index}
                             itemCount={item.length}
                             itemsPerPage={itemsPerPage}
+                            hasMultiplePages={hasMultiplePages}
                         >
                             {item}
                         </CarouselItem>
@@ -125,6 +127,7 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                         <CarouselItem
                             itemCount={firstChunk.length}
                             itemsPerPage={itemsPerPage}
+                            hasMultiplePages={hasMultiplePages}
                         >
                             {firstChunk}
                         </CarouselItem>

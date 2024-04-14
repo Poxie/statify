@@ -1,9 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-export default function CarouselItem({ children, itemsPerPage, itemCount }: {
+export default function CarouselItem({ children, itemsPerPage, itemCount, hasMultiplePages }: {
     children: React.ReactNode;
     itemsPerPage: number;
     itemCount: number;
+    hasMultiplePages: boolean;
 }) {
     const hasLessItems = itemCount < itemsPerPage;
     return(
@@ -13,8 +14,8 @@ export default function CarouselItem({ children, itemsPerPage, itemCount }: {
                 !hasLessItems && 'min-w-full'
             )}
             style={{ 
-                gridTemplateColumns: `repeat(${itemCount}, 1fr)`,
-                minWidth: !hasLessItems ? '100%' : `${(itemCount / itemsPerPage) * 100}%`,
+                gridTemplateColumns: `repeat(${hasMultiplePages ? itemCount : itemsPerPage}, 1fr)`,
+                minWidth: !(hasLessItems || hasMultiplePages) ? '100%' : `${(itemCount / itemsPerPage) * 100}%`,
             }}
         >
             {children}
