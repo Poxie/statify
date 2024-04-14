@@ -12,8 +12,9 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
     className?: string;
 }) {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [controlsDisabled, setControlsDisabled] = useState(false);
+
     const contentRef = useRef<HTMLDivElement>(null);
-    const preventEffect = useRef(false);
     
     const chunks = Array.from({ length: Math.ceil(items.length / itemsPerPage) }, (_, i) => {
         return items.slice(i * itemsPerPage, i * itemsPerPage + itemsPerPage);
@@ -27,13 +28,11 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
     const isLastChunk = activeIndex === chunks.length - 1;
 
     useEffect(() => {
+        if(controlsDisabled) return;
         if(!hasMultiplePages) return;
-
-        if(preventEffect.current) {
-            preventEffect.current = false;
-            return;
-        }
         if(!contentRef.current) return;
+
+        setControlsDisabled(true);
 
         const initialOffsetTranslation = lastChunk.length / itemsPerPage;
         const offsetTranslation = (isLastChunk || isOutOfBounds) ? (
@@ -66,14 +65,18 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                 contentRef.current.style.transition = 'none';
                 contentRef.current.style.transform = `translateX(${translate}%)`;
 
-                preventEffect.current = true;
                 setActiveIndex(index);
 
                 setTimeout(() => {
                     if(!contentRef.current) return;
+                    
                     contentRef.current.style.transition = `transform ${TRANSITION_DURATION}ms`;
+
+                    setControlsDisabled(false);
                 }, 10);
             }, TRANSITION_DURATION);
+        } else {
+            setControlsDisabled(false);
         }
     }, [activeIndex]);
 
@@ -91,6 +94,7 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
         <div className="relative">
             {hasMultiplePages && (
                 <CarouselButton 
+                    disabled={controlsDisabled}
                     onClick={handlePrev}
                     type="prev"
                 />
@@ -136,6 +140,7 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
             </div>
             {hasMultiplePages && (
                 <CarouselButton 
+                    disabled={controlsDisabled}
                     onClick={handleNext}
                     type="next"
                 />

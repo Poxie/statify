@@ -1,9 +1,10 @@
 import { ArrowIcon } from "@/assets/icons/ArrowIcon";
 import { twMerge } from "tailwind-merge";
 
-export default function CarouselButton({ onClick, type }: {
+export default function CarouselButton({ onClick, type, disabled }: {
     onClick: () => void;
     type: 'next' | 'prev';
+    disabled?: boolean;
 }) {
     return(
         <button
