@@ -9,7 +9,7 @@ export default function CarouselItem({ children, itemsPerPage, itemCount }: {
     return(
         <div 
             className={twMerge(
-                "grid gap-2",
+                "px-1 grid gap-2",
                 !hasLessItems && 'min-w-full'
             )}
             style={{ 

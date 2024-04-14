@@ -96,7 +96,7 @@ export default function Carousel({ items, className, itemsPerPage=4 }: {
                 className,
             )}>
                 <div
-                    className="flex transition-transform duration-300"
+                    className="-mx-1 flex transition-transform duration-300"
                     style={{ transform: `translateX(${initialTranslate}%)` }}
                     ref={contentRef}
                 >
