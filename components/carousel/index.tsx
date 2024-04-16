@@ -14,7 +14,7 @@ export default function Carousel({ items, className, itemsPerPage=1 }: {
     const [activeIndex, setActiveIndex] = useState(0);
     const [controlsDisabled, setControlsDisabled] = useState(false);
 
-    const contentRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLUListElement>(null);
     
     const chunks = Array.from({ length: Math.ceil(items.length / itemsPerPage) }, (_, i) => {
         return items.slice(i * itemsPerPage, i * itemsPerPage + itemsPerPage);
@@ -103,7 +103,7 @@ export default function Carousel({ items, className, itemsPerPage=1 }: {
                 "overflow-hidden",
                 className,
             )}>
-                <div
+                <ul
                     className="-mx-1 flex transition-transform duration-300"
                     style={{ transform: `translateX(${initialTranslate}%)` }}
                     ref={contentRef}
@@ -136,7 +136,7 @@ export default function Carousel({ items, className, itemsPerPage=1 }: {
                             {firstChunk}
                         </CarouselItem>
                     )}
-                </div>
+                </ul>
             </div>
             {hasMultiplePages && (
                 <CarouselButton 

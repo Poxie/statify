@@ -8,7 +8,7 @@ export default function CarouselItem({ children, itemsPerPage, itemCount, hasMul
 }) {
     const hasLessItems = itemCount < itemsPerPage;
     return(
-        <div 
+        <li 
             className={twMerge(
                 "px-1 grid gap-2",
                 !hasLessItems && 'min-w-full'
@@ -19,6 +19,6 @@ export default function CarouselItem({ children, itemsPerPage, itemCount, hasMul
             }}
         >
             {children}
-        </div>
+        </li>
     )
 }
