@@ -6,7 +6,7 @@ import CarouselButton from "./CarouselButton";
 
 const OFFSET_INDEX = 1;
 const TRANSITION_DURATION = 300;
-export default function Carousel({ items, className, itemsPerPage=4 }: {
+export default function Carousel({ items, className, itemsPerPage=1 }: {
     items: React.ReactNode[];
     itemsPerPage?: number;
     className?: string;
