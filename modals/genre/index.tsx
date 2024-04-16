@@ -9,13 +9,16 @@ import ArtistModal from "../artist";
 import { useModal } from "@/contexts/modal";
 import Carousel from "@/components/carousel";
 import ArtistGroup from "./ArtistGroup";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
-const ARTISTS_PER_CHUNK = 5;
+const ARTISTS_PER_CHUNK = 4;
+const SMALL_SCREEN_ARTISTS_PER_CHUNK = 3;
 export default function GenreModal({ genre, timeRange }: {
     genre: string;
     timeRange: SpotifyTimeRange;
 }) {
     const { openModal } = useModal();
+    const isSmallScreen = useIsSmallScreen();
 
     const { getArtistsByGenre } = useProfileGenres({ timeRange });
 
@@ -43,6 +46,7 @@ export default function GenreModal({ genre, timeRange }: {
             <Carousel 
                 items={artistItems}
                 className="m-4 mt-0 rounded-md"
+                itemsPerPage={isSmallScreen ? SMALL_SCREEN_ARTISTS_PER_CHUNK : ARTISTS_PER_CHUNK}
             />
         </>
     )
